@@ -1,0 +1,28 @@
+== Introduction
+
+When it comes to applying Tactical Techniques of Domain Driven Design in a project,
+there are two principal options: (a) use a complex framework or (b) provide an implementation from scratch.
+
+Another option is the *TRINITY4j*, a lightweight library for DDD applications in Java.
+TRINITY4j is an opinionated library distilling the best solutions for common problems that developers face when applying DDD.
+
+Internally, the modules follow the structure of the Trinity Architecture. Therefore, TRINITY4j is a perfect fit for applications following the Trinity Architecture too, although this is not a hard requirement.
+
+
+=== The Trinity Architecture
+
+The *Trinity Architecture* is an architectural pattern for applications focused on,
+but not limited to, *Domain-Driven Design* (DDD).
+It emanates from a typical layered architecture employing the *Dependency Inversion Principle* (DIP).
+The term "Trinity" refers to the three basic building blocks of an enterprise (microservice)
+application being:
+
+* the *Domain* Model,
+* the public Application Programming Interface / *API* and
+* the Auxiliary Services / *AUX* which do not naturally fit neither into the Domain or the API, but are mandatory for the application.
+
+The pattern balances uncontrolled flexibility with consistency and provides concrete implementation guidelines with eight top modules. Supporting tools and libraries are also available at Github (https://github.com/oregor-projects/trinity-demo-java).
+
+
+=== Modules Structure
+

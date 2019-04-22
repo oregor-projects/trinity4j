@@ -1,0 +1,13 @@
+:icons: font
+
+= TRINITY4J
+Christos Tsakostas, OREGOR LTD
+
+[abstract]
+A set of Domain-Driven Design Libraries for Java Applications.
+
+include::1-introduction/index.adoc[]
+
+include::2-getting-started/index.adoc[]
+
+include::3-domain/index.adoc[]
