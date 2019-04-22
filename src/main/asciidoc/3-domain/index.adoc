@@ -1,0 +1,11 @@
+== Domain
+
+The TRINITY4J Domain library covers the following DDD patterns:
+
+* Aggregate Root
+* Aggregate Entity
+* Domain Event
+* Domain Command
+* Repository
+
+=== Aggregate Root

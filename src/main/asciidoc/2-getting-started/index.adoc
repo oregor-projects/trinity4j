@@ -1,0 +1,26 @@
+== Getting started
+
+```xml
+<properties>
+...
+  <trinity4j.version>0.0.2</trinity4j.version>
+...
+</properties>
+```
+
+```xml
+<dependencyManagement>
+  <dependencies>
+    ...
+    <dependency>
+      <groupId>com.oregor.trinity4j</groupId>
+      <artifactId>trinity4j-bom</artifactId>
+      <version>${trinity4j.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+    ...
+  </dependencies>
+</dependencyManagement>
+```
+
