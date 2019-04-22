@@ -236,7 +236,7 @@
           <version>${license-maven-plugin.version}</version>
           <configuration>
             <licenseName>apache_v2</licenseName>
-            <projectName>trinity4j: A set of Domain-Driven-Design Libraries for Java Applications</projectName>
+            <projectName>TRINITY4J: A set of Domain-Driven Design Libraries for Java Applications</projectName>
             <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
             <emptyLineAfterHeader>true</emptyLineAfterHeader>
             <failOnMissingHeader>true</failOnMissingHeader>
