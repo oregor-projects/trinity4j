@@ -120,7 +120,8 @@
     <guava.version>26.0-jre</guava.version>
 
     <!--UUID-->
-    <fasterxml-uuid.version>3.1.5</fasterxml-uuid.version>  </properties>
+    <fasterxml-uuid.version>3.1.5</fasterxml-uuid.version>
+  </properties>
 
   <dependencies>
   </dependencies>
