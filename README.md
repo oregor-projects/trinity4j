@@ -13,7 +13,10 @@ It distills the best solutions for common problems when applying DDD.
 
 TRINITY4J follows the structure of the Trinity Architecture pattern. 
 Thus, it is a perfect fit for Trinity-based Java applications.
- Nonetheless, you can also use it in any application that does not follow the Trinity pattern.
+Nonetheless, you can also use it in any application that does not follow the Trinity pattern.
+
+To learn more about the Trinity Architecture go to: https://medium.com/oregor/the-trinity-architecture-c89ed5743c1e
+
 
 ## 
 ## WORK IN PROGRESS
