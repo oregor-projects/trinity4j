@@ -21,31 +21,47 @@
 package com.oregor.trinity4j.domain;
 
 import java.util.UUID;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
- * The interface Findable.
+ * The type Tenant id.
  *
- * @param <R> the type parameter
+ * @author Christos Tsakostas
  */
-public interface TenantFindable<R> {
+@Embeddable
+public class TenantId extends AbstractUuid {
+
+  private static final long serialVersionUID = 1L;
+
+  // ===============================================================================================
+  // CONSTRUCTOR(S)
+  // ===============================================================================================
+
+  /** No args constructor for ORM. */
+  private TenantId() {
+    super();
+  }
 
   /**
-   * Returns all the aggregate root entities stored in the repository, provided a Tenant UUID. USE
-   * WITH CAUTION!
+   * Instantiates a new Tenant id.
    *
-   * @param tenantUuid the tenant timeBasedUuid
-   * @return the iterable
+   * @param uuid the uuid
    */
-  Iterable<R> findAll(UUID tenantUuid);
+  public TenantId(UUID uuid) {
+    super(uuid);
+  }
 
-  /**
-   * Returns pages of all the aggregate root entities stored in the repository, provided a Tenant
-   * UUID.
-   *
-   * @param tenantUuid the tenant timeBasedUuid
-   * @param pageNumber the page number
-   * @param pageSize the page size
-   * @return the paginated
-   */
-  Paginated<R> findPaginated(UUID tenantUuid, Integer pageNumber, Integer pageSize);
+  // ===============================================================================================
+  // OVERRIDES
+  // ===============================================================================================
+
+  @Access(AccessType.PROPERTY)
+  @Column(name = "tenant_id")
+  @Override
+  public UUID getUuid() {
+    return super.getUuid();
+  }
 }

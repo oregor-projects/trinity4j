@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -29,8 +30,13 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class TenantAggregateRoot<I extends TenantAggregateRootId>
-    extends AggregateRoot<I> {
+public abstract class TenantAggregateRoot<I extends AggregateRootId> extends AggregateRoot<I> {
+
+  // ===============================================================================================
+  // STATE
+  // ===============================================================================================
+
+  private TenantId tenantId;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -45,9 +51,24 @@ public abstract class TenantAggregateRoot<I extends TenantAggregateRootId>
    * Instantiates a new Tenant aggregate root.
    *
    * @param id the id
+   * @param tenantId the tenant id
    */
-  protected TenantAggregateRoot(I id) {
+  protected TenantAggregateRoot(I id, TenantId tenantId) {
     super(id);
+    setTenantId(tenantId);
+  }
+
+  // ===============================================================================================
+  // GETTERS
+  // ===============================================================================================
+
+  /**
+   * Gets tenant id.
+   *
+   * @return the tenant id
+   */
+  public TenantId getTenantId() {
+    return tenantId;
   }
 
   // ===============================================================================================
@@ -57,6 +78,20 @@ public abstract class TenantAggregateRoot<I extends TenantAggregateRootId>
   @Override
   protected <D extends DomainMessage> void fillDomainMessageProperties(D domainMessage) {
     super.fillDomainMessageProperties(domainMessage);
-    domainMessage.setTenantId(getId().getTenantId());
+    domainMessage.setTenantId(getTenantId().getUuid());
+  }
+
+  // ===============================================================================================
+  // GUARDS
+  // ===============================================================================================
+
+  /**
+   * Sets tenant id.
+   *
+   * @param tenantId the tenant id
+   */
+  private void setTenantId(TenantId tenantId) {
+    Assertion.isNotNull(tenantId, "tenantId is required");
+    this.tenantId = tenantId;
   }
 }

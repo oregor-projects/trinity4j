@@ -20,10 +20,10 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
-import java.io.Serializable;
-import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -32,21 +32,15 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateRootId implements Serializable {
+public abstract class AggregateRootId extends AbstractUuid {
 
   private static final long serialVersionUID = 1L;
-
-  private UUID rootId;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Aggregate root id.
-   *
-   * <p>No args constructor for ORM frameworks.
-   */
+  /** Instantiates a new Aggregate root id. */
   protected AggregateRootId() {
     super();
   }
@@ -54,57 +48,20 @@ public abstract class AggregateRootId implements Serializable {
   /**
    * Instantiates a new Aggregate root id.
    *
-   * @param rootId the root timeBasedUuid
+   * @param uuid the uuid
    */
-  protected AggregateRootId(UUID rootId) {
-    setRootId(rootId);
-  }
-
-  // ===============================================================================================
-  // GETTERS
-  // ===============================================================================================
-
-  /**
-   * Gets root timeBasedUuid.
-   *
-   * @return the root timeBasedUuid
-   */
-  public UUID getRootId() {
-    return rootId;
-  }
-
-  // ===============================================================================================
-  // GUARDS
-  // ===============================================================================================
-
-  /**
-   * Sets root timeBasedUuid.
-   *
-   * @param rootId the root timeBasedUuid
-   */
-  private void setRootId(UUID rootId) {
-    Assertion.isNotNull(rootId, "rootId is required");
-    this.rootId = rootId;
+  protected AggregateRootId(UUID uuid) {
+    super(uuid);
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
+  @Access(AccessType.PROPERTY)
+  @Column(name = "root_id")
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    AggregateRootId that = (AggregateRootId) o;
-    return Objects.equals(rootId, that.rootId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(rootId);
+  public UUID getUuid() {
+    return super.getUuid();
   }
 }

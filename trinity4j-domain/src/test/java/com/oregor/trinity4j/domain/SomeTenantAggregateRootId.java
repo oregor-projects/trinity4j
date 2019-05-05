@@ -29,20 +29,14 @@ import javax.persistence.Embeddable;
  * @author Christos Tsakostas
  */
 @Embeddable
-public class SomeTenantAggregateRootId extends TenantAggregateRootId {
+public class SomeTenantAggregateRootId extends AggregateRootId {
 
   private static final long serialVersionUID = 1L;
 
   /** Instantiates a new Some tenant aggregate root id. */
   public SomeTenantAggregateRootId() {}
 
-  /**
-   * Instantiates a new Some tenant aggregate root id.
-   *
-   * @param rootId the root id
-   * @param tenantId the tenant id
-   */
-  public SomeTenantAggregateRootId(UUID rootId, UUID tenantId) {
-    super(rootId, tenantId);
+  public SomeTenantAggregateRootId(UUID rootId) {
+    super(rootId);
   }
 }

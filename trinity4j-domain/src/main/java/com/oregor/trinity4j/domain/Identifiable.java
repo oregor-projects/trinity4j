@@ -20,6 +20,12 @@
 
 package com.oregor.trinity4j.domain;
 
+/**
+ * The interface Identifiable.
+ *
+ * @param <I> the type parameter
+ * @author Christos Tsakostas
+ */
 public interface Identifiable<I> {
 
   /**

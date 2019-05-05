@@ -34,7 +34,8 @@ public class TenantAggregateRootTest {
   @Test
   public void shouldFillDomainMessageProperties() {
     SomeTenantAggregateRoot someTenantAggregateRoot =
-        new SomeTenantAggregateRoot(new SomeTenantAggregateRootId(rootUuid, tenantUuid));
+        new SomeTenantAggregateRoot(
+            new SomeTenantAggregateRootId(rootUuid), new TenantId(tenantUuid));
 
     someTenantAggregateRoot.registerDomainMessage(new SomeDomainEvent());
 

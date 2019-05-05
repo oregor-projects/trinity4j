@@ -20,48 +20,91 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
+import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
- * The type Aggregate entity id.
+ * The type Abstract uuid.
  *
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateEntityId extends AbstractUuid {
+public abstract class AbstractUuid implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
+  // ===============================================================================================
+  // STATE
+  // ===============================================================================================
+
+  private UUID uuid;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Aggregate entity id. */
-  protected AggregateEntityId() {
+  /** Instantiates a new Abstract uuid. */
+  protected AbstractUuid() {
     super();
   }
 
   /**
-   * Instantiates a new Aggregate entity id.
+   * Instantiates a new Abstract uuid.
    *
    * @param uuid the uuid
    */
-  protected AggregateEntityId(UUID uuid) {
-    super(uuid);
+  protected AbstractUuid(UUID uuid) {
+    setUuid(uuid);
+  }
+
+  // ===============================================================================================
+  // GETTERS
+  // ===============================================================================================
+
+  /**
+   * Gets uuid.
+   *
+   * @return the uuid
+   */
+  public UUID getUuid() {
+    return uuid;
+  }
+
+  // ===============================================================================================
+  // GUARDS
+  // ===============================================================================================
+
+  /**
+   * Sets uuid.
+   *
+   * @param uuid the uuid
+   */
+  public void setUuid(UUID uuid) {
+    Assertion.isNotNull(uuid, "the uuid is required");
+    this.uuid = uuid;
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
-  @Access(AccessType.PROPERTY)
-  @Column(name = "entity_id")
   @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AbstractUuid that = (AbstractUuid) o;
+    return Objects.equals(uuid, that.uuid);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(uuid);
   }
 }

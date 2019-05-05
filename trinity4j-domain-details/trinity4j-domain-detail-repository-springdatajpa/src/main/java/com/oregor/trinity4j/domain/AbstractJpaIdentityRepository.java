@@ -20,48 +20,54 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.util.UUID;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
- * The type Aggregate entity id.
+ * The type Abstract jpa identity repository.
  *
+ * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-@MappedSuperclass
-public abstract class AggregateEntityId extends AbstractUuid {
+public abstract class AbstractJpaIdentityRepository<I extends AggregateRootId> {
 
-  private static final long serialVersionUID = 1L;
+  // ===============================================================================================
+  // STATE
+  // ===============================================================================================
+
+  private Class<I> idClass;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Aggregate entity id. */
-  protected AggregateEntityId() {
-    super();
-  }
-
   /**
-   * Instantiates a new Aggregate entity id.
+   * Instantiates a new Abstract jpa identity repository.
    *
-   * @param uuid the uuid
+   * @param idClass the id class
    */
-  protected AggregateEntityId(UUID uuid) {
-    super(uuid);
+  protected AbstractJpaIdentityRepository(Class<I> idClass) {
+    this.idClass = idClass;
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
-  @Access(AccessType.PROPERTY)
-  @Column(name = "entity_id")
-  @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  /**
+   * Next id.
+   *
+   * @return the
+   */
+  @SuppressWarnings("unchecked")
+  public I nextId() {
+    try {
+      Constructor<?>[] allConstructors = idClass.getConstructors();
+      Constructor<?> constructor = allConstructors[0];
+      Object[] objects = {UuidGenerator.timeBasedUuid()};
+      return (I) constructor.newInstance(objects);
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new IllegalStateException(e.getMessage(), e);
+    }
   }
 }

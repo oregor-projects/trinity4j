@@ -21,23 +21,26 @@
 package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * The type Abstract jpa tenant repository.
+ *
+ * @param <T> the type parameter
+ * @param <I> the type parameter
+ * @param <D> the type parameter
+ * @author Christos Tsakostas
+ */
 public abstract class AbstractJpaTenantRepository<
-        T extends TenantAggregateRoot<I>,
-        I extends TenantAggregateRootId,
-        D extends DomainMessageData>
-    implements TenantRepository<T, I> {
+        T extends TenantAggregateRoot<I>, I extends AggregateRootId, D extends DomainMessageData>
+    extends AbstractJpaIdentityRepository<I> implements TenantRepository<T, I> {
 
-  /** The Repository. */
-  protected SpringDataTenantRepository<T, I> multiTenantRepository;
+  /** The Spring Data Tenant Repository. */
+  protected SpringDataTenantRepository<T, I> springDataTenantRepository;
 
   /** The Domain message data repository. */
   protected SpringDomainMessageDataRepository<D> domainMessageDataRepository;
@@ -45,21 +48,27 @@ public abstract class AbstractJpaTenantRepository<
   /** The Domain message data converter. */
   protected DomainMessageDataConvertible<D> domainMessageDataConverter;
 
-  private Class<I> idClass;
-
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
+  /**
+   * Instantiates a new Abstract jpa tenant repository.
+   *
+   * @param idClass the id class
+   * @param springDataTenantRepository the spring data tenant repository
+   * @param domainMessageDataRepository the domain message data repository
+   * @param domainMessageDataConverter the domain message data converter
+   */
   protected AbstractJpaTenantRepository(
-      SpringDataTenantRepository<T, I> repository,
+      Class<I> idClass,
+      SpringDataTenantRepository<T, I> springDataTenantRepository,
       SpringDomainMessageDataRepository<D> domainMessageDataRepository,
-      DomainMessageDataConvertible<D> domainMessageDataConverter,
-      Class<I> idClass) {
-    this.multiTenantRepository = repository;
+      DomainMessageDataConvertible<D> domainMessageDataConverter) {
+    super(idClass);
+    this.springDataTenantRepository = springDataTenantRepository;
     this.domainMessageDataRepository = domainMessageDataRepository;
     this.domainMessageDataConverter = domainMessageDataConverter;
-    this.idClass = idClass;
   }
 
   // ===============================================================================================
@@ -68,7 +77,7 @@ public abstract class AbstractJpaTenantRepository<
 
   @Override
   public T store(T object) {
-    T storedObject = this.multiTenantRepository.save(object);
+    T storedObject = this.springDataTenantRepository.save(object);
     domainMessageDataRepository.saveAll(
         domainMessageDataConverter.convert(object.getDomainMessages()));
     return storedObject;
@@ -76,7 +85,7 @@ public abstract class AbstractJpaTenantRepository<
 
   @Override
   public Optional<T> restore(I objectId) {
-    return multiTenantRepository.findById(objectId);
+    return springDataTenantRepository.findById(objectId);
   }
 
   @Override
@@ -85,36 +94,23 @@ public abstract class AbstractJpaTenantRepository<
   }
 
   @Override
-  public Iterable<T> findAll(UUID tenantUuid) {
+  public Iterable<T> findAll(TenantId tenantId) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Paginated<T> findPaginated(UUID tenantId, Integer pageNumber, Integer pageSize) {
+  public Paginated<T> findPaginated(TenantId tenantId, Integer pageNumber, Integer pageSize) {
     Assertion.isNotNull(tenantId, "tenantId is required");
     Assertion.isNotNull(pageNumber, "pageNumber is required");
     Assertion.isNotNull(pageSize, "pageSize is required");
 
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-    Page<T> dataPage = multiTenantRepository.findById_TenantId(tenantId, pageable);
+    Page<T> dataPage = springDataTenantRepository.findByTenantId(tenantId, pageable);
 
     return new Paginated<>(
         dataPage.getContent().stream().collect(Collectors.toList()),
         dataPage.getTotalPages(),
         dataPage.getTotalElements());
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public I nextId(UUID tenantUuid) {
-    try {
-      Constructor<?>[] allConstructors = idClass.getConstructors();
-      Constructor<?> constructor = allConstructors[0];
-      Object[] objects = {UuidGenerator.timeBasedUuid(), tenantUuid};
-      return (I) constructor.newInstance(objects);
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException(e.getMessage(), e);
-    }
   }
 }

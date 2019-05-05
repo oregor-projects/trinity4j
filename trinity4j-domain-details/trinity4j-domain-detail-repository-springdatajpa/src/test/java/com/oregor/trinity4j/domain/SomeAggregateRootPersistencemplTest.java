@@ -60,8 +60,8 @@ public class SomeAggregateRootPersistencemplTest extends JpaTest {
     SomeAggregateRootId someAggregateRootId = someAggregateRootRepository.nextId();
 
     assertThat(someAggregateRootId).isNotNull();
-    assertThat(someAggregateRootId.getRootId()).isNotNull();
-    assertThat(UUID.fromString(someAggregateRootId.getRootId().toString())).isNotNull();
+    assertThat(someAggregateRootId.getUuid()).isNotNull();
+    assertThat(UUID.fromString(someAggregateRootId.getUuid().toString())).isNotNull();
   }
 
   //  @Test

@@ -23,8 +23,11 @@ package com.oregor.trinity4j.domain;
 import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -34,12 +37,17 @@ import org.springframework.core.annotation.AnnotationUtils;
  * @param <I> the type parameter
  * @author Christos Tsakostas
  */
+@Access(AccessType.FIELD)
 @MappedSuperclass
 public abstract class AggregateRoot<I extends AggregateRootId> {
 
+  // ===============================================================================================
+  // STATE
+  // ===============================================================================================
+
   private final transient List<DomainMessage> domainMessages = new LinkedList<>();
 
-  @EmbeddedId private I id;
+  private I id;
 
   @Version private Integer version;
 
@@ -112,7 +120,7 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
             ? domainMessage.getClass().getSimpleName()
             : domainEventInfo.name());
 
-    domainMessage.setRootId(getId().getRootId());
+    domainMessage.setRootId(getId().getUuid());
   }
 
   // ===============================================================================================
@@ -124,6 +132,7 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
    *
    * @return the domain messages
    */
+  @Transient
   public List<DomainMessage> getDomainMessages() {
     return domainMessages;
   }
@@ -169,6 +178,8 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
   // OVERRIDES
   // ===============================================================================================
 
+  @Access(AccessType.PROPERTY)
+  @EmbeddedId
   public I getId() {
     return id;
   }

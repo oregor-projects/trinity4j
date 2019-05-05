@@ -26,4 +26,6 @@ package com.oregor.trinity4j.domain;
  * @author Christos Tsakostas
  */
 @DomainMessageInfo(type = DomainMessageType.EVENT, version = 1)
-public class SomeAggregateRootCreated extends DomainMessage {}
+public class SomeAggregateRootCreated extends DomainMessage {
+  private static final long serialVersionUID = 1L;
+}

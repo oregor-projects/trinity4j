@@ -20,22 +20,49 @@
 
 package com.oregor.trinity4j.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.lang.reflect.Constructor;
 import java.util.UUID;
+import org.junit.Test;
 
 /** @author Christos Tsakostas */
-public class TenantAggregateRootIdTest extends AbstractEqualityTest<TenantAggregateRootId> {
+public class TenantIdTest extends AbstractEqualityTest<TenantId> {
 
-  private static UUID rootUuid = UuidGenerator.timeBasedUuid();
   private static UUID uuid1 = UuidGenerator.timeBasedUuid();
   private static UUID uuid2 = UuidGenerator.timeBasedUuid();
 
-  @Override
-  public TenantAggregateRootId createObject1() {
-    return new SomeTenantAggregateRootId(rootUuid, uuid1);
+  @Test
+  public void shouldInstantiate() {
+    TenantId tenantId = createObject1();
+
+    assertThat(tenantId).isNotNull();
+    assertThat(tenantId.getUuid()).isNotNull();
+    assertThat(tenantId.getUuid()).isEqualTo(uuid1);
+  }
+
+  @Test
+  public void shouldInstantiateWithEmptyConstructor() throws NoSuchMethodException {
+    Constructor<TenantId> constructor = TenantId.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+    assertThatCode(constructor::newInstance).doesNotThrowAnyException();
+  }
+
+  @Test
+  public void shouldNotInstantiateWithEmptyConstructor() throws NoSuchMethodException {
+    Constructor<TenantId> constructor = TenantId.class.getDeclaredConstructor();
+    assertThatThrownBy(constructor::newInstance).isInstanceOf(IllegalAccessException.class);
   }
 
   @Override
-  public TenantAggregateRootId createObject2() {
-    return new SomeTenantAggregateRootId(rootUuid, uuid2);
+  public TenantId createObject1() {
+    return new TenantId(uuid1);
+  }
+
+  @Override
+  public TenantId createObject2() {
+    return new TenantId(uuid2);
   }
 }

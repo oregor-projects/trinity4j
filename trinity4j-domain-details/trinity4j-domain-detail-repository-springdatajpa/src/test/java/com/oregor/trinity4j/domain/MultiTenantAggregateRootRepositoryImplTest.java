@@ -23,7 +23,6 @@ package com.oregor.trinity4j.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +32,20 @@ public class MultiTenantAggregateRootRepositoryImplTest extends JpaTest {
 
   @Autowired private MultiTenantAggregateRootRepository multiTenantAggregateRootRepository;
 
-  private UUID tenantUuid;
+  private TenantId tenantId;
 
   @Before
-  public void setUp() throws Exception {
-    tenantUuid = UuidGenerator.timeBasedUuid();
+  public void setUp() {
+    tenantId = new TenantId(UuidGenerator.timeBasedUuid());
   }
 
   @Test
   public void shouldStoreAndRestoreSomeAggregateRoot() {
     MultiTenantAggregateRootId multiTenantAggregateRootId =
-        new MultiTenantAggregateRootId(UuidGenerator.timeBasedUuid(), tenantUuid);
+        new MultiTenantAggregateRootId(UuidGenerator.timeBasedUuid());
+
     MultiTenantAggregateRoot multiTenantAggregateRoot =
-        new MultiTenantAggregateRoot(multiTenantAggregateRootId);
+        new MultiTenantAggregateRoot(multiTenantAggregateRootId, tenantId);
 
     assertThat(multiTenantAggregateRoot.getDomainMessages().size()).isEqualTo(1);
 
@@ -66,13 +66,22 @@ public class MultiTenantAggregateRootRepositoryImplTest extends JpaTest {
   }
 
   @Test
+  public void shouldFindPaginated() {
+    Paginated<MultiTenantAggregateRoot> multiTenantAggregateRootPaginated =
+        multiTenantAggregateRootRepository.findPaginated(tenantId, 0, 10);
+
+    assertThat(multiTenantAggregateRootPaginated).isNotNull();
+    assertThat(multiTenantAggregateRootPaginated.getItems()).isNotNull();
+    assertThat(multiTenantAggregateRootPaginated.getTotalElements()).isEqualTo(0);
+    assertThat(multiTenantAggregateRootPaginated.getTotalPages()).isEqualTo(0);
+  }
+
+  @Test
   public void shouldGenerateNextId() {
     MultiTenantAggregateRootId multiTenantAggregateRootId =
-        multiTenantAggregateRootRepository.nextId(tenantUuid);
+        multiTenantAggregateRootRepository.nextId();
 
     assertThat(multiTenantAggregateRootId).isNotNull();
-    assertThat(multiTenantAggregateRootId.getRootId()).isNotNull();
-    assertThat(multiTenantAggregateRootId.getTenantId()).isNotNull();
-    assertThat(multiTenantAggregateRootId.getTenantId()).isEqualTo(tenantUuid);
+    assertThat(multiTenantAggregateRootId.getUuid()).isNotNull();
   }
 }
