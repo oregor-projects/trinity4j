@@ -20,38 +20,45 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.Objects;
 import java.util.UUID;
+import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
+/**
+ * The type Tenant aggregate root id.
+ *
+ * @author Christos Tsakostas
+ */
 @MappedSuperclass
 public abstract class TenantAggregateRootId extends AggregateRootId {
 
   private static final long serialVersionUID = 1L;
 
-  private UUID tenantId;
+  // ===============================================================================================
+  // STATE
+  // ===============================================================================================
+
+  @Embedded private TenantId tenantId;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Aggregate root id with tenant id.
-   *
-   * <p>No args constructor for ORM frameworks.
-   */
+  /** Instantiates a new Tenant aggregate root id. */
   protected TenantAggregateRootId() {
     super();
   }
 
   /**
-   * Instantiates a new Aggregate root id with tenant id.
+   * Instantiates a new Tenant aggregate root id.
    *
-   * @param rootId the root id
+   * @param uuid the uuid
    * @param tenantId the tenant id
    */
-  public TenantAggregateRootId(UUID rootId, UUID tenantId) {
-    super(rootId);
+  protected TenantAggregateRootId(UUID uuid, TenantId tenantId) {
+    super(uuid);
     setTenantId(tenantId);
   }
 
@@ -60,11 +67,11 @@ public abstract class TenantAggregateRootId extends AggregateRootId {
   // ===============================================================================================
 
   /**
-   * Gets tenant timeBasedUuid.
+   * Gets tenant id.
    *
-   * @return the tenant timeBasedUuid
+   * @return the tenant id
    */
-  public UUID getTenantId() {
+  public TenantId getTenantId() {
     return tenantId;
   }
 
@@ -73,11 +80,12 @@ public abstract class TenantAggregateRootId extends AggregateRootId {
   // ===============================================================================================
 
   /**
-   * Sets tenant timeBasedUuid.
+   * Sets tenant id.
    *
-   * @param tenantId the tenant timeBasedUuid
+   * @param tenantId the tenant id
    */
-  private void setTenantId(UUID tenantId) {
+  private void setTenantId(TenantId tenantId) {
+    Assertion.isNotNull(tenantId, "tenantId is required");
     this.tenantId = tenantId;
   }
 

@@ -79,7 +79,7 @@ public abstract class DomainMessageDataConverter<D extends DomainMessageData>
   @Override
   public D convert(DomainMessage domainMessage) {
     Assertion.isNotNull(domainMessage, "domainMessage is required");
-    Assertion.isNotNull(domainMessage.getRootId(), "domainMessage.getRootId() is required");
+    Assertion.isNotNull(domainMessage.getRootId(), "domainMessage.getUuid() is required");
     Assertion.isNotNull(domainMessage.getRootId(), "domainMessage.getTenantId() is required");
 
     try {

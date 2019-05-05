@@ -21,7 +21,6 @@
 package com.oregor.trinity4j.domain;
 
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -48,5 +47,5 @@ public interface SpringDataTenantRepository<T extends AggregateRoot<I>, I extend
    * @param pageable the pageable
    * @return the page
    */
-  Page<T> findById_TenantId(UUID tenantId, Pageable pageable);
+  Page<T> findByTenantId(TenantId tenantId, Pageable pageable);
 }

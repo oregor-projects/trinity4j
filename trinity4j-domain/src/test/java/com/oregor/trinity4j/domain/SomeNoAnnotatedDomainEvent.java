@@ -21,4 +21,6 @@
 package com.oregor.trinity4j.domain;
 
 /** @author Christos Tsakostas */
-public class SomeNoAnnotatedDomainEvent extends DomainMessage {}
+public class SomeNoAnnotatedDomainEvent extends DomainMessage {
+  private static final long serialVersionUID = 1L;
+}

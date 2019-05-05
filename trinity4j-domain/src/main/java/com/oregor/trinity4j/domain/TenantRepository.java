@@ -20,22 +20,31 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.util.UUID;
-
 /**
  * The interface Tenant repository.
  *
  * @param <R> the type parameter
  * @param <I> the type parameter
  */
-public interface TenantRepository<R extends TenantAggregateRoot<I>, I extends TenantAggregateRootId>
-    extends Storable<R, I>, TenantFindable<R> {
+public interface TenantRepository<R extends TenantAggregateRoot<I>, I extends AggregateRootId>
+    extends IdentityProvider<I>, Storable<R, I> {
 
   /**
-   * Returns a new identity for the current aggregate root, provided a Tenant UUID.
+   * Returns all the aggregate root entities stored in the repository, provided a Tenant UUID.
    *
-   * @param tenantUuid the tenant timeBasedUuid
-   * @return I The new identity.
+   * @param tenantId the tenant id
+   * @return the iterable
    */
-  I nextId(UUID tenantUuid);
+  Iterable<R> findAll(TenantId tenantId);
+
+  /**
+   * Returns pages of all the aggregate root entities stored in the repository, provided a Tenant
+   * UUID.
+   *
+   * @param tenantId the tenant id
+   * @param pageNumber the page number
+   * @param pageSize the page size
+   * @return the paginated
+   */
+  Paginated<R> findPaginated(TenantId tenantId, Integer pageNumber, Integer pageSize);
 }

@@ -21,20 +21,26 @@
 package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-public class AbstractJpaRepository<
+/**
+ * The type Abstract jpa repository.
+ *
+ * @param <T> the type parameter
+ * @param <I> the type parameter
+ * @param <D> the type parameter
+ * @author Christos Tsakostas
+ */
+public abstract class AbstractJpaRepository<
         T extends AggregateRoot<I>, I extends AggregateRootId, D extends DomainMessageData>
-    implements Repository<T, I> {
+    extends AbstractJpaIdentityRepository<I> implements Repository<T, I> {
 
-  /** The Repository. */
-  protected SpringDataRepository<T, I> repository;
+  /** The Spring Data Repository. */
+  protected SpringDataRepository<T, I> springDataRepository;
 
   /** The Domain message data repository. */
   protected SpringDomainMessageDataRepository<D> domainMessageDataRepository;
@@ -42,21 +48,27 @@ public class AbstractJpaRepository<
   /** The Domain message data converter. */
   protected DomainMessageDataConvertible<D> domainMessageDataConverter;
 
-  private Class<I> idClass;
-
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
+  /**
+   * Instantiates a new Abstract jpa repository.
+   *
+   * @param idClass the id class
+   * @param springDataRepository the spring data repository
+   * @param domainMessageDataRepository the domain message data repository
+   * @param domainMessageDataConverter the domain message data converter
+   */
   protected AbstractJpaRepository(
-      SpringDataRepository<T, I> repository,
+      Class<I> idClass,
+      SpringDataRepository<T, I> springDataRepository,
       SpringDomainMessageDataRepository<D> domainMessageDataRepository,
-      DomainMessageDataConvertible<D> domainMessageDataConverter,
-      Class<I> idClass) {
-    this.repository = repository;
+      DomainMessageDataConvertible<D> domainMessageDataConverter) {
+    super(idClass);
+    this.springDataRepository = springDataRepository;
     this.domainMessageDataRepository = domainMessageDataRepository;
     this.domainMessageDataConverter = domainMessageDataConverter;
-    this.idClass = idClass;
   }
 
   // ===============================================================================================
@@ -65,7 +77,7 @@ public class AbstractJpaRepository<
 
   @Override
   public T store(T object) {
-    T storedObject = this.repository.save(object);
+    T storedObject = this.springDataRepository.save(object);
     domainMessageDataRepository.saveAll(
         domainMessageDataConverter.convert(object.getDomainMessages()));
     return storedObject;
@@ -73,7 +85,7 @@ public class AbstractJpaRepository<
 
   @Override
   public Optional<T> restore(I objectId) {
-    return repository.findById(objectId);
+    return springDataRepository.findById(objectId);
   }
 
   @Override
@@ -93,24 +105,11 @@ public class AbstractJpaRepository<
 
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-    Page<T> dataPage = repository.findAll(pageable);
+    Page<T> dataPage = springDataRepository.findAll(pageable);
 
     return new Paginated<>(
         dataPage.getContent().stream().collect(Collectors.toList()),
         dataPage.getTotalPages(),
         dataPage.getTotalElements());
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public I nextId() {
-    try {
-      Constructor<?>[] allConstructors = idClass.getConstructors();
-      Constructor<?> constructor = allConstructors[0];
-      Object[] objects = {UuidGenerator.timeBasedUuid()};
-      return (I) constructor.newInstance(objects);
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException(e.getMessage(), e);
-    }
   }
 }

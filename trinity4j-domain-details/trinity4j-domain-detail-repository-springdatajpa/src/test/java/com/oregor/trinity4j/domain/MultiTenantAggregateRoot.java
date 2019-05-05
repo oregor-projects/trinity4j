@@ -40,10 +40,10 @@ public class MultiTenantAggregateRoot extends TenantAggregateRoot<MultiTenantAgg
    * Instantiates a new Multi tenant aggregate root.
    *
    * @param id the id
+   * @param tenantId the tenant id
    */
-  public MultiTenantAggregateRoot(MultiTenantAggregateRootId id) {
-    super(id);
-
+  public MultiTenantAggregateRoot(MultiTenantAggregateRootId id, TenantId tenantId) {
+    super(id, tenantId);
     registerDomainMessage(new MultiTenantAggregateRootCreated());
   }
 }

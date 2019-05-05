@@ -45,9 +45,9 @@ public class SomeAggregateRootRepositoryImpl
       SomeContextDomainMessageDataRepository domainMessageDataRepository,
       SomeContextDomainMessageDataConverter domainMessageDataConverter) {
     super(
+        SomeAggregateRootId.class,
         repository,
         domainMessageDataRepository,
-        domainMessageDataConverter,
-        SomeAggregateRootId.class);
+        domainMessageDataConverter);
   }
 }

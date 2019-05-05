@@ -34,9 +34,9 @@ public class MultiTenantAggregateRootRepositoryImpl
       SomeContextDomainMessageDataRepository domainMessageDataRepository,
       SomeContextDomainMessageDataConverter domainMessageDataConverter) {
     super(
+        MultiTenantAggregateRootId.class,
         repository,
         domainMessageDataRepository,
-        domainMessageDataConverter,
-        MultiTenantAggregateRootId.class);
+        domainMessageDataConverter);
   }
 }

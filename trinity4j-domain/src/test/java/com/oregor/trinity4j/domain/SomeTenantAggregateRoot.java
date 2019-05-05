@@ -36,8 +36,9 @@ public class SomeTenantAggregateRoot extends TenantAggregateRoot<SomeTenantAggre
    * Instantiates a new Some tenant aggregate root.
    *
    * @param id the id
+   * @param tenantId the tenant id
    */
-  public SomeTenantAggregateRoot(SomeTenantAggregateRootId id) {
-    super(id);
+  public SomeTenantAggregateRoot(SomeTenantAggregateRootId id, TenantId tenantId) {
+    super(id, tenantId);
   }
 }

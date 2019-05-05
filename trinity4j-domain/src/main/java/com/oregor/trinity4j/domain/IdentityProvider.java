@@ -21,25 +21,17 @@
 package com.oregor.trinity4j.domain;
 
 /**
- * The interface Findable.
+ * The interface Identity provider.
  *
- * @param <R> the type parameter
+ * @param <I> the type parameter
+ * @author Christos Tsakostas
  */
-public interface Findable<R> {
+public interface IdentityProvider<I> {
 
   /**
-   * Returns all the aggregate root entities stored in the repository. USE WITH CAUTION!
+   * Returns a new identity.
    *
-   * @return the iterable
+   * @return I The new identity.
    */
-  Iterable<R> findAll();
-
-  /**
-   * Returns pages of all the aggregate root entities stored in the repository.
-   *
-   * @param pageNumber the page number
-   * @param pageSize the page size
-   * @return the paginated
-   */
-  Paginated<R> findPaginated(Integer pageNumber, Integer pageSize);
+  I nextId();
 }

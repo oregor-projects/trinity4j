@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -39,7 +40,9 @@ import java.util.UUID;
  *
  * @author Christos Tsakostas
  */
-public abstract class DomainMessage {
+public abstract class DomainMessage implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private UUID rootId;
   private UUID tenantId;
