@@ -20,54 +20,102 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import com.oregor.trinity4j.commons.assertion.Assertion;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.EmbeddedId;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 /**
- * The type Abstract jpa identity repository.
+ * Base class for Projections.
  *
  * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class AbstractJpaIdentityRepository<I extends AbstractUuid> {
+@Access(AccessType.FIELD)
+@MappedSuperclass
+public abstract class Projection<I extends ProjectionId> {
 
   // ===============================================================================================
   // STATE
   // ===============================================================================================
 
-  private Class<I> idClass;
+  private I id;
+
+  @Version private Integer version;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
   /**
-   * Instantiates a new Abstract jpa identity repository.
+   * Instantiates a new Projection.
    *
-   * @param idClass the id class
+   * <p>No args constructor for ORM Frameworks.
    */
-  protected AbstractJpaIdentityRepository(Class<I> idClass) {
-    this.idClass = idClass;
+  protected Projection() {
+    super();
+  }
+
+  /**
+   * Instantiates a new Projection.
+   *
+   * @param id the id
+   */
+  protected Projection(I id) {
+    setId(id);
   }
 
   // ===============================================================================================
-  // OVERRIDES
+  // GETTERS
   // ===============================================================================================
 
   /**
-   * Next id.
+   * Gets id.
    *
-   * @return the
+   * @return the id
    */
-  @SuppressWarnings("unchecked")
-  public I nextId() {
-    try {
-      Constructor<?>[] allConstructors = idClass.getConstructors();
-      Constructor<?> constructor = allConstructors[0];
-      Object[] objects = {UuidGenerator.timeBasedUuid()};
-      return (I) constructor.newInstance(objects);
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException(e.getMessage(), e);
-    }
+  @Access(AccessType.PROPERTY)
+  @EmbeddedId
+  public I getId() {
+    return id;
+  }
+
+  /**
+   * Gets version.
+   *
+   * @return the version
+   */
+  public Integer getVersion() {
+    return version;
+  }
+
+  // ===============================================================================================
+  // SETTERS
+  // ===============================================================================================
+
+  /**
+   * Sets version.
+   *
+   * @param version the version
+   */
+  public void setVersion(Integer version) {
+    Assertion.isNotNull(version, "version cannot be null");
+    this.version = version;
+  }
+
+  // ===============================================================================================
+  // GUARDS
+  // ===============================================================================================
+
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
+  private void setId(I id) {
+    Assertion.isNotNull(id, "id cannot be null");
+    this.id = id;
   }
 }
