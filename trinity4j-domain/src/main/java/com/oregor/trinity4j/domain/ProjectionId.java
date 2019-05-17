@@ -20,54 +20,48 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.UUID;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 /**
- * The type Abstract jpa identity repository.
+ * The type Projection id.
  *
- * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class AbstractJpaIdentityRepository<I extends AbstractUuid> {
+@MappedSuperclass
+public abstract class ProjectionId extends AbstractUuid {
 
-  // ===============================================================================================
-  // STATE
-  // ===============================================================================================
-
-  private Class<I> idClass;
+  private static final long serialVersionUID = 1L;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
+  /** Instantiates a new Projection id. */
+  protected ProjectionId() {
+    super();
+  }
+
   /**
-   * Instantiates a new Abstract jpa identity repository.
+   * Instantiates a new Projection id.
    *
-   * @param idClass the id class
+   * @param uuid the uuid
    */
-  protected AbstractJpaIdentityRepository(Class<I> idClass) {
-    this.idClass = idClass;
+  protected ProjectionId(UUID uuid) {
+    super(uuid);
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
-  /**
-   * Next id.
-   *
-   * @return the
-   */
-  @SuppressWarnings("unchecked")
-  public I nextId() {
-    try {
-      Constructor<?>[] allConstructors = idClass.getConstructors();
-      Constructor<?> constructor = allConstructors[0];
-      Object[] objects = {UuidGenerator.timeBasedUuid()};
-      return (I) constructor.newInstance(objects);
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new IllegalStateException(e.getMessage(), e);
-    }
+  @Access(AccessType.PROPERTY)
+  @Column(name = "projection_id")
+  @Override
+  public UUID getUuid() {
+    return super.getUuid();
   }
 }

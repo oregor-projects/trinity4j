@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /** @author Christos Tsakostas */
-public class SomeAggregateRootPersistencemplTest extends JpaTest {
+public class SomeAggregateRootRepositoryImplTest extends JpaTest {
 
   @Autowired private SomeAggregateRootRepository someAggregateRootRepository;
 
