@@ -120,7 +120,7 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
             ? domainMessage.getClass().getSimpleName()
             : domainEventInfo.name());
 
-    domainMessage.setRootId(getId().getUuid());
+    domainMessage.setRootId(getId().getTypeId());
   }
 
   // ===============================================================================================

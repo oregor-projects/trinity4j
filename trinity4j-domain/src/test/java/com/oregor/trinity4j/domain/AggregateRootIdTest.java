@@ -40,8 +40,8 @@ public class AggregateRootIdTest extends AbstractEqualityTest<AggregateRootId> {
     AggregateRootId aggregateRootId = createObject1();
 
     assertThat(aggregateRootId).isNotNull();
-    assertThat(aggregateRootId.getUuid()).isNotNull();
-    assertThat(aggregateRootId.getUuid()).isEqualTo(uuid1);
+    assertThat(aggregateRootId.getTypeId()).isNotNull();
+    assertThat(aggregateRootId.getTypeId()).isEqualTo(uuid1);
   }
 
   @Test
@@ -49,7 +49,7 @@ public class AggregateRootIdTest extends AbstractEqualityTest<AggregateRootId> {
     AggregateRootId aggregateRootId = new SomeAggregateRootId();
 
     assertThat(aggregateRootId).isNotNull();
-    assertThat(aggregateRootId.getUuid()).isNull();
+    assertThat(aggregateRootId.getTypeId()).isNull();
   }
 
   @Override

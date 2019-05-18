@@ -82,6 +82,6 @@ public class MultiTenantAggregateRootRepositoryImplTest extends JpaTest {
         multiTenantAggregateRootRepository.nextId();
 
     assertThat(multiTenantAggregateRootId).isNotNull();
-    assertThat(multiTenantAggregateRootId.getUuid()).isNotNull();
+    assertThat(multiTenantAggregateRootId.getTypeId()).isNotNull();
   }
 }

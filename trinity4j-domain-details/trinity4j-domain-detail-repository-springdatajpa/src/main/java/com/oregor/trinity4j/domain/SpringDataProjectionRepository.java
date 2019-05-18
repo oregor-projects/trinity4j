@@ -33,7 +33,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Christos Tsakostas
  */
 @NoRepositoryBean
-public interface ProjectionSpringDataRepository<T extends Projection<I>, I extends ProjectionId>
+public interface SpringDataProjectionRepository<T extends Projection<I>, I extends ProjectionId>
     extends PagingAndSortingRepository<T, I>, QuerydslPredicateExecutor<T> {
 
   Optional<T> findById(I id);

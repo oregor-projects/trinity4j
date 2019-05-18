@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateRootId extends AbstractUuid {
+public abstract class AggregateRootId extends AbstractId<UUID> {
 
   private static final long serialVersionUID = 1L;
 
@@ -45,13 +45,8 @@ public abstract class AggregateRootId extends AbstractUuid {
     super();
   }
 
-  /**
-   * Instantiates a new Aggregate root id.
-   *
-   * @param uuid the uuid
-   */
-  protected AggregateRootId(UUID uuid) {
-    super(uuid);
+  protected AggregateRootId(UUID typeId) {
+    super(typeId);
   }
 
   // ===============================================================================================
@@ -61,7 +56,7 @@ public abstract class AggregateRootId extends AbstractUuid {
   @Access(AccessType.PROPERTY)
   @Column(name = "root_id")
   @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  public UUID getTypeId() {
+    return super.getTypeId();
   }
 }

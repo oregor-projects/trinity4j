@@ -23,16 +23,16 @@ package com.oregor.trinity4j.domain;
 import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.MappedSuperclass;
 
 /**
- * The type Abstract uuid.
+ * The type Abstract id.
  *
+ * @param <U> the type parameter
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AbstractUuid implements Serializable {
+public abstract class AbstractId<U extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -40,24 +40,25 @@ public abstract class AbstractUuid implements Serializable {
   // STATE
   // ===============================================================================================
 
-  private UUID uuid;
+  /** The type Id will usually be a UUID, Long or String. */
+  private U typeId;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Abstract uuid. */
-  protected AbstractUuid() {
+  /** Instantiates a new Abstract id. */
+  protected AbstractId() {
     super();
   }
 
   /**
-   * Instantiates a new Abstract uuid.
+   * Instantiates a new Abstract id.
    *
-   * @param uuid the uuid
+   * @param typeId the type id
    */
-  protected AbstractUuid(UUID uuid) {
-    setUuid(uuid);
+  public AbstractId(U typeId) {
+    setTypeId(typeId);
   }
 
   // ===============================================================================================
@@ -65,12 +66,12 @@ public abstract class AbstractUuid implements Serializable {
   // ===============================================================================================
 
   /**
-   * Gets uuid.
+   * Gets type id.
    *
-   * @return the uuid
+   * @return the type id
    */
-  public UUID getUuid() {
-    return uuid;
+  public U getTypeId() {
+    return typeId;
   }
 
   // ===============================================================================================
@@ -78,13 +79,13 @@ public abstract class AbstractUuid implements Serializable {
   // ===============================================================================================
 
   /**
-   * Sets uuid.
+   * Sets type id.
    *
-   * @param uuid the uuid
+   * @param typeId the type id
    */
-  public void setUuid(UUID uuid) {
-    Assertion.isNotNull(uuid, "the uuid is required");
-    this.uuid = uuid;
+  private void setTypeId(U typeId) {
+    Assertion.isNotNull(typeId, "typeId is required");
+    this.typeId = typeId;
   }
 
   // ===============================================================================================
@@ -99,12 +100,12 @@ public abstract class AbstractUuid implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AbstractUuid that = (AbstractUuid) o;
-    return Objects.equals(uuid, that.uuid);
+    AbstractId<?> that = (AbstractId<?>) o;
+    return Objects.equals(typeId, that.typeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid);
+    return Objects.hash(typeId);
   }
 }

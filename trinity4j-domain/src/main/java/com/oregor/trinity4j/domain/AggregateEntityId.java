@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateEntityId extends AbstractUuid {
+public abstract class AggregateEntityId extends AbstractId<UUID> {
 
   private static final long serialVersionUID = 1L;
 
@@ -61,7 +61,7 @@ public abstract class AggregateEntityId extends AbstractUuid {
   @Access(AccessType.PROPERTY)
   @Column(name = "entity_id")
   @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  public UUID getTypeId() {
+    return super.getTypeId();
   }
 }

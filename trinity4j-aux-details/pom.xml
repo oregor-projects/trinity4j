@@ -12,7 +12,9 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>trinity4j-aux-detail-aop-spring</module>
     <module>trinity4j-aux-detail-publisher-activemq</module>
+    <module>trinity4j-aux-detail-scheduler-spring</module>
   </modules>
 
 </project>

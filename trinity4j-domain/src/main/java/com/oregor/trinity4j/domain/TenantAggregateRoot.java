@@ -78,7 +78,7 @@ public abstract class TenantAggregateRoot<I extends AggregateRootId> extends Agg
   @Override
   protected <D extends DomainMessage> void fillDomainMessageProperties(D domainMessage) {
     super.fillDomainMessageProperties(domainMessage);
-    domainMessage.setTenantId(getTenantId().getUuid());
+    domainMessage.setTenantId(getTenantId().getTypeId());
   }
 
   // ===============================================================================================

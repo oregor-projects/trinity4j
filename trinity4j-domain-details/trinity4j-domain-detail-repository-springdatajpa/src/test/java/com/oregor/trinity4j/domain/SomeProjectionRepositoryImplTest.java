@@ -54,7 +54,7 @@ public class SomeProjectionRepositoryImplTest extends JpaTest {
     SomeProjectionId someProjectionId = someProjectionRepository.nextId();
 
     assertThat(someProjectionId).isNotNull();
-    assertThat(someProjectionId.getUuid()).isNotNull();
-    assertThat(UUID.fromString(someProjectionId.getUuid().toString())).isNotNull();
+    assertThat(someProjectionId.getTypeId()).isNotNull();
+    assertThat(UUID.fromString(someProjectionId.getTypeId().toString())).isNotNull();
   }
 }
