@@ -22,6 +22,7 @@ package com.oregor.trinity4j.domain;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.UUID;
 
 /**
  * The type Abstract jpa identity repository.
@@ -29,7 +30,7 @@ import java.lang.reflect.InvocationTargetException;
  * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class AbstractJpaIdentityRepository<I extends AbstractUuid> {
+public abstract class AbstractJpaIdentityRepository<I extends AbstractId<UUID>> {
 
   // ===============================================================================================
   // STATE

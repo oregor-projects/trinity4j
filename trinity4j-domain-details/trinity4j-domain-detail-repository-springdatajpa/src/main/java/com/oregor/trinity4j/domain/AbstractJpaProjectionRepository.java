@@ -38,7 +38,7 @@ public abstract class AbstractJpaProjectionRepository<
     extends AbstractJpaIdentityRepository<I> implements ProjectionRepository<O, I> {
 
   /** The Spring Data Repository. */
-  protected ProjectionSpringDataRepository<O, I> springDataRepository;
+  protected SpringDataProjectionRepository<O, I> springDataRepository;
 
   /**
    * Instantiates a new Abstract jpa projection repository.
@@ -47,15 +47,14 @@ public abstract class AbstractJpaProjectionRepository<
    * @param springDataRepository the spring data repository
    */
   public AbstractJpaProjectionRepository(
-      Class<I> idClass, ProjectionSpringDataRepository<O, I> springDataRepository) {
+      Class<I> idClass, SpringDataProjectionRepository<O, I> springDataRepository) {
     super(idClass);
     this.springDataRepository = springDataRepository;
   }
 
   @Override
   public O store(O object) {
-    O storedObject = this.springDataRepository.save(object);
-    return storedObject;
+    return this.springDataRepository.save(object);
   }
 
   @Override

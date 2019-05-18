@@ -23,18 +23,18 @@ package com.oregor.trinity4j.domain;
 import java.util.UUID;
 
 /** @author Christos Tsakostas */
-public class ProjectionIdTest extends AbstractEqualityTest<ProjectionId> {
+public class ProjectionIdTest extends AbstractEqualityTest<SomeProjectionId> {
 
   private static UUID uuid1 = UuidGenerator.timeBasedUuid();
   private static UUID uuid2 = UuidGenerator.timeBasedUuid();
 
   @Override
-  public ProjectionId createObject1() {
+  public SomeProjectionId createObject1() {
     return new SomeProjectionId(uuid1);
   }
 
   @Override
-  public ProjectionId createObject2() {
+  public SomeProjectionId createObject2() {
     return new SomeProjectionId(uuid2);
   }
 }

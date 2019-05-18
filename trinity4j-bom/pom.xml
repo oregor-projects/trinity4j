@@ -10,7 +10,6 @@
   <groupId>com.oregor.trinity4j</groupId>
   <artifactId>trinity4j-bom</artifactId>
 
-
   <dependencies>
     <!--API-->
     <dependency>
@@ -31,18 +30,18 @@
       <groupId>com.oregor.trinity4j</groupId>
       <artifactId>trinity4j-aux</artifactId>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>-->
-      <!--<artifactId>trinity4j-aux-detail-aspect-spring</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
+      <artifactId>trinity4j-aux-detail-aop-spring</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
       <artifactId>trinity4j-aux-detail-publisher-activemq</artifactId>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>-->
-      <!--<artifactId>trinity4j-aux-detail-scheduler-spring</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
+      <artifactId>trinity4j-aux-detail-scheduler-spring</artifactId>
+    </dependency>
 
     <!--DOMAIN-->
     <dependency>
@@ -51,12 +50,16 @@
     </dependency>
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
+      <artifactId>trinity4j-domain-detail-repository-inmemory</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
       <artifactId>trinity4j-domain-detail-repository-springdatajpa</artifactId>
     </dependency>
-    <!--<dependency>-->
-      <!--<groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>-->
-      <!--<artifactId>trinity4j-domain-detail-repository-inmemory</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
+      <artifactId>trinity4j-domain-detail-services</artifactId>
+    </dependency>
 
     <!--COMMONS-->
     <dependency>

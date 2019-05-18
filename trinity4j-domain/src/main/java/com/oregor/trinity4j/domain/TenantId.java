@@ -32,7 +32,7 @@ import javax.persistence.Embeddable;
  * @author Christos Tsakostas
  */
 @Embeddable
-public class TenantId extends AbstractUuid {
+public class TenantId extends AbstractId<UUID> {
 
   private static final long serialVersionUID = 1L;
 
@@ -48,10 +48,10 @@ public class TenantId extends AbstractUuid {
   /**
    * Instantiates a new Tenant id.
    *
-   * @param uuid the uuid
+   * @param typeId the type id
    */
-  public TenantId(UUID uuid) {
-    super(uuid);
+  public TenantId(UUID typeId) {
+    super(typeId);
   }
 
   // ===============================================================================================
@@ -61,7 +61,7 @@ public class TenantId extends AbstractUuid {
   @Access(AccessType.PROPERTY)
   @Column(name = "tenant_id")
   @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  public UUID getTypeId() {
+    return super.getTypeId();
   }
 }

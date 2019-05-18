@@ -160,7 +160,7 @@
       </dependency>
       <dependency>
         <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
-        <artifactId>trinity4j-aux-detail-aspect-spring</artifactId>
+        <artifactId>trinity4j-aux-detail-aop-spring</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -188,6 +188,11 @@
       <dependency>
         <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
         <artifactId>trinity4j-domain-detail-repository-inmemory</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
+        <artifactId>trinity4j-domain-detail-services</artifactId>
         <version>${project.version}</version>
       </dependency>
 

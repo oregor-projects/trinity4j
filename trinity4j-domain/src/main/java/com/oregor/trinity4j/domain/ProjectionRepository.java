@@ -23,19 +23,20 @@ package com.oregor.trinity4j.domain;
 /**
  * Contract for projection repositories.
  *
- * @param <R> the type parameter
+ * @param <O> the type parameter
  * @param <I> the type parameter of the projection Id
+ * @param <U> the type parameter
  * @author Christos Tsakostas
  */
-public interface ProjectionRepository<R extends Projection<I>, I extends ProjectionId>
-    extends IdentityProvider<I>, Storable<R, I> {
+public interface ProjectionRepository<O extends Projection<I>, I extends ProjectionId>
+    extends IdentityProvider<I>, Storable<O, I> {
 
   /**
    * Returns all the aggregate root entities stored in the repository.
    *
    * @return the iterable
    */
-  Iterable<R> findAll();
+  Iterable<O> findAll();
 
   /**
    * Returns pages of all the aggregate root entities stored in the repository.
@@ -44,5 +45,5 @@ public interface ProjectionRepository<R extends Projection<I>, I extends Project
    * @param pageSize the page size
    * @return the paginated
    */
-  Paginated<R> findPaginated(Integer pageNumber, Integer pageSize);
+  Paginated<O> findPaginated(Integer pageNumber, Integer pageSize);
 }

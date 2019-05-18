@@ -59,7 +59,6 @@ public class ApiPagedCollectionResponseTest {
     assertThat(someApiPagedCollectionResponse.getTotalPages()).isEqualTo(10);
     assertThat(someApiPagedCollectionResponse.getPageNumber()).isEqualTo(1);
     assertThat(someApiPagedCollectionResponse.getPageSize()).isEqualTo(5);
-    assertThat(someApiPagedCollectionResponse.getNumber()).isEqualTo(1);
   }
 
   @Test

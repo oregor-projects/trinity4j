@@ -37,7 +37,7 @@ public class SomeProjectionRepositoryImpl
    *
    * @param springDataRepository the spring data repository
    */
-  public SomeProjectionRepositoryImpl(SomeProjectionSpringDataRepository springDataRepository) {
+  public SomeProjectionRepositoryImpl(SomeSpringDataProjectionRepository springDataRepository) {
     super(SomeProjectionId.class, springDataRepository);
   }
 }

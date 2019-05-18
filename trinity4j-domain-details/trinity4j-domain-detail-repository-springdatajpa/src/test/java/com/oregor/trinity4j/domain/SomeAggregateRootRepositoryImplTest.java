@@ -60,23 +60,7 @@ public class SomeAggregateRootRepositoryImplTest extends JpaTest {
     SomeAggregateRootId someAggregateRootId = someAggregateRootRepository.nextId();
 
     assertThat(someAggregateRootId).isNotNull();
-    assertThat(someAggregateRootId.getUuid()).isNotNull();
-    assertThat(UUID.fromString(someAggregateRootId.getUuid().toString())).isNotNull();
+    assertThat(someAggregateRootId.getTypeId()).isNotNull();
+    assertThat(UUID.fromString(someAggregateRootId.getTypeId().toString())).isNotNull();
   }
-
-  //  @Test
-  //  public void remove() {
-  //  }
-  //
-  //  @Test
-  //  public void findAll() {
-  //  }
-  //
-  //  @Test
-  //  public void findPaginated() {
-  //  }
-  //
-  //  @Test
-  //  public void getTypeParameterClass() {
-  //  }
 }

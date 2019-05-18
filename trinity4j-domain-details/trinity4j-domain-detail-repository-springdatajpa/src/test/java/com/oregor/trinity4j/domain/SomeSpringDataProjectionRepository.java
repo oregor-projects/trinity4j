@@ -21,5 +21,5 @@
 package com.oregor.trinity4j.domain;
 
 /** @author Christos Tsakostas */
-public interface SomeProjectionSpringDataRepository
-    extends ProjectionSpringDataRepository<SomeProjection, SomeProjectionId> {}
+public interface SomeSpringDataProjectionRepository
+    extends SpringDataProjectionRepository<SomeProjection, SomeProjectionId> {}

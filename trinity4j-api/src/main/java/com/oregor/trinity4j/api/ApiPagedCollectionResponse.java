@@ -34,8 +34,6 @@ public abstract class ApiPagedCollectionResponse<T> extends ApiCollectionRespons
   private Long totalElements;
   private Integer pageNumber;
   private Integer pageSize;
-  // TODO: The following is for Spring compatibility in PolyGenesis - check how it can be avoided.
-  private Integer number;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -62,7 +60,6 @@ public abstract class ApiPagedCollectionResponse<T> extends ApiCollectionRespons
     setTotalElements(totalElements);
     setPageNumber(pageNumber);
     setPageSize(pageSize);
-    setNumber(pageNumber);
   }
 
   // ===============================================================================================
@@ -105,15 +102,6 @@ public abstract class ApiPagedCollectionResponse<T> extends ApiCollectionRespons
     return pageSize;
   }
 
-  /**
-   * Gets number.
-   *
-   * @return the number
-   */
-  public Integer getNumber() {
-    return number;
-  }
-
   // ===============================================================================================
   // SETTERS
   // ===============================================================================================
@@ -152,14 +140,5 @@ public abstract class ApiPagedCollectionResponse<T> extends ApiCollectionRespons
    */
   public void setPageSize(Integer pageSize) {
     this.pageSize = pageSize;
-  }
-
-  /**
-   * Sets number.
-   *
-   * @param number the number
-   */
-  public void setNumber(Integer number) {
-    this.number = number;
   }
 }

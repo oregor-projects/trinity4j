@@ -41,9 +41,9 @@ public class SomeProjectionId extends ProjectionId {
   /**
    * Instantiates a new Some projection id.
    *
-   * @param uuid the uuid
+   * @param id the id
    */
-  public SomeProjectionId(UUID uuid) {
-    super(uuid);
+  public SomeProjectionId(UUID id) {
+    super(id);
   }
 }

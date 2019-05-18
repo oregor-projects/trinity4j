@@ -39,8 +39,8 @@ public class TenantIdTest extends AbstractEqualityTest<TenantId> {
     TenantId tenantId = createObject1();
 
     assertThat(tenantId).isNotNull();
-    assertThat(tenantId.getUuid()).isNotNull();
-    assertThat(tenantId.getUuid()).isEqualTo(uuid1);
+    assertThat(tenantId.getTypeId()).isNotNull();
+    assertThat(tenantId.getTypeId()).isEqualTo(uuid1);
   }
 
   @Test

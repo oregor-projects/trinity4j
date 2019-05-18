@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class ProjectionId extends AbstractUuid {
+public abstract class ProjectionId extends AbstractId<UUID> {
 
   private static final long serialVersionUID = 1L;
 
@@ -48,10 +48,10 @@ public abstract class ProjectionId extends AbstractUuid {
   /**
    * Instantiates a new Projection id.
    *
-   * @param uuid the uuid
+   * @param typeId the type id
    */
-  protected ProjectionId(UUID uuid) {
-    super(uuid);
+  public ProjectionId(UUID typeId) {
+    super(typeId);
   }
 
   // ===============================================================================================
@@ -61,7 +61,7 @@ public abstract class ProjectionId extends AbstractUuid {
   @Access(AccessType.PROPERTY)
   @Column(name = "projection_id")
   @Override
-  public UUID getUuid() {
-    return super.getUuid();
+  public UUID getTypeId() {
+    return super.getTypeId();
   }
 }
