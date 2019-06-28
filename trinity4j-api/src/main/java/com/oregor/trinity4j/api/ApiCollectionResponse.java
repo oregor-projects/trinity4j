@@ -28,7 +28,8 @@ import java.util.List;
  * @param <T> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class ApiCollectionResponse<T> extends ApiResponse {
+public abstract class ApiCollectionResponse<T extends CollectionItemIdentifiable>
+    extends ApiResponse {
 
   private List<T> items;
 

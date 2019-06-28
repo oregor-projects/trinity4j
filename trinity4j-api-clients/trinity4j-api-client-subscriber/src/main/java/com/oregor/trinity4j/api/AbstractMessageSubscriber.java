@@ -18,99 +18,78 @@
  * ===========================LICENSE_END==================================
  */
 
-package com.oregor.trinity4j.domain;
+package com.oregor.trinity4j.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oregor.trinity4j.commons.assertion.Assertion;
-import javax.persistence.EmbeddedId;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 /**
- * Base class for Aggregate Entities.
+ * The type Abstract message subscriber.
  *
- * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-@MappedSuperclass
-public abstract class AggregateEntity<I extends AggregateEntityId> implements Identifiable<I> {
+public abstract class AbstractMessageSubscriber implements MessageSubscriber {
 
   // ===============================================================================================
   // STATE / DEPENDENCIES
   // ===============================================================================================
 
-  @EmbeddedId private I id;
-
-  @Version private Integer version;
+  /** The Object mapper. */
+  protected final ObjectMapper objectMapper;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
   /**
-   * Instantiates a new Aggregate entity.
+   * Instantiates a new Abstract message subscriber.
    *
-   * <p>No args constructor for ORM frameworks.
+   * @param objectMapper the object mapper
    */
-  protected AggregateEntity() {
-    super();
-  }
-
-  /**
-   * Instantiates a new Aggregate entity.
-   *
-   * @param id the id
-   */
-  protected AggregateEntity(I id) {
-    setId(id);
+  protected AbstractMessageSubscriber(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
   }
 
   // ===============================================================================================
-  // GETTERS
+  // FUNCTIONALITY
   // ===============================================================================================
 
   /**
-   * Gets version.
+   * Transforms a JsonNode into a UUID.
    *
-   * @return the version
+   * @param jsonNode the json node
+   * @return the uuid
+   * @throws IllegalArgumentException if the node does not contain a valid UUID.
    */
-  public Integer getVersion() {
-    return version;
+  protected UUID asUuid(JsonNode jsonNode) {
+    Assertion.isNotNull(jsonNode, "jsonNode is required");
+    return UUID.fromString(jsonNode.asText());
   }
-
-  // ===============================================================================================
-  // SETTERS
-  // ===============================================================================================
 
   /**
-   * Sets version.
+   * Transforms a JsonNode into a LocalDate.
    *
-   * @param version the version
+   * @param jsonNode the json node
+   * @return the local date
    */
-  public void setVersion(Integer version) {
-    Assertion.isNotNull(version, "version cannot be null");
-    this.version = version;
+  protected LocalDate asLocalDate(JsonNode jsonNode) {
+    Assertion.isNotNull(jsonNode, "jsonNode is required");
+    return LocalDate.parse(jsonNode.asText(), DateTimeFormatter.ISO_DATE);
   }
-
-  // ===============================================================================================
-  // GUARDS
-  // ===============================================================================================
 
   /**
-   * Sets id.
+   * Transforms a JsonNode into a LocalDateTime.
    *
-   * @param id the id
+   * @param jsonNode the json node
+   * @return the local date time
    */
-  private void setId(I id) {
-    Assertion.isNotNull(id, "id cannot be null");
-    this.id = id;
-  }
-
-  // ===============================================================================================
-  // OVERRIDES
-  // ===============================================================================================
-
-  @Override
-  public I getId() {
-    return id;
+  protected LocalDateTime asLocalDateTime(JsonNode jsonNode) {
+    Assertion.isNotNull(jsonNode, "jsonNode is required");
+    return LocalDateTime.parse(jsonNode.asText(), DateTimeFormatter.ISO_DATE_TIME);
   }
 }

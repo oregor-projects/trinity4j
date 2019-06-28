@@ -29,7 +29,13 @@ import org.junit.Test;
 /** @author Christos Tsakostas */
 public class ApiCollectionResponseTest {
 
-  private class SomeCollectionDto {}
+  private class SomeCollectionDto implements CollectionItemIdentifiable {
+
+    @Override
+    public String getId() {
+      return null;
+    }
+  }
 
   private class SomeApiCollectionResponse extends ApiCollectionResponse<SomeCollectionDto> {
 
