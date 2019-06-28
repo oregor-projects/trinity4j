@@ -12,8 +12,10 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>trinity4j-api-client-periodic-process</module>
     <module>trinity4j-api-client-rest-spring</module>
     <module>trinity4j-api-client-subscriber-activemq</module>
+    <module>trinity4j-api-client-subscriber</module>
   </modules>
 
 </project>

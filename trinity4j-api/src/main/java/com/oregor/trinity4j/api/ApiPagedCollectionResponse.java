@@ -28,7 +28,8 @@ import java.util.List;
  * @param <T> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class ApiPagedCollectionResponse<T> extends ApiCollectionResponse<T> {
+public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentifiable>
+    extends ApiCollectionResponse<T> {
 
   private Integer totalPages;
   private Long totalElements;
