@@ -20,29 +20,5 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.util.List;
-
-/**
- * The interface Domain message data convertible.
- *
- * @param <D> the type parameter
- * @author Christos Tsakostas
- */
-public interface DomainMessageDataConvertible<D extends DomainMessageData> {
-
-  /**
-   * Converts a DomainMessage to DomainMessageData.
-   *
-   * @param domainMessage the domain message
-   * @return the d
-   */
-  D convert(DomainMessage domainMessage);
-
-  /**
-   * Converts a list of DomainMessages to an Iterable of DomainMessageData.
-   *
-   * @param domainMessages the domain messages
-   * @return the iterable
-   */
-  Iterable<D> convert(List<DomainMessage> domainMessages);
-}
+/** @author Christos Tsakostas */
+public interface TestDomainMessageData extends DomainMessageData {}

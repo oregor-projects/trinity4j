@@ -37,29 +37,29 @@ public abstract class AbstractJpaProjectionRepository<
         O extends Projection<I>, I extends ProjectionId>
     extends AbstractJpaIdentityRepository<I> implements ProjectionRepository<O, I> {
 
-  /** The Spring Data Repository. */
-  protected SpringDataProjectionRepository<O, I> springDataRepository;
+  /** The Spring data projection repository. */
+  protected SpringDataProjectionRepository<O, I> springDataProjectionRepository;
 
   /**
    * Instantiates a new Abstract jpa projection repository.
    *
    * @param idClass the id class
-   * @param springDataRepository the spring data repository
+   * @param springDataProjectionRepository the spring data repository
    */
   public AbstractJpaProjectionRepository(
-      Class<I> idClass, SpringDataProjectionRepository<O, I> springDataRepository) {
+      Class<I> idClass, SpringDataProjectionRepository<O, I> springDataProjectionRepository) {
     super(idClass);
-    this.springDataRepository = springDataRepository;
+    this.springDataProjectionRepository = springDataProjectionRepository;
   }
 
   @Override
   public O store(O object) {
-    return this.springDataRepository.save(object);
+    return this.springDataProjectionRepository.save(object);
   }
 
   @Override
   public Optional<O> restore(I objectId) {
-    return springDataRepository.findById(objectId);
+    return springDataProjectionRepository.findById(objectId);
   }
 
   @Override
@@ -76,7 +76,7 @@ public abstract class AbstractJpaProjectionRepository<
   public Paginated<O> findPaginated(Integer pageNumber, Integer pageSize) {
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-    Page<O> dataPage = springDataRepository.findAll(pageable);
+    Page<O> dataPage = springDataProjectionRepository.findAll(pageable);
 
     return new Paginated<>(
         dataPage.getContent().stream().collect(Collectors.toList()),

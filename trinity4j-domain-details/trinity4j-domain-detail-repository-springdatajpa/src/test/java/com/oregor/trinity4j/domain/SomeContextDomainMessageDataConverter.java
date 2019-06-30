@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SomeContextDomainMessageDataConverter
-    extends DomainMessageDataConverter<SomeContextDomainMessageData> {
+    extends AbstractDomainMessageDataConverter<SomeContextDomainMessageData> {
 
   /**
    * Instantiates a new Context domain message data converter.

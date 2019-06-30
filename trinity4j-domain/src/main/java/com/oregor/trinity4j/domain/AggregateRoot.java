@@ -104,24 +104,42 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
   }
 
   protected <D extends DomainMessage> void fillDomainMessageProperties(D domainMessage) {
-    DomainMessageInfo domainEventInfo =
+    DomainMessageInfo domainMessageInfo =
         AnnotationUtils.findAnnotation(domainMessage.getClass(), DomainMessageInfo.class);
 
-    if (domainEventInfo == null) {
-      throw new IllegalStateException(
-          String.format(
-              "Domain Message=%s is not annotated with @DomainMessageInfo",
-              domainMessage.getClass().getCanonicalName()));
-    }
+    if (domainMessageInfo != null) {
+      domainMessage.setMessageVersion(domainMessageInfo.version());
+      domainMessage.setMessageName(
+          domainMessageInfo.name().equals("")
+              ? domainMessage.getClass().getSimpleName()
+              : domainMessageInfo.name());
+      domainMessage.setMessageType(domainMessageInfo.type());
+    } else {
+      DomainEventInfo domainEventInfo =
+          AnnotationUtils.findAnnotation(domainMessage.getClass(), DomainEventInfo.class);
 
-    domainMessage.setMessageVersion(domainEventInfo.version());
-    domainMessage.setMessageName(
-        domainEventInfo.name().equals("")
-            ? domainMessage.getClass().getSimpleName()
-            : domainEventInfo.name());
+      if (domainEventInfo != null) {
+        domainMessage.setMessageVersion(domainEventInfo.version());
+        domainMessage.setMessageName(
+            domainEventInfo.name().equals("")
+                ? domainMessage.getClass().getSimpleName()
+                : domainEventInfo.name());
+        domainMessage.setMessageType(DomainMessageType.EVENT);
+      } else {
+        throw new IllegalStateException(
+            String.format(
+                "Domain Message=%s is not annotated with with neither"
+                    + " @DomainMessageInfo or @DomainEventInfo",
+                domainMessage.getClass().getCanonicalName()));
+      }
+    }
 
     domainMessage.setRootId(getId().getTypeId());
   }
+
+  // ===============================================================================================
+  // PRIVATE
+  // ===============================================================================================
 
   // ===============================================================================================
   // GETTERS

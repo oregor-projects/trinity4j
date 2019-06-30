@@ -57,21 +57,21 @@ public class DomainMessageDataConverterTest {
     someDomainEvent.setTenantId(tenantUuid);
     someDomainEvent.setMessageName("someName");
     someDomainEvent.setMessageVersion(1);
+    someDomainEvent.setMessageType(DomainMessageType.EVENT);
 
     SomeDomainMessageData someDomainMessageData =
         someDomainMessageDataConverter.convert(someDomainEvent);
 
     assertThat(someDomainMessageData).isNotNull();
-    assertThat(someDomainMessageData.getId()).isNotNull();
-    assertThat(someDomainMessageData.getRootId()).isNotNull();
-    assertThat(someDomainMessageData.getTenantId()).isNotNull();
-    assertThat(someDomainMessageData.getStreamVersion()).isNotNull();
-    assertThat(someDomainMessageData.getMessageName()).isNotNull();
-    assertThat(someDomainMessageData.getMessageVersion()).isNotNull();
-    assertThat(someDomainMessageData.getMessage()).isNotNull();
-    assertThat(someDomainMessageData.getPrincipal()).isNotNull();
-    assertThat(someDomainMessageData.getIpAddress()).isNotNull();
+    assertThat(someDomainMessageData.getMessageId()).isNotNull();
     assertThat(someDomainMessageData.getOccurredOn()).isNotNull();
+    assertThat(someDomainMessageData.getRootId()).isNotNull();
+    assertThat(someDomainMessageData.getRootVersion()).isNotNull();
+    assertThat(someDomainMessageData.getMessageType()).isNotNull();
+    assertThat(someDomainMessageData.getMessageName()).isNotNull();
+    assertThat(someDomainMessageData.getMessageBody()).isNotNull();
+    assertThat(someDomainMessageData.getUserId()).isNotNull();
+    assertThat(someDomainMessageData.getIpAddress()).isNotNull();
   }
 
   @Test

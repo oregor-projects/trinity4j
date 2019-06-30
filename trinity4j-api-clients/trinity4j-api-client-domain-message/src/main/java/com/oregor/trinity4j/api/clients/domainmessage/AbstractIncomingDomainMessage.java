@@ -18,78 +18,78 @@
  * ===========================LICENSE_END==================================
  */
 
-package com.oregor.trinity4j.api;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oregor.trinity4j.commons.assertion.Assertion;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+package com.oregor.trinity4j.api.clients.domainmessage;
 
 /**
- * The type Abstract message subscriber.
+ * The type Abstract incoming domain message.
  *
  * @author Christos Tsakostas
  */
-public abstract class AbstractMessageSubscriber implements MessageSubscriber {
+public abstract class AbstractIncomingDomainMessage implements IncomingDomainMessage {
 
   // ===============================================================================================
-  // STATE / DEPENDENCIES
+  // STATE
   // ===============================================================================================
-
-  /** The Object mapper. */
-  protected final ObjectMapper objectMapper;
+  private String messageId;
+  private String rootId;
+  private String messageBody;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Abstract message subscriber.
-   *
-   * @param objectMapper the object mapper
-   */
-  protected AbstractMessageSubscriber(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
+  /** Instantiates a new Abstract incoming domain message. */
+  public AbstractIncomingDomainMessage() {
+    super();
   }
 
   // ===============================================================================================
-  // FUNCTIONALITY
+  // GETTERS
+  // ===============================================================================================
+
+  @Override
+  public String getMessageId() {
+    return messageId;
+  }
+
+  @Override
+  public String getRootId() {
+    return rootId;
+  }
+
+  @Override
+  public String getMessageBody() {
+    return messageBody;
+  }
+
+  // ===============================================================================================
+  // SETTERS
   // ===============================================================================================
 
   /**
-   * Transforms a JsonNode into a UUID.
+   * Sets message id.
    *
-   * @param jsonNode the json node
-   * @return the uuid
-   * @throws IllegalArgumentException if the node does not contain a valid UUID.
+   * @param messageId the message id
    */
-  protected UUID asUuid(JsonNode jsonNode) {
-    Assertion.isNotNull(jsonNode, "jsonNode is required");
-    return UUID.fromString(jsonNode.asText());
+  public void setMessageId(String messageId) {
+    this.messageId = messageId;
   }
 
   /**
-   * Transforms a JsonNode into a LocalDate.
+   * Sets root id.
    *
-   * @param jsonNode the json node
-   * @return the local date
+   * @param rootId the root id
    */
-  protected LocalDate asLocalDate(JsonNode jsonNode) {
-    Assertion.isNotNull(jsonNode, "jsonNode is required");
-    return LocalDate.parse(jsonNode.asText(), DateTimeFormatter.ISO_DATE);
+  public void setRootId(String rootId) {
+    this.rootId = rootId;
   }
 
   /**
-   * Transforms a JsonNode into a LocalDateTime.
+   * Sets message body.
    *
-   * @param jsonNode the json node
-   * @return the local date time
+   * @param messageBody the message body
    */
-  protected LocalDateTime asLocalDateTime(JsonNode jsonNode) {
-    Assertion.isNotNull(jsonNode, "jsonNode is required");
-    return LocalDateTime.parse(jsonNode.asText(), DateTimeFormatter.ISO_DATE_TIME);
+  public void setMessageBody(String messageBody) {
+    this.messageBody = messageBody;
   }
 }

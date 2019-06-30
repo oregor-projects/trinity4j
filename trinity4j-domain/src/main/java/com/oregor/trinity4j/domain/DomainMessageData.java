@@ -22,185 +22,81 @@ package com.oregor.trinity4j.domain;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.MappedSuperclass;
 
 /**
- * The type Domain message data.
+ * The interface Domain message data.
  *
  * @author Christos Tsakostas
  */
-@MappedSuperclass
-public abstract class DomainMessageData {
-
-  @Id
-  @Column(updatable = false)
-  private UUID id;
-
-  private UUID rootId;
-
-  private UUID tenantId;
-
-  private Integer streamVersion;
-
-  private String messageName;
-
-  private Integer messageVersion;
-
-  @Column(columnDefinition = "LONGTEXT")
-  @Lob
-  private String message;
-
-  private String principal;
-
-  private String ipAddress;
-
-  private LocalDateTime occurredOn;
-
-  // ===============================================================================================
-  // CONSTRUCTOR(S)
-  // ===============================================================================================
-
-  /** Instantiates a new Abstract domain message data. */
-  protected DomainMessageData() {
-    super();
-  }
+public interface DomainMessageData {
 
   /**
-   * Instantiates a new Abstract domain message data.
+   * Gets message id.
    *
-   * @param id the id
-   * @param rootId the root id
-   * @param tenantId the tenant id
-   * @param streamVersion the stream version
-   * @param messageName the message name
-   * @param messageVersion the message version
-   * @param message the message
-   * @param principal the principal
-   * @param ipAddress the ip address
-   * @param occurredOn the occurred on
+   * @return the message id
    */
-  public DomainMessageData(
-      UUID id,
-      UUID rootId,
-      UUID tenantId,
-      Integer streamVersion,
-      String messageName,
-      Integer messageVersion,
-      String message,
-      String principal,
-      String ipAddress,
-      LocalDateTime occurredOn) {
-    this.id = id;
-    this.rootId = rootId;
-    this.tenantId = tenantId;
-    this.streamVersion = streamVersion;
-    this.messageName = messageName;
-    this.messageVersion = messageVersion;
-    this.message = message;
-    this.principal = principal;
-    this.ipAddress = ipAddress;
-    this.occurredOn = occurredOn;
-  }
-
-  // ===============================================================================================
-  // GETTERS
-  // ===============================================================================================
-
-  /**
-   * Gets id.
-   *
-   * @return the id
-   */
-  public UUID getId() {
-    return id;
-  }
-
-  /**
-   * Gets root id.
-   *
-   * @return the root id
-   */
-  public UUID getRootId() {
-    return rootId;
-  }
-
-  /**
-   * Gets tenant id.
-   *
-   * @return the tenant id
-   */
-  public UUID getTenantId() {
-    return tenantId;
-  }
-
-  /**
-   * Gets stream version.
-   *
-   * @return the stream version
-   */
-  public Integer getStreamVersion() {
-    return streamVersion;
-  }
-
-  /**
-   * Gets message name.
-   *
-   * @return the message name
-   */
-  public String getMessageName() {
-    return messageName;
-  }
-
-  /**
-   * Gets message version.
-   *
-   * @return the message version
-   */
-  public Integer getMessageVersion() {
-    return messageVersion;
-  }
-
-  /**
-   * Gets message.
-   *
-   * @return the message
-   */
-  public String getMessage() {
-    return message;
-  }
-
-  /**
-   * Gets principal.
-   *
-   * @return the principal
-   */
-  public String getPrincipal() {
-    return principal;
-  }
-
-  /**
-   * Gets ip address.
-   *
-   * @return the ip address
-   */
-  public String getIpAddress() {
-    return ipAddress;
-  }
+  UUID getMessageId();
 
   /**
    * Gets occurred on.
    *
    * @return the occurred on
    */
-  public LocalDateTime getOccurredOn() {
-    return occurredOn;
-  }
+  LocalDateTime getOccurredOn();
 
-  // ===============================================================================================
-  // SETTERS
-  // ===============================================================================================
+  /**
+   * Gets root id.
+   *
+   * @return the root id
+   */
+  UUID getRootId();
 
+  /**
+   * Gets root version.
+   *
+   * @return the root version
+   */
+  Integer getRootVersion();
+
+  /**
+   * Gets message type.
+   *
+   * @return the message type
+   */
+  String getMessageType();
+
+  /**
+   * Gets message name.
+   *
+   * @return the message name
+   */
+  String getMessageName();
+
+  /**
+   * Gets message version.
+   *
+   * @return the message version
+   */
+  Integer getMessageVersion();
+
+  /**
+   * Gets message body.
+   *
+   * @return the message body
+   */
+  String getMessageBody();
+
+  /**
+   * Gets user id.
+   *
+   * @return the user id
+   */
+  UUID getUserId();
+
+  /**
+   * Gets ip address.
+   *
+   * @return the ip address
+   */
+  String getIpAddress();
 }

@@ -30,7 +30,7 @@ import javax.persistence.Entity;
  * @author Christos Tsakostas
  */
 @Entity
-public class SomeContextDomainMessageData extends DomainMessageData {
+public class SomeContextDomainMessageData extends AbstractDomainMessageData {
 
   private SomeContextDomainMessageData() {
     super();
@@ -39,38 +39,38 @@ public class SomeContextDomainMessageData extends DomainMessageData {
   /**
    * Instantiates a new Some context domain message data.
    *
-   * @param id the id
+   * @param messageId the message id
+   * @param occurredOn the occurred on
    * @param rootId the root id
-   * @param tenantId the tenant id
-   * @param streamVersion the stream version
+   * @param rootVersion the root version
+   * @param messageType the message type
    * @param messageName the message name
    * @param messageVersion the message version
-   * @param message the message
-   * @param principal the principal
+   * @param messageBody the message body
+   * @param userId the user id
    * @param ipAddress the ip address
-   * @param occurredOn the occurred on
    */
   public SomeContextDomainMessageData(
-      UUID id,
+      UUID messageId,
+      LocalDateTime occurredOn,
       UUID rootId,
-      UUID tenantId,
-      Integer streamVersion,
+      Integer rootVersion,
+      DomainMessageType messageType,
       String messageName,
       Integer messageVersion,
-      String message,
-      String principal,
-      String ipAddress,
-      LocalDateTime occurredOn) {
+      String messageBody,
+      UUID userId,
+      String ipAddress) {
     super(
-        id,
+        messageId,
+        occurredOn,
         rootId,
-        tenantId,
-        streamVersion,
+        rootVersion,
+        messageType,
         messageName,
         messageVersion,
-        message,
-        principal,
-        ipAddress,
-        occurredOn);
+        messageBody,
+        userId,
+        ipAddress);
   }
 }

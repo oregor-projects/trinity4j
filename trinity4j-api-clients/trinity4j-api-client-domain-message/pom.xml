@@ -10,9 +10,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
-  <artifactId>trinity4j-api-client-periodic-process</artifactId>
+  <artifactId>trinity4j-api-client-domain-message</artifactId>
 
   <dependencies>
+    <!--COMMONS-->
+    <dependency>
+      <groupId>com.oregor.trinity4j</groupId>
+      <artifactId>trinity4j-commons</artifactId>
+    </dependency>
+
+    <!--API CLIENT SUBSCRIBER-->
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
+      <artifactId>trinity4j-api-client-subscriber</artifactId>
+    </dependency>
+
     <!--TEST-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -20,4 +32,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
 </project>

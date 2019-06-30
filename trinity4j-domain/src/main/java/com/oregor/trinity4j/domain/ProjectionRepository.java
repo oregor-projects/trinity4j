@@ -25,7 +25,6 @@ package com.oregor.trinity4j.domain;
  *
  * @param <O> the type parameter
  * @param <I> the type parameter of the projection Id
- * @param <U> the type parameter
  * @author Christos Tsakostas
  */
 public interface ProjectionRepository<O extends Projection<I>, I extends ProjectionId>

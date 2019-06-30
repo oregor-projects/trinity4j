@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>trinity4j</artifactId>
     <groupId>com.oregor.trinity4j</groupId>
@@ -18,7 +20,11 @@
     </dependency>
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
-      <artifactId>trinity4j-api-client-periodic-process</artifactId>
+      <artifactId>trinity4j-api-client-batch-process</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
+      <artifactId>trinity4j-api-client-domain-message</artifactId>
     </dependency>
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
@@ -27,10 +33,6 @@
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
       <artifactId>trinity4j-api-client-subscriber</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
-      <artifactId>trinity4j-api-client-subscriber-activemq</artifactId>
     </dependency>
 
     <!--AUX-->
@@ -55,6 +57,10 @@
     <dependency>
       <groupId>com.oregor.trinity4j</groupId>
       <artifactId>trinity4j-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
+      <artifactId>trinity4j-domain-detail-domain-message-publisher</artifactId>
     </dependency>
     <dependency>
       <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>

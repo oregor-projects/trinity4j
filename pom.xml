@@ -78,7 +78,7 @@
     <java.version>1.8</java.version>
 
     <!--BUILD-->
-    <oregor-build-tools-java.version>0.0.4</oregor-build-tools-java.version>
+    <oregor-build-tools-java.version>0.0.3</oregor-build-tools-java.version>
     <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
     <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
@@ -90,8 +90,8 @@
     <sonar-maven-plugin.version>3.5.0.1254</sonar-maven-plugin.version>
     <license-maven-plugin.version>1.14</license-maven-plugin.version>
     <fmt-maven-plugin.version>2.6.0</fmt-maven-plugin.version>
-    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>8.15</checkstyle.version>
+    <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>8.22</checkstyle.version>
     <findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
     <maven-pmd-plugin.version>3.11.0</maven-pmd-plugin.version>
     <maven-jxr-plugin.version>2.4</maven-jxr-plugin.version>
@@ -143,7 +143,12 @@
       </dependency>
       <dependency>
         <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
-        <artifactId>trinity4j-api-client-periodic-process</artifactId>
+        <artifactId>trinity4j-api-client-batch-process</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
+        <artifactId>trinity4j-api-client-domain-message</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -154,11 +159,6 @@
       <dependency>
         <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
         <artifactId>trinity4j-api-client-subscriber</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.oregor.trinity4j.trinity4j-api-clients</groupId>
-        <artifactId>trinity4j-api-client-subscriber-activemq</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -188,6 +188,11 @@
       <dependency>
         <groupId>com.oregor.trinity4j</groupId>
         <artifactId>trinity4j-domain</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-domain-details</groupId>
+        <artifactId>trinity4j-domain-detail-domain-message-publisher</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

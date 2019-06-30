@@ -33,38 +33,38 @@ public class DomainMessageDataTest {
   public void shouldCreateSomeDomainMessageData() {
     UUID id = UuidGenerator.timeBasedUuid();
     UUID rootId = UuidGenerator.timeBasedUuid();
-    UUID tenantId = UuidGenerator.timeBasedUuid();
-    Integer streamVersion = 1;
+    Integer rootVersion = 1;
     String messageName = "someMessageName";
     Integer messageVersion = 1;
-    String message = "someMessage";
-    String principal = "somePrincipal";
+    String messageBody = "someMessage";
+    UUID userId = UuidGenerator.timeBasedUuid();
     String ipAddress = "127.0.0.1";
     LocalDateTime occurredOn = LocalDateTime.now();
 
     SomeDomainMessageData someDomainMessageData =
         new SomeDomainMessageData(
             id,
+            occurredOn,
             rootId,
-            tenantId,
-            streamVersion,
+            rootVersion,
+            DomainMessageType.EVENT,
             messageName,
             messageVersion,
-            message,
-            principal,
-            ipAddress,
-            occurredOn);
+            messageBody,
+            userId,
+            ipAddress);
 
     assertThat(someDomainMessageData).isNotNull();
-    assertThat(someDomainMessageData.getId()).isEqualTo(id);
+
+    assertThat(someDomainMessageData.getMessageId()).isEqualTo(id);
+    assertThat(someDomainMessageData.getOccurredOn()).isEqualTo(occurredOn);
     assertThat(someDomainMessageData.getRootId()).isEqualTo(rootId);
-    assertThat(someDomainMessageData.getTenantId()).isEqualTo(tenantId);
-    assertThat(someDomainMessageData.getStreamVersion()).isEqualTo(streamVersion);
+    assertThat(someDomainMessageData.getRootVersion()).isEqualTo(rootVersion);
+    assertThat(someDomainMessageData.getMessageType()).isEqualTo(DomainMessageType.EVENT.name());
     assertThat(someDomainMessageData.getMessageName()).isEqualTo(messageName);
     assertThat(someDomainMessageData.getMessageVersion()).isEqualTo(messageVersion);
-    assertThat(someDomainMessageData.getMessage()).isEqualTo(message);
-    assertThat(someDomainMessageData.getPrincipal()).isEqualTo(principal);
+    assertThat(someDomainMessageData.getMessageBody()).isEqualTo(messageBody);
+    assertThat(someDomainMessageData.getUserId()).isEqualTo(userId);
     assertThat(someDomainMessageData.getIpAddress()).isEqualTo(ipAddress);
-    assertThat(someDomainMessageData.getOccurredOn()).isEqualTo(occurredOn);
   }
 }

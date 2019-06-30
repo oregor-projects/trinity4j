@@ -28,33 +28,33 @@ import java.util.UUID;
  *
  * @author Christos Tsakostas
  */
-public class SomeDomainMessageData extends DomainMessageData {
+public class SomeDomainMessageData extends AbstractDomainMessageData {
 
   protected SomeDomainMessageData() {
     super();
   }
 
   public SomeDomainMessageData(
-      UUID id,
+      UUID messageId,
+      LocalDateTime occurredOn,
       UUID rootId,
-      UUID tenantId,
-      Integer streamVersion,
+      Integer rootVersion,
+      DomainMessageType messageType,
       String messageName,
       Integer messageVersion,
-      String message,
-      String principal,
-      String ipAddress,
-      LocalDateTime occurredOn) {
+      String messageBody,
+      UUID userId,
+      String ipAddress) {
     super(
-        id,
+        messageId,
+        occurredOn,
         rootId,
-        tenantId,
-        streamVersion,
+        rootVersion,
+        messageType,
         messageName,
         messageVersion,
-        message,
-        principal,
-        ipAddress,
-        occurredOn);
+        messageBody,
+        userId,
+        ipAddress);
   }
 }

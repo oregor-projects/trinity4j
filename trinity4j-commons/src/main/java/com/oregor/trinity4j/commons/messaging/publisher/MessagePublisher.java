@@ -18,28 +18,19 @@
  * ===========================LICENSE_END==================================
  */
 
-package com.oregor.trinity4j.api;
-
-import java.util.List;
+package com.oregor.trinity4j.commons.messaging.publisher;
 
 /**
- * The interface Message subscriber.
+ * The interface Message publisher.
  *
  * @author Christos Tsakostas
  */
-public interface MessageSubscriber {
+public interface MessagePublisher {
 
   /**
-   * Processes an incoming message. Make sure that the implementation is IDEMPOTENT.
+   * Send.
    *
-   * @param jsonMessage the json message
+   * @param message the message
    */
-  void process(String jsonMessage);
-
-  /**
-   * Returns a list of supported message types that can be handled by the subscriber.
-   *
-   * @return the supported message types
-   */
-  List<String> getSupportedMessageTypes();
+  void send(String message);
 }
