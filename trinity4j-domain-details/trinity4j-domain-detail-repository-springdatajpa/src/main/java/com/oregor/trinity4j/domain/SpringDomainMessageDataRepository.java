@@ -31,15 +31,16 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @param <O> the type parameter
  * @author Christos Tsakostas
  */
+@Deprecated
 @NoRepositoryBean
 public interface SpringDomainMessageDataRepository<O extends DomainMessageData>
     extends PagingAndSortingRepository<O, UUID>, QuerydslPredicateExecutor<O> {
 
   /**
-   * Find all by id greater than iterable.
+   * Find all by message id greater than iterable.
    *
    * @param id the id
    * @return the iterable
    */
-  Iterable<O> findAllByIdGreaterThan(Long id);
+  Iterable<O> findAllByMessageIdGreaterThan(Long id);
 }

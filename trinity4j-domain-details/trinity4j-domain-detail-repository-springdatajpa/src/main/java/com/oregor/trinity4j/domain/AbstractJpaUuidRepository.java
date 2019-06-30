@@ -20,78 +20,44 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**
- * The type Abstract jpa repository.
+ * The type Abstract jpa uuid repository.
  *
  * @param <T> the type parameter
- * @param <I> the type parameter
- * @param <D> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class AbstractJpaRepository<
-        T extends AggregateRoot<I>, I extends AggregateRootId, D extends DomainMessageData>
-    extends AbstractJpaIdentityRepository<I> implements Repository<T, I> {
+public abstract class AbstractJpaUuidRepository<T> implements GenericRepository<T, UUID> {
 
-  /** The Spring Data Repository. */
-  protected SpringDataRepository<T, I> springDataRepository;
+  // ===============================================================================================
+  // DEPENDENCIES
+  // ===============================================================================================
 
-  /** The Domain message data repository. */
-  protected SpringDomainMessageDataRepository<D> domainMessageDataRepository;
-
-  /** The Domain message data converter. */
-  protected DomainMessageDataConvertible<D> domainMessageDataConverter;
+  private SpringDataGenericRepository<T, UUID> springDataGenericRepository;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
   /**
-   * Instantiates a new Abstract jpa repository.
+   * Instantiates a new Abstract jpa uuid repository.
    *
-   * @param idClass the id class
-   * @param springDataRepository the spring data repository
-   * @param domainMessageDataRepository the domain message data repository
-   * @param domainMessageDataConverter the domain message data converter
+   * @param springDataGenericRepository the spring data generic repository
    */
-  protected AbstractJpaRepository(
-      Class<I> idClass,
-      SpringDataRepository<T, I> springDataRepository,
-      SpringDomainMessageDataRepository<D> domainMessageDataRepository,
-      DomainMessageDataConvertible<D> domainMessageDataConverter) {
-    super(idClass);
-    this.springDataRepository = springDataRepository;
-    this.domainMessageDataRepository = domainMessageDataRepository;
-    this.domainMessageDataConverter = domainMessageDataConverter;
+  public AbstractJpaUuidRepository(
+      SpringDataGenericRepository<T, UUID> springDataGenericRepository) {
+    this.springDataGenericRepository = springDataGenericRepository;
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
-
-  @Override
-  public T store(T object) {
-    T storedObject = this.springDataRepository.save(object);
-    domainMessageDataRepository.saveAll(
-        domainMessageDataConverter.convert(object.getDomainMessages()));
-    return storedObject;
-  }
-
-  @Override
-  public Optional<T> restore(I objectId) {
-    return springDataRepository.findById(objectId);
-  }
-
-  @Override
-  public void remove(I objectId) {
-    throw new UnsupportedOperationException();
-  }
 
   @Override
   public Iterable<T> findAll() {
@@ -100,16 +66,33 @@ public abstract class AbstractJpaRepository<
 
   @Override
   public Paginated<T> findPaginated(Integer pageNumber, Integer pageSize) {
-    Assertion.isNotNull(pageNumber, "pageNumber is required");
-    Assertion.isNotNull(pageSize, "pageSize is required");
-
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-    Page<T> dataPage = springDataRepository.findAll(pageable);
+    Page<T> dataPage = springDataGenericRepository.findAll(pageable);
 
     return new Paginated<>(
         dataPage.getContent().stream().collect(Collectors.toList()),
         dataPage.getTotalPages(),
         dataPage.getTotalElements());
+  }
+
+  @Override
+  public UUID nextId() {
+    return UuidGenerator.timeBasedUuid();
+  }
+
+  @Override
+  public T store(T entity) {
+    return springDataGenericRepository.save(entity);
+  }
+
+  @Override
+  public Optional<T> restore(UUID entityId) {
+    return springDataGenericRepository.findById(entityId);
+  }
+
+  @Override
+  public void remove(UUID entityId) {
+    springDataGenericRepository.deleteById(entityId);
   }
 }

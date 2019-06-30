@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class SomeAggregateRootRepositoryImpl
-    extends AbstractJpaRepository<
+    extends AbstractJpaRootRepository<
         SomeAggregateRoot, SomeAggregateRootId, SomeContextDomainMessageData>
     implements SomeAggregateRootRepository {
 

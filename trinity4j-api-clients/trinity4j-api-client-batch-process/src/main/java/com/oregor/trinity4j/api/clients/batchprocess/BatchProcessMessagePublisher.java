@@ -18,23 +18,13 @@
  * ===========================LICENSE_END==================================
  */
 
-package com.oregor.trinity4j.domain;
+package com.oregor.trinity4j.api.clients.batchprocess;
 
-import java.util.Optional;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.oregor.trinity4j.commons.messaging.publisher.MessagePublisher;
 
 /**
- * The interface Spring data repository.
+ * The interface Batch process message publisher.
  *
- * @param <T> the type parameter
- * @param <I> the type parameter
  * @author Christos Tsakostas
  */
-@NoRepositoryBean
-public interface SpringDataRepository<T extends AggregateRoot<I>, I extends AggregateRootId>
-    extends PagingAndSortingRepository<T, I>, QuerydslPredicateExecutor<T> {
-
-  Optional<T> findById(I id);
-}
+public interface BatchProcessMessagePublisher extends MessagePublisher {}

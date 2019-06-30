@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** @author Christos Tsakostas */
 public class SomeDomainMessageDataConverter
-    extends DomainMessageDataConverter<SomeDomainMessageData> {
+    extends AbstractDomainMessageDataConverter<SomeDomainMessageData> {
 
   public SomeDomainMessageDataConverter(ObjectMapper objectMapper) {
     super(objectMapper);

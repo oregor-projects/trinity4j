@@ -12,6 +12,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>trinity4j-domain-detail-domain-message-publisher</module>
     <module>trinity4j-domain-detail-repository-inmemory</module>
     <module>trinity4j-domain-detail-repository-springdatajpa</module>
     <module>trinity4j-domain-detail-services</module>

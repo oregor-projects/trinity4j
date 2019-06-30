@@ -46,6 +46,7 @@ public abstract class DomainMessage implements Serializable {
 
   private UUID rootId;
   private UUID tenantId;
+  private transient DomainMessageType messageType;
   private transient String messageName;
   private Integer messageVersion;
   private LocalDateTime occurredOn;
@@ -79,6 +80,15 @@ public abstract class DomainMessage implements Serializable {
    */
   public UUID getTenantId() {
     return tenantId;
+  }
+
+  /**
+   * Gets message type.
+   *
+   * @return the message type
+   */
+  public DomainMessageType getMessageType() {
+    return messageType;
   }
 
   /**
@@ -128,6 +138,15 @@ public abstract class DomainMessage implements Serializable {
    */
   public void setTenantId(UUID tenantId) {
     this.tenantId = tenantId;
+  }
+
+  /**
+   * Sets message type.
+   *
+   * @param messageType the message type
+   */
+  public void setMessageType(DomainMessageType messageType) {
+    this.messageType = messageType;
   }
 
   /**

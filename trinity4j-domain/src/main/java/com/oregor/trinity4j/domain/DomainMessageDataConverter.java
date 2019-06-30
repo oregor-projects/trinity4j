@@ -20,108 +20,29 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oregor.trinity4j.commons.assertion.Assertion;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * The type Domain message data converter.
+ * The interface Domain message data converter.
  *
  * @param <D> the type parameter
  * @author Christos Tsakostas
  */
-public abstract class DomainMessageDataConverter<D extends DomainMessageData>
-    implements DomainMessageDataConvertible<D> {
-
-  private ObjectMapper objectMapper;
-  private Class<D> clazz;
-  private Constructor<?> constructor;
-
-  // ===============================================================================================
-  // CONSTRUCTOR(S)
-  // ===============================================================================================
+public interface DomainMessageDataConverter<D extends DomainMessageData> {
 
   /**
-   * Instantiates a new Abstract domain message data converter.
+   * Converts a DomainMessage to DomainMessageData.
    *
-   * @param objectMapper the object mapper
+   * @param domainMessage the domain message
+   * @return the d
    */
-  @SuppressWarnings("unchecked")
-  protected DomainMessageDataConverter(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
-    clazz = getTypeParameterClass();
-    Constructor<?>[] allConstructors = clazz.getConstructors();
-    constructor = allConstructors[0];
-  }
-
-  // ===============================================================================================
-  // ABSTRACT
-  // ===============================================================================================
+  D convert(DomainMessage domainMessage);
 
   /**
-   * Gets context.
+   * Converts a list of DomainMessages to an Iterable of DomainMessageData.
    *
-   * @return the context
+   * @param domainMessages the domain messages
+   * @return the iterable
    */
-  protected abstract String getContext();
-
-  // ===============================================================================================
-  // OVERRIDES
-  // ===============================================================================================
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public D convert(DomainMessage domainMessage) {
-    Assertion.isNotNull(domainMessage, "domainMessage is required");
-    Assertion.isNotNull(domainMessage.getRootId(), "domainMessage.getUuid() is required");
-    Assertion.isNotNull(domainMessage.getRootId(), "domainMessage.getTenantId() is required");
-
-    try {
-      Object[] objects = {
-        UuidGenerator.timeBasedUuid(),
-        domainMessage.getRootId(),
-        domainMessage.getTenantId(),
-        1,
-        domainMessage.getMessageName(),
-        domainMessage.getMessageVersion(),
-        objectMapper.writeValueAsString(domainMessage),
-        "principal",
-        "ipAddress",
-        domainMessage.getOccurredOn(),
-      };
-      return (D) constructor.newInstance(objects);
-    } catch (JsonProcessingException
-        | InstantiationException
-        | IllegalAccessException
-        | InvocationTargetException e) {
-      throw new IllegalStateException(e.getMessage(), e);
-    }
-  }
-
-  @Override
-  public Iterable<D> convert(List<DomainMessage> domainMessages) {
-    return domainMessages.stream().map(this::convert).collect(Collectors.toList());
-  }
-
-  // ===============================================================================================
-  // PRIVATE
-  // ===============================================================================================
-
-  @SuppressWarnings("unchecked")
-  private Class<D> getTypeParameterClass() {
-    Type type = getClass().getGenericSuperclass();
-    if (type instanceof ParameterizedType) {
-      ParameterizedType paramType = (ParameterizedType) type;
-      return (Class<D>) paramType.getActualTypeArguments()[0];
-    } else {
-      throw new IllegalStateException(
-          "Type type = getClass().getGenericSuperclass(); is not a ParameterizedType");
-    }
-  }
+  Iterable<D> convert(List<DomainMessage> domainMessages);
 }

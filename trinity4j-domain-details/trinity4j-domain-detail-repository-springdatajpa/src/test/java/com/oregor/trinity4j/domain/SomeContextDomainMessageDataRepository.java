@@ -20,10 +20,12 @@
 
 package com.oregor.trinity4j.domain;
 
+import java.util.UUID;
+
 /**
  * The interface Context domain message data repository.
  *
  * @author Christos Tsakostas
  */
 public interface SomeContextDomainMessageDataRepository
-    extends SpringDomainMessageDataRepository<SomeContextDomainMessageData> {}
+    extends SpringDataGenericRepository<SomeContextDomainMessageData, UUID> {}

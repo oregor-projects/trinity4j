@@ -22,6 +22,7 @@ package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,10 +44,10 @@ public abstract class AbstractJpaTenantRepository<
   protected SpringDataTenantRepository<T, I> springDataTenantRepository;
 
   /** The Domain message data repository. */
-  protected SpringDomainMessageDataRepository<D> domainMessageDataRepository;
+  protected SpringDataGenericRepository<D, UUID> domainMessageDataRepository;
 
   /** The Domain message data converter. */
-  protected DomainMessageDataConvertible<D> domainMessageDataConverter;
+  protected DomainMessageDataConverter<D> domainMessageDataConverter;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -63,8 +64,8 @@ public abstract class AbstractJpaTenantRepository<
   protected AbstractJpaTenantRepository(
       Class<I> idClass,
       SpringDataTenantRepository<T, I> springDataTenantRepository,
-      SpringDomainMessageDataRepository<D> domainMessageDataRepository,
-      DomainMessageDataConvertible<D> domainMessageDataConverter) {
+      SpringDataGenericRepository<D, UUID> domainMessageDataRepository,
+      DomainMessageDataConverter<D> domainMessageDataConverter) {
     super(idClass);
     this.springDataTenantRepository = springDataTenantRepository;
     this.domainMessageDataRepository = domainMessageDataRepository;

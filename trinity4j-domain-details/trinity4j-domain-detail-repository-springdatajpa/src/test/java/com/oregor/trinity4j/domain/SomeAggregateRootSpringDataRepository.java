@@ -26,4 +26,4 @@ package com.oregor.trinity4j.domain;
  * @author Christos Tsakostas
  */
 public interface SomeAggregateRootSpringDataRepository
-    extends SpringDataRepository<SomeAggregateRoot, SomeAggregateRootId> {}
+    extends SpringDataRootRepository<SomeAggregateRoot, SomeAggregateRootId> {}

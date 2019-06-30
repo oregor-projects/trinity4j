@@ -22,30 +22,35 @@ package com.oregor.trinity4j.domain;
 
 import java.util.Optional;
 
+/**
+ * The interface Storable.
+ *
+ * @param <R> the type parameter
+ * @param <I> the type parameter
+ * @author Christos Tsakostas
+ */
 public interface Storable<R, I> {
 
   /**
-   * Stores the provided aggregate root to the repository.
+   * Stores the provided entity to the repository.
    *
-   * @param aggregateRoot The Aggregate Root
+   * @param entity the entity
    * @return the r
    */
-  R store(R aggregateRoot);
+  R store(R entity);
 
   /**
-   * Restores an aggregate root from the repository, as optional, by its id.
+   * Restores an optional entity from the repository, by its id.
    *
-   * @param aggregateRootId must not be {@literal null}.
-   * @return the optional aggregate root
-   * @throws IllegalArgumentException if {@code anAbstractId} is {@literal null}
+   * @param entityId the entity id
+   * @return the optional
    */
-  Optional<R> restore(I aggregateRootId);
+  Optional<R> restore(I entityId);
 
   /**
-   * Removes an aggregate root from the repository by its id.
+   * Removes an entity from the repository by its id.
    *
-   * @param id must not be {@literal null}.
-   * @throws IllegalArgumentException if {@code id} is {@literal null}
+   * @param entityId the entity id
    */
-  void remove(I id);
+  void remove(I entityId);
 }
