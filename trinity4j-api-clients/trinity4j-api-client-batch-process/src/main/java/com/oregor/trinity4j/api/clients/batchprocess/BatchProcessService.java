@@ -32,13 +32,15 @@ public interface BatchProcessService {
    *
    * @param pageNumber the page number
    * @param pageSize the page size
+   * @param dryRun the dry run
    */
-  void fetchPage(Integer pageNumber, Integer pageSize);
+  void fetchPage(Integer pageNumber, Integer pageSize, Boolean dryRun);
 
   /**
    * Process for id.
    *
    * @param uniqueId the unique id
+   * @param dryRun the dry run
    */
-  void processForId(String uniqueId);
+  void processForId(String uniqueId, Boolean dryRun);
 }

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oregor.trinity4j.api.ApiPagedCollectionResponse;
 import com.oregor.trinity4j.api.CollectionItemIdentifiable;
+import com.oregor.trinity4j.commons.assertion.Assertion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,11 +84,17 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
   }
 
   // ===============================================================================================
+  // ABSTRACT
+  // ===============================================================================================
+
+  protected abstract String getBatchProcessServiceName();
+
+  // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
   @Override
-  public void fetchPage(Integer pageNumber, Integer pageSize) {
+  public void fetchPage(Integer pageNumber, Integer pageSize, Boolean dryRun) {
     try {
       pageNumber = ensurePageNumber(pageNumber);
       pageSize = ensurePageSize(pageSize);
@@ -100,9 +107,10 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
           .forEach(
               collectionItem -> {
                 try {
+                  Assertion.isNotNull(collectionItem.getId(), "collectionItem.getId() is required");
                   batchProcessMessagePublisher.send(
                       objectMapper.writeValueAsString(
-                          new BatchProcessMessage(messageType, collectionItem.getId())));
+                          new BatchProcessMessage(messageType, collectionItem.getId(), dryRun)));
                 } catch (JsonProcessingException e) {
                   throw new IllegalArgumentException(e.getMessage(), e);
                 }
@@ -111,12 +119,15 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
       if (response.getItems().size() == pageSize) {
         batchProcessMessagePublisher.send(
             objectMapper.writeValueAsString(
-                new BatchProcessMessage(messageType, incrementPageNumber(pageNumber), pageSize)));
+                new BatchProcessMessage(
+                    messageType, incrementPageNumber(pageNumber), pageSize, dryRun)));
       } else {
         LOG.info(
-            "Processed {} pages with pageSize={} in AbstractBatchProcessService",
+            "Processed {} pages with pageSize={} and dryRun={} in {}",
             response.getTotalPages(),
-            pageSize);
+            pageSize,
+            dryRun,
+            getBatchProcessServiceName());
       }
     } catch (JsonProcessingException e) {
       throw new IllegalArgumentException(e.getMessage(), e);
@@ -124,8 +135,8 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
   }
 
   @Override
-  public void processForId(String uniqueId) {
-    batchProcessCommandService.processForId(uniqueId);
+  public void processForId(String uniqueId, Boolean dryRun) {
+    batchProcessCommandService.processForId(uniqueId, dryRun);
   }
 
   // ===============================================================================================
