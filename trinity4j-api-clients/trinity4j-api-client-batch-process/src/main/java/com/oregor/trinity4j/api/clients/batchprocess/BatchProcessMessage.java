@@ -35,6 +35,7 @@ public class BatchProcessMessage {
   private Integer pageNumber;
   private Integer pageSize;
   private String uniqueId;
+  private Boolean dryRun;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -51,11 +52,14 @@ public class BatchProcessMessage {
    * @param messageType the message type
    * @param pageNumber the page number
    * @param pageSize the page size
+   * @param dryRun the dry run
    */
-  public BatchProcessMessage(String messageType, Integer pageNumber, Integer pageSize) {
+  public BatchProcessMessage(
+      String messageType, Integer pageNumber, Integer pageSize, Boolean dryRun) {
     this.messageType = messageType;
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
+    this.dryRun = dryRun;
   }
 
   /**
@@ -63,10 +67,12 @@ public class BatchProcessMessage {
    *
    * @param messageType the message type
    * @param uniqueId the unique id
+   * @param dryRun the dry run
    */
-  public BatchProcessMessage(String messageType, String uniqueId) {
+  public BatchProcessMessage(String messageType, String uniqueId, Boolean dryRun) {
     this.messageType = messageType;
     this.uniqueId = uniqueId;
+    this.dryRun = dryRun;
   }
 
   // ===============================================================================================
@@ -109,6 +115,15 @@ public class BatchProcessMessage {
     return uniqueId;
   }
 
+  /**
+   * Gets dry run.
+   *
+   * @return the dry run
+   */
+  public Boolean getDryRun() {
+    return dryRun;
+  }
+
   // ===============================================================================================
   // SETTERS
   // ===============================================================================================
@@ -147,5 +162,14 @@ public class BatchProcessMessage {
    */
   public void setUniqueId(String uniqueId) {
     this.uniqueId = uniqueId;
+  }
+
+  /**
+   * Sets dry run.
+   *
+   * @param dryRun the dry run
+   */
+  public void setDryRun(Boolean dryRun) {
+    this.dryRun = dryRun;
   }
 }
