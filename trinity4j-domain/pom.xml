@@ -41,17 +41,6 @@
       <artifactId>trinity4j-commons</artifactId>
     </dependency>
 
-    <!--QUERY DSL-->
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-apt</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.querydsl</groupId>
-      <artifactId>querydsl-jpa</artifactId>
-    </dependency>
-
     <!--TEST-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
