@@ -52,7 +52,6 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
   private final BatchProcessCommandService batchProcessCommandService;
   private final BatchProcessQueryService<T> batchProcessQueryService;
   private final Integer defaultPageSize;
-  private final String messageType;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -66,21 +65,18 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
    * @param batchProcessCommandService the batch process command service
    * @param batchProcessQueryService the batch process query service
    * @param defaultPageSize the default page size
-   * @param messageType the message type
    */
   public AbstractBatchProcessService(
       ObjectMapper objectMapper,
       BatchProcessMessagePublisher batchProcessMessagePublisher,
       BatchProcessCommandService batchProcessCommandService,
       BatchProcessQueryService<T> batchProcessQueryService,
-      Integer defaultPageSize,
-      String messageType) {
+      Integer defaultPageSize) {
     this.objectMapper = objectMapper;
     this.batchProcessMessagePublisher = batchProcessMessagePublisher;
     this.batchProcessCommandService = batchProcessCommandService;
     this.batchProcessQueryService = batchProcessQueryService;
     this.defaultPageSize = defaultPageSize;
-    this.messageType = messageType;
   }
 
   // ===============================================================================================
@@ -94,13 +90,13 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
   // ===============================================================================================
 
   @Override
-  public void fetchPage(Integer pageNumber, Integer pageSize, Boolean dryRun) {
+  public void fetchPage(BatchProcessMessage batchProcessMessage) {
     try {
-      pageNumber = ensurePageNumber(pageNumber);
-      pageSize = ensurePageSize(pageSize);
+      batchProcessMessage.setPageNumber(ensurePageNumber(batchProcessMessage.getPageNumber()));
+      batchProcessMessage.setPageSize(ensurePageSize(batchProcessMessage.getPageSize()));
 
       ApiPagedCollectionResponse<T> response =
-          batchProcessQueryService.fetchPagedCollection(pageNumber, pageSize);
+          batchProcessQueryService.fetchPagedCollection(batchProcessMessage);
 
       response
           .getItems()
@@ -108,25 +104,32 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
               collectionItem -> {
                 try {
                   Assertion.isNotNull(collectionItem.getId(), "collectionItem.getId() is required");
+
                   batchProcessMessagePublisher.send(
                       objectMapper.writeValueAsString(
-                          new BatchProcessMessage(messageType, collectionItem.getId(), dryRun)));
+                          BatchProcessMessage.forProcessing(
+                              batchProcessMessage.getMessageType(),
+                              collectionItem.getId(),
+                              batchProcessMessage.getDryRun())));
                 } catch (JsonProcessingException e) {
                   throw new IllegalArgumentException(e.getMessage(), e);
                 }
               });
 
-      if (response.getItems().size() == pageSize) {
+      if (response.getItems().size() == batchProcessMessage.getPageSize()) {
         batchProcessMessagePublisher.send(
             objectMapper.writeValueAsString(
-                new BatchProcessMessage(
-                    messageType, incrementPageNumber(pageNumber), pageSize, dryRun)));
+                BatchProcessMessage.forFetchingPage(
+                    batchProcessMessage.getMessageType(),
+                    incrementPageNumber(batchProcessMessage.getPageNumber()),
+                    batchProcessMessage.getPageSize(),
+                    batchProcessMessage.getDryRun())));
       } else {
         LOG.info(
             "Processed {} pages with pageSize={} and dryRun={} in {}",
             response.getTotalPages(),
-            pageSize,
-            dryRun,
+            batchProcessMessage.getPageSize(),
+            batchProcessMessage.getDryRun(),
             getBatchProcessServiceName());
       }
     } catch (JsonProcessingException e) {
@@ -135,8 +138,8 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
   }
 
   @Override
-  public void processForId(String uniqueId, Boolean dryRun) {
-    batchProcessCommandService.processForId(uniqueId, dryRun);
+  public void processForId(BatchProcessMessage batchProcessMessage) {
+    batchProcessCommandService.processForId(batchProcessMessage);
   }
 
   // ===============================================================================================

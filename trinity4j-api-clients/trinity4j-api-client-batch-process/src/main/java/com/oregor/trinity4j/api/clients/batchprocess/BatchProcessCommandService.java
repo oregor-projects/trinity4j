@@ -30,8 +30,7 @@ public interface BatchProcessCommandService {
   /**
    * Process for id.
    *
-   * @param uniqueId the unique id
-   * @param dryRun the dry run
+   * @param batchProcessMessage the batch process message
    */
-  void processForId(String uniqueId, Boolean dryRun);
+  void processForId(BatchProcessMessage batchProcessMessage);
 }

@@ -32,11 +32,10 @@ import com.oregor.trinity4j.api.CollectionItemIdentifiable;
 public interface BatchProcessQueryService<T extends CollectionItemIdentifiable> {
 
   /**
-   * Fetches a paged collection of items.
+   * Fetch paged collection api paged collection response.
    *
-   * @param pageNumber the page number
-   * @param pageSize the page size
+   * @param batchProcessMessage the batch process message
    * @return the api paged collection response
    */
-  ApiPagedCollectionResponse<T> fetchPagedCollection(Integer pageNumber, Integer pageSize);
+  ApiPagedCollectionResponse<T> fetchPagedCollection(BatchProcessMessage batchProcessMessage);
 }

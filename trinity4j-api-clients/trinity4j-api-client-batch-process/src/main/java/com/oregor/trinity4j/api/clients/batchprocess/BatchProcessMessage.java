@@ -20,6 +20,8 @@
 
 package com.oregor.trinity4j.api.clients.batchprocess;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
+
 /**
  * The type Batch process message.
  *
@@ -38,11 +40,51 @@ public class BatchProcessMessage {
   private Boolean dryRun;
 
   // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+
+  /**
+   * For fetching page batch process message.
+   *
+   * @param messageType the message type
+   * @param pageNumber the page number
+   * @param pageSize the page size
+   * @param dryRun the dry run
+   * @return the batch process message
+   */
+  public static BatchProcessMessage forFetchingPage(
+      String messageType, Integer pageNumber, Integer pageSize, Boolean dryRun) {
+    Assertion.isNotNull(messageType, "messageType is required");
+    Assertion.isNotNull(pageNumber, "pageNumber is required");
+    Assertion.isNotNull(pageSize, "pageSize is required");
+    Assertion.isNotNull(dryRun, "dryRun is required");
+
+    return new BatchProcessMessage(messageType, pageNumber, pageSize, dryRun);
+  }
+
+  /**
+   * For processing batch process message.
+   *
+   * @param messageType the message type
+   * @param uniqueId the unique id
+   * @param dryRun the dry run
+   * @return the batch process message
+   */
+  public static BatchProcessMessage forProcessing(
+      String messageType, String uniqueId, Boolean dryRun) {
+    Assertion.isNotNull(messageType, "messageType is required");
+    Assertion.isNotNull(uniqueId, "uniqueId is required");
+    Assertion.isNotNull(dryRun, "dryRun is required");
+
+    return new BatchProcessMessage(messageType, uniqueId, dryRun);
+  }
+
+  // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
   /** Instantiates a new Batch process message. */
-  public BatchProcessMessage() {
+  private BatchProcessMessage() {
     super();
   }
 
@@ -54,7 +96,7 @@ public class BatchProcessMessage {
    * @param pageSize the page size
    * @param dryRun the dry run
    */
-  public BatchProcessMessage(
+  private BatchProcessMessage(
       String messageType, Integer pageNumber, Integer pageSize, Boolean dryRun) {
     this.messageType = messageType;
     this.pageNumber = pageNumber;
@@ -69,10 +111,32 @@ public class BatchProcessMessage {
    * @param uniqueId the unique id
    * @param dryRun the dry run
    */
-  public BatchProcessMessage(String messageType, String uniqueId, Boolean dryRun) {
+  private BatchProcessMessage(String messageType, String uniqueId, Boolean dryRun) {
     this.messageType = messageType;
     this.uniqueId = uniqueId;
     this.dryRun = dryRun;
+  }
+
+  // ===============================================================================================
+  // QUERIES
+  // ===============================================================================================
+
+  /**
+   * Is for fetching page boolean.
+   *
+   * @return the boolean
+   */
+  public Boolean isForFetchingPage() {
+    return pageSize != null && pageNumber != null && uniqueId == null;
+  }
+
+  /**
+   * Is for processing boolean.
+   *
+   * @return the boolean
+   */
+  public Boolean isForProcessing() {
+    return pageSize == null && pageNumber == null && uniqueId != null;
   }
 
   // ===============================================================================================
