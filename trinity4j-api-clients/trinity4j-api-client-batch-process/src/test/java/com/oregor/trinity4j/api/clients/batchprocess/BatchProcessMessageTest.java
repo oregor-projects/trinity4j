@@ -20,24 +20,28 @@
 
 package com.oregor.trinity4j.api.clients.batchprocess;
 
-/**
- * The interface Batch process service.
- *
- * @author Christos Tsakostas
- */
-public interface BatchProcessService {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  /**
-   * Fetch page.
-   *
-   * @param batchProcessMessage the batch process message
-   */
-  void fetchPage(BatchProcessMessage batchProcessMessage);
+import org.junit.Test;
 
-  /**
-   * Process for id.
-   *
-   * @param batchProcessMessage the batch process message
-   */
-  void processForId(BatchProcessMessage batchProcessMessage);
+/** @author Christos Tsakostas */
+public class BatchProcessMessageTest {
+
+  @Test
+  public void shouldSucceedForFetchingPage() {
+    BatchProcessMessage batchProcessMessage =
+        BatchProcessMessage.forFetchingPage("some messageType", 0, 1, false);
+
+    assertThat(batchProcessMessage.isForFetchingPage()).isTrue();
+    assertThat(batchProcessMessage.isForProcessing()).isFalse();
+  }
+
+  @Test
+  public void shouldSucceedForProcessing() {
+    BatchProcessMessage batchProcessMessage =
+        BatchProcessMessage.forProcessing("some messageType", "some unique id", false);
+
+    assertThat(batchProcessMessage.isForFetchingPage()).isFalse();
+    assertThat(batchProcessMessage.isForProcessing()).isTrue();
+  }
 }
