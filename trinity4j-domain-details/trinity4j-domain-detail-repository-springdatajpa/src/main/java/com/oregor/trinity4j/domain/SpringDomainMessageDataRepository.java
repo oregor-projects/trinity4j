@@ -21,7 +21,6 @@
 package com.oregor.trinity4j.domain;
 
 import java.util.UUID;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -34,7 +33,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 @Deprecated
 @NoRepositoryBean
 public interface SpringDomainMessageDataRepository<O extends DomainMessageData>
-    extends PagingAndSortingRepository<O, UUID>, QuerydslPredicateExecutor<O> {
+    extends PagingAndSortingRepository<O, UUID> {
 
   /**
    * Find all by message id greater than iterable.

@@ -23,7 +23,6 @@ package com.oregor.trinity4j.domain;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -36,7 +35,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 @NoRepositoryBean
 public interface SpringDataTenantRepository<T extends AggregateRoot<I>, I extends AggregateRootId>
-    extends PagingAndSortingRepository<T, I>, QuerydslPredicateExecutor<T> {
+    extends PagingAndSortingRepository<T, I> {
 
   Optional<T> findById(I id);
 
