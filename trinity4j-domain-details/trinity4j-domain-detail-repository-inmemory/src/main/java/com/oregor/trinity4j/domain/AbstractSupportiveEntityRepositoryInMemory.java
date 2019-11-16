@@ -20,74 +20,49 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.EmbeddedId;
-import javax.persistence.MappedSuperclass;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * The type Supportive entity.
+ * The type Abstract supportive entity repository in memory.
  *
  * @param <I> the type parameter
+ * @param <T> the type parameter
+ * @author Christos Tsakostas
  */
-@MappedSuperclass
-public abstract class SupportiveEntity<I extends SupportiveEntityId<?>> implements Identifiable<I> {
+public abstract class AbstractSupportiveEntityRepositoryInMemory<
+        I extends SupportiveEntityId<?>, T extends SupportiveEntity<I>>
+    implements SupportiveEntityRepository<I, T> {
 
   // ===============================================================================================
   // STATE
   // ===============================================================================================
 
-  @EmbeddedId private I id;
+  private Map<I, T> map;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Helper entity.
-   *
-   * <p>No args constructor for Persistence Frameworks.
-   */
-  protected SupportiveEntity() {
-    super();
+  /** Instantiates a new Abstract supportive entity repository in memory. */
+  protected AbstractSupportiveEntityRepositoryInMemory() {
+    map = new LinkedHashMap<>();
   }
 
-  /**
-   * Instantiates a new Helper entity.
-   *
-   * @param id the id
-   */
-  public SupportiveEntity(I id) {
-    setId(id);
-  }
-
-  // ===============================================================================================
-  // GETTERS
-  // ===============================================================================================
-
-  // ===============================================================================================
-  // GUARDS
-  // ===============================================================================================
-
-  /**
-   * Sets id.
-   *
-   * @param id the id
-   */
-  private void setId(I id) {
-    Assertion.isNotNull(id, "id is required");
-    this.id = id;
-  }
-
-  // ===============================================================================================
-  // OVERRIDES
-  // ===============================================================================================
-
-  @Access(AccessType.PROPERTY)
-  @EmbeddedId
   @Override
-  public I getId() {
-    return id;
+  public void add(T object) {
+    map.put(object.getId(), object);
+  }
+
+  @Override
+  public T findById(I id) {
+    return map.get(id);
+  }
+
+  @Override
+  public Set<T> findAll() {
+    return map.entrySet().stream().map(p -> p.getValue()).collect(Collectors.toSet());
   }
 }

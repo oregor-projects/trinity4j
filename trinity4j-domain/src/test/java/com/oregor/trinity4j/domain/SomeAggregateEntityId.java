@@ -27,7 +27,7 @@ import java.util.UUID;
  *
  * @author Christos Tsakostas
  */
-public class SomeAggregateEntityId extends AggregateEntityId {
+public class SomeAggregateEntityId extends AggregateEntityId<UUID> {
 
   private static final long serialVersionUID = 1L;
 

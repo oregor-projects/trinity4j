@@ -20,7 +20,7 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.util.UUID;
+import java.io.Serializable;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateEntityId extends AbstractId<UUID> {
+public abstract class AggregateEntityId<T extends Serializable> extends AbstractId<T> {
 
   private static final long serialVersionUID = 1L;
 
@@ -48,10 +48,10 @@ public abstract class AggregateEntityId extends AbstractId<UUID> {
   /**
    * Instantiates a new Aggregate entity id.
    *
-   * @param uuid the uuid
+   * @param entityId the entityId
    */
-  protected AggregateEntityId(UUID uuid) {
-    super(uuid);
+  protected AggregateEntityId(T entityId) {
+    super(entityId);
   }
 
   // ===============================================================================================
@@ -61,7 +61,7 @@ public abstract class AggregateEntityId extends AbstractId<UUID> {
   @Access(AccessType.PROPERTY)
   @Column(name = "entity_id")
   @Override
-  public UUID getTypeId() {
+  public T getTypeId() {
     return super.getTypeId();
   }
 }

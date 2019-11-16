@@ -20,7 +20,6 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -29,7 +28,8 @@ import java.util.Set;
  * @param <I> the type parameter
  * @param <T> the type parameter
  */
-public interface SupportiveEntityRepository<I extends Serializable, T extends SupportiveEntity<I>> {
+public interface SupportiveEntityRepository<
+    I extends SupportiveEntityId<?>, T extends SupportiveEntity<I>> {
 
   /**
    * Add.
