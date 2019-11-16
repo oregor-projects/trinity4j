@@ -78,6 +78,8 @@ public abstract class AbstractJpaRootRepository<
 
   @Override
   public T store(T object) {
+    Assertion.isNotNull(object.getId(), "Aggregate Root Id is required");
+
     T storedObject = this.springDataRootRepository.save(object);
     springDomainMessageDataRepository.saveAll(
         domainMessageDataConverter.convert(object.getDomainMessages()));
@@ -86,11 +88,15 @@ public abstract class AbstractJpaRootRepository<
 
   @Override
   public Optional<T> restore(I objectId) {
+    Assertion.isNotNull(objectId, "Aggregate Root Id is required");
+
     return springDataRootRepository.findById(objectId);
   }
 
   @Override
   public void remove(I objectId) {
+    Assertion.isNotNull(objectId, "Aggregate Root Id is required");
+
     throw new UnsupportedOperationException();
   }
 

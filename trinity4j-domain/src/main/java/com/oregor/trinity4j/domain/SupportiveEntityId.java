@@ -20,64 +20,39 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
+import java.io.Serializable;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
- * The type Supportive entity.
+ * The type Supportive entity id.
  *
- * @param <I> the type parameter
+ * @param <T> the type parameter
+ * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class SupportiveEntity<I extends SupportiveEntityId<?>> implements Identifiable<I> {
+public abstract class SupportiveEntityId<T extends Serializable> extends AbstractId<T> {
 
-  // ===============================================================================================
-  // STATE
-  // ===============================================================================================
-
-  @EmbeddedId private I id;
+  private static final long serialVersionUID = 1L;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Helper entity.
-   *
-   * <p>No args constructor for Persistence Frameworks.
-   */
-  protected SupportiveEntity() {
+  /** Instantiates a new Supportive entity id. */
+  protected SupportiveEntityId() {
     super();
   }
 
   /**
-   * Instantiates a new Helper entity.
+   * Instantiates a new Supportive entity id.
    *
-   * @param id the id
+   * @param entityId the entity id
    */
-  public SupportiveEntity(I id) {
-    setId(id);
-  }
-
-  // ===============================================================================================
-  // GETTERS
-  // ===============================================================================================
-
-  // ===============================================================================================
-  // GUARDS
-  // ===============================================================================================
-
-  /**
-   * Sets id.
-   *
-   * @param id the id
-   */
-  private void setId(I id) {
-    Assertion.isNotNull(id, "id is required");
-    this.id = id;
+  protected SupportiveEntityId(T entityId) {
+    super(entityId);
   }
 
   // ===============================================================================================
@@ -85,9 +60,9 @@ public abstract class SupportiveEntity<I extends SupportiveEntityId<?>> implemen
   // ===============================================================================================
 
   @Access(AccessType.PROPERTY)
-  @EmbeddedId
+  @Column(name = "supportive_id")
   @Override
-  public I getId() {
-    return id;
+  public T getTypeId() {
+    return super.getTypeId();
   }
 }
