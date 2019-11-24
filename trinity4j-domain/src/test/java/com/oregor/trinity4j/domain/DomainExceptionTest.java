@@ -33,11 +33,22 @@ class DomainExceptionTest {
   }
 
   @Test
+  void getKeyAndArguments() {
+    Object[] arguments = {0};
+    assertThatThrownBy(() -> throwDomainException("someMessageKey", arguments))
+        .hasMessage("someMessageKey");
+  }
+
+  @Test
   void nullMessageKey() {
     assertThatThrownBy(() -> throwDomainException(null)).hasMessage(null);
   }
 
   private void throwDomainException(String messageKey) {
     throw new DomainException(messageKey);
+  }
+
+  private void throwDomainException(String messageKey, Object[] arguments) {
+    throw new DomainException(messageKey, arguments);
   }
 }

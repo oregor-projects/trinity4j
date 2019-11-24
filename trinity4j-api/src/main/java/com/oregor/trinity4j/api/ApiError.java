@@ -21,11 +21,11 @@
 package com.oregor.trinity4j.api;
 
 /**
- * The type Error.
+ * The type Api error.
  *
  * @author Christos Tsakostas
  */
-public class Error {
+public class ApiError {
 
   // ===============================================================================================
   // STATE
@@ -41,18 +41,18 @@ public class Error {
   // ===============================================================================================
 
   /**
-   * With error error.
+   * Of api error.
    *
    * @param errorCode the error code
    * @param errorMessage the error message
-   * @return the error
+   * @return the api error
    */
-  public static Error withError(String errorCode, String errorMessage) {
-    return new Error(errorCode, errorMessage, null, null);
+  public static ApiError of(String errorCode, String errorMessage) {
+    return new ApiError(errorCode, errorMessage, null, null);
   }
 
   /**
-   * With error and hint error.
+   * With error and hint.
    *
    * @param errorCode the error code
    * @param errorMessage the error message
@@ -60,16 +60,16 @@ public class Error {
    * @param hintMessage the hint message
    * @return the error
    */
-  public static Error withErrorAndHint(
+  public static ApiError withErrorAndHint(
       String errorCode, String errorMessage, String hintCode, String hintMessage) {
-    return new Error(errorCode, errorMessage, hintCode, hintMessage);
+    return new ApiError(errorCode, errorMessage, hintCode, hintMessage);
   }
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  private Error(String errorCode, String errorMessage, String hintCode, String hintMessage) {
+  private ApiError(String errorCode, String errorMessage, String hintCode, String hintMessage) {
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;
     this.hintCode = hintCode;

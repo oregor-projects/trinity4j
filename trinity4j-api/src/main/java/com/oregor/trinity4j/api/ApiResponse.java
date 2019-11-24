@@ -33,7 +33,7 @@ public class ApiResponse {
   // STATE
   // ===============================================================================================
 
-  private Error error;
+  private ApiError error;
   private LocalDateTime occurredOn;
 
   // ===============================================================================================
@@ -50,7 +50,7 @@ public class ApiResponse {
    *
    * @param error the failure message
    */
-  public ApiResponse(Error error) {
+  public ApiResponse(ApiError error) {
     setError(error);
     setOccurredOn(LocalDateTime.now());
   }
@@ -64,7 +64,7 @@ public class ApiResponse {
    *
    * @return the failure message
    */
-  public Error getError() {
+  public ApiError getError() {
     return error;
   }
 
@@ -86,7 +86,7 @@ public class ApiResponse {
    *
    * @param error the failure message
    */
-  public void setError(Error error) {
+  public void setError(ApiError error) {
     this.error = error;
   }
 

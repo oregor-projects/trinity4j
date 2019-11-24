@@ -31,7 +31,7 @@ public class ApiResponseTest {
 
     public SomeApiResponse() {}
 
-    public SomeApiResponse(Error error) {
+    public SomeApiResponse(ApiError error) {
       super(error);
     }
   }
@@ -45,7 +45,7 @@ public class ApiResponseTest {
   @Test
   public void shouldInitializeWithFailure() {
     SomeApiResponse someApiResponse =
-        new SomeApiResponse(Error.withError("SOME_ERROR", "an error occurred"));
+        new SomeApiResponse(ApiError.of("SOME_ERROR", "an error occurred"));
     assertThat(someApiResponse.getError()).isNotNull();
     assertThat(someApiResponse.getError().getErrorCode()).isEqualTo("SOME_ERROR");
     assertThat(someApiResponse.getOccurredOn()).isNotNull();

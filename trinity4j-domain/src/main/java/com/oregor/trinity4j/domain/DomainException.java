@@ -38,6 +38,7 @@ public class DomainException extends RuntimeException {
   // ===============================================================================================
 
   private String errorCode;
+  private Object[] arguments;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -57,13 +58,12 @@ public class DomainException extends RuntimeException {
    * Instantiates a new Domain exception.
    *
    * @param errorCode the error code
-   * @param cause the cause
-   * @param enableSuppression the enable suppression
-   * @param writableStackTrace the writable stack trace
+   * @param arguments the arguments
    */
-  private DomainException(
-      String errorCode, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-    super(errorCode, cause, enableSuppression, writableStackTrace);
+  public DomainException(String errorCode, Object[] arguments) {
+    super(errorCode, null, false, errorCode == null ? true : false);
+    this.errorCode = errorCode;
+    this.arguments = arguments;
   }
 
   // ===============================================================================================
@@ -77,5 +77,14 @@ public class DomainException extends RuntimeException {
    */
   public String getErrorCode() {
     return errorCode;
+  }
+
+  /**
+   * Get arguments object [ ].
+   *
+   * @return the object [ ]
+   */
+  public Object[] getArguments() {
+    return arguments;
   }
 }
