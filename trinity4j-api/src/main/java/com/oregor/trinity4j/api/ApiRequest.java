@@ -30,6 +30,7 @@ import java.time.LocalDateTime;
 public abstract class ApiRequest {
 
   private String userId;
+  private String userLanguage;
   private String tenantId;
   private String ipAddress;
   private LocalDateTime occurredOn;
@@ -39,7 +40,7 @@ public abstract class ApiRequest {
   // ===============================================================================================
 
   /** Instantiates a new Api request. */
-  public ApiRequest() {
+  protected ApiRequest() {
     setOccurredOn(LocalDateTime.now());
   }
 
@@ -54,6 +55,15 @@ public abstract class ApiRequest {
    */
   public String getUserId() {
     return userId;
+  }
+
+  /**
+   * Gets user language.
+   *
+   * @return the user language
+   */
+  public String getUserLanguage() {
+    return userLanguage;
   }
 
   /**
@@ -94,6 +104,15 @@ public abstract class ApiRequest {
    */
   public void setUserId(String userId) {
     this.userId = userId;
+  }
+
+  /**
+   * Sets user language.
+   *
+   * @param userLanguage the user language
+   */
+  public void setUserLanguage(String userLanguage) {
+    this.userLanguage = userLanguage;
   }
 
   /**
