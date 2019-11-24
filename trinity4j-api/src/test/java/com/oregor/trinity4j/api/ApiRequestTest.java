@@ -34,10 +34,12 @@ public class ApiRequestTest {
     SomeApiRequest someApiRequest = new SomeApiRequest();
 
     someApiRequest.setUserId("a");
+    someApiRequest.setUserLanguage("en");
     someApiRequest.setTenantId("a");
     someApiRequest.setIpAddress("a");
 
     assertThat(someApiRequest.getUserId()).isEqualTo("a");
+    assertThat(someApiRequest.getUserLanguage()).isEqualTo("en");
     assertThat(someApiRequest.getTenantId()).isEqualTo("a");
     assertThat(someApiRequest.getIpAddress()).isEqualTo("a");
     assertThat(someApiRequest.getOccurredOn()).isNotNull();
