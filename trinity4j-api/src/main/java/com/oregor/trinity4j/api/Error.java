@@ -20,39 +20,60 @@
 
 package com.oregor.trinity4j.api;
 
-import java.time.LocalDateTime;
-
 /**
- * The type Api response.
+ * The type Error.
  *
  * @author Christos Tsakostas
  */
-public class ApiResponse {
+public class Error {
 
   // ===============================================================================================
   // STATE
   // ===============================================================================================
 
-  private Error error;
-  private LocalDateTime occurredOn;
+  private String errorCode;
+  private String errorMessage;
+  private String hintCode;
+  private String hintMessage;
+
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+
+  /**
+   * With error error.
+   *
+   * @param errorCode the error code
+   * @param errorMessage the error message
+   * @return the error
+   */
+  public static Error withError(String errorCode, String errorMessage) {
+    return new Error(errorCode, errorMessage, null, null);
+  }
+
+  /**
+   * With error and hint error.
+   *
+   * @param errorCode the error code
+   * @param errorMessage the error message
+   * @param hintCode the hint code
+   * @param hintMessage the hint message
+   * @return the error
+   */
+  public static Error withErrorAndHint(
+      String errorCode, String errorMessage, String hintCode, String hintMessage) {
+    return new Error(errorCode, errorMessage, hintCode, hintMessage);
+  }
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Api response. */
-  protected ApiResponse() {
-    setOccurredOn(LocalDateTime.now());
-  }
-
-  /**
-   * Instantiates a new Api response.
-   *
-   * @param error the failure message
-   */
-  public ApiResponse(Error error) {
-    setError(error);
-    setOccurredOn(LocalDateTime.now());
+  private Error(String errorCode, String errorMessage, String hintCode, String hintMessage) {
+    this.errorCode = errorCode;
+    this.errorMessage = errorMessage;
+    this.hintCode = hintCode;
+    this.hintMessage = hintMessage;
   }
 
   // ===============================================================================================
@@ -60,42 +81,38 @@ public class ApiResponse {
   // ===============================================================================================
 
   /**
-   * Gets failure message.
+   * Gets error code.
    *
-   * @return the failure message
+   * @return the error code
    */
-  public Error getError() {
-    return error;
+  public String getErrorCode() {
+    return errorCode;
   }
 
   /**
-   * Gets occurred on.
+   * Gets error message.
    *
-   * @return the occurred on
+   * @return the error message
    */
-  public LocalDateTime getOccurredOn() {
-    return occurredOn;
-  }
-
-  // ===============================================================================================
-  // SETTERS
-  // ===============================================================================================
-
-  /**
-   * Sets failure message.
-   *
-   * @param error the failure message
-   */
-  public void setError(Error error) {
-    this.error = error;
+  public String getErrorMessage() {
+    return errorMessage;
   }
 
   /**
-   * Sets occurred on.
+   * Gets hint code.
    *
-   * @param occurredOn the occurred on
+   * @return the hint code
    */
-  public void setOccurredOn(LocalDateTime occurredOn) {
-    this.occurredOn = occurredOn;
+  public String getHintCode() {
+    return hintCode;
+  }
+
+  /**
+   * Gets hint message.
+   *
+   * @return the hint message
+   */
+  public String getHintMessage() {
+    return hintMessage;
   }
 }
