@@ -27,12 +27,27 @@ import org.junit.Test;
 /** @author Christos Tsakostas */
 public class ApiResponseTest {
 
-  private class SomeApiResponse extends ApiResponse {}
+  private class SomeApiResponse extends ApiResponse {
+
+    public SomeApiResponse() {}
+
+    public SomeApiResponse(Error error) {
+      super(error);
+    }
+  }
 
   @Test
   public void shouldInitialize() {
     SomeApiResponse someApiResponse = new SomeApiResponse();
+    assertThat(someApiResponse.getOccurredOn()).isNotNull();
+  }
 
+  @Test
+  public void shouldInitializeWithFailure() {
+    SomeApiResponse someApiResponse =
+        new SomeApiResponse(Error.withError("SOME_ERROR", "an error occurred"));
+    assertThat(someApiResponse.getError()).isNotNull();
+    assertThat(someApiResponse.getError().getErrorCode()).isEqualTo("SOME_ERROR");
     assertThat(someApiResponse.getOccurredOn()).isNotNull();
   }
 }
