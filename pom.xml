@@ -169,7 +169,17 @@
       </dependency>
       <dependency>
         <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
+        <artifactId>trinity4j-aux-detail-alert-slack</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
         <artifactId>trinity4j-aux-detail-aop-spring</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-aux-details</groupId>
+        <artifactId>trinity4j-aux-detail-property-file</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
