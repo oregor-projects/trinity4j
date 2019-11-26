@@ -50,7 +50,7 @@ public class ApiResponse {
    *
    * @param error the failure message
    */
-  public ApiResponse(ApiError error) {
+  protected ApiResponse(ApiError error) {
     setError(error);
     setOccurredOn(LocalDateTime.now());
   }

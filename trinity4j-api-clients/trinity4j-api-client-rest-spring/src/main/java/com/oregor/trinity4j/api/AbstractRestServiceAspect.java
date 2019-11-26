@@ -38,6 +38,9 @@ public abstract class AbstractRestServiceAspect {
   // ===============================================================================================
 
   private static final Logger LOG = LoggerFactory.getLogger(AbstractRestServiceAspect.class);
+  private static final String UNEXPECTED = "UNEXPECTED";
+  private static final String UNEXPECTED_MESSAGE =
+      "Oops... an unexpected error occurred" + " and we're working on it. Please try again later.";
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -69,12 +72,10 @@ public abstract class AbstractRestServiceAspect {
     } catch (ApiException e) {
       return returnType.getDeclaredConstructor(ApiError.class).newInstance(e.getApiError());
     } catch (Exception e) {
-      // Wen should NEVER reach here
-      LOG.error(
-          String.format(
-              "Unexpected Exception, which should have NEVER been occurred=%s", e.getMessage()),
-          e);
-      throw new IllegalStateException(e.getMessage(), e);
+      LOG.error(String.format("Unexpected REST API Exception=%s", e.getMessage()), e);
+      return returnType
+          .getDeclaredConstructor(ApiError.class)
+          .newInstance(ApiError.of(UNEXPECTED, UNEXPECTED_MESSAGE));
     }
   }
 }
