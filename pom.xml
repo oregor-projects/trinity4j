@@ -11,6 +11,7 @@
     <module>trinity4j-aux-details</module>
     <module>trinity4j-bom</module>
     <module>trinity4j-commons</module>
+    <module>trinity4j-api-detail</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -123,6 +124,12 @@
   </properties>
 
   <dependencies>
+    <!--TEST-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -138,6 +145,11 @@
       <dependency>
         <groupId>com.oregor.trinity4j</groupId>
         <artifactId>trinity4j-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j</groupId>
+        <artifactId>trinity4j-api-detail</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

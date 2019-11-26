@@ -20,51 +20,61 @@
 
 package com.oregor.trinity4j.api;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * The type Api exception.
+ * The type Abstract service aspect.
  *
  * @author Christos Tsakostas
  */
-public class ApiException extends RuntimeException {
+public abstract class AbstractRestServiceAspect {
 
   // ===============================================================================================
   // STATIC
   // ===============================================================================================
 
-  private static final long serialVersionUID = 1L;
-
-  // ===============================================================================================
-  // STATE
-  // ===============================================================================================
-
-  private ApiError apiError;
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractRestServiceAspect.class);
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Api exception.
-   *
-   * @param apiError the api error
-   */
-  @SuppressWarnings("CPD-START")
-  public ApiException(ApiError apiError) {
-    super(apiError.getErrorCode(), null, false, apiError.getErrorCode() == null ? true : false);
-    this.apiError = apiError;
+  /** Instantiates a new Abstract rest service aspect. */
+  protected AbstractRestServiceAspect() {
+    super();
   }
 
   // ===============================================================================================
-  // GETTERS
+  // FUNCTIONALITY
   // ===============================================================================================
 
   /**
-   * Gets api error.
+   * Around object.
    *
-   * @return the api error
+   * @param proceedingJoinPoint the proceeding join point
+   * @return the object
+   * @throws Throwable the throwable
    */
-  @SuppressWarnings("CPD-END")
-  public ApiError getApiError() {
-    return apiError;
+  protected Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    Signature signature = proceedingJoinPoint.getSignature();
+    MethodSignature methodSignature = (MethodSignature) signature;
+    Class<?> returnType = methodSignature.getReturnType();
+
+    try {
+      return proceedingJoinPoint.proceed();
+    } catch (ApiException e) {
+      return returnType.getDeclaredConstructor(ApiError.class).newInstance(e.getApiError());
+    } catch (Exception e) {
+      // Wen should NEVER reach here
+      LOG.error(
+          String.format(
+              "Unexpected Exception, which should have NEVER been occurred=%s", e.getMessage()),
+          e);
+      throw new IllegalStateException(e.getMessage(), e);
+    }
   }
 }

@@ -20,22 +20,29 @@
 
 package com.oregor.trinity4j.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
-
 /**
- * The type Api exception test.
+ * The type Unexpected api exception.
  *
  * @author Christos Tsakostas
  */
-class ApiExceptionTest {
+public class UnexpectedApiException extends ApiException {
 
-  /** Should instantiate. */
-  @Test
-  void shouldInstantiate() {
-    ApiException apiException = new ApiException(ApiError.of("code", "message"));
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
 
-    assertThat(apiException.getApiError()).isNotNull();
+  private static final long serialVersionUID = 1L;
+
+  // ===============================================================================================
+  // CONSTRUCTOR(S)
+  // ===============================================================================================
+
+  /**
+   * Instantiates a new Unexpected api exception.
+   *
+   * @param apiError the api error
+   */
+  public UnexpectedApiException(ApiError apiError) {
+    super(apiError);
   }
 }
