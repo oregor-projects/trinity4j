@@ -24,18 +24,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * The type Api exception test.
- *
- * @author Christos Tsakostas
- */
-class ApiExceptionTest {
+/** @author Christos Tsakostas */
+class UnexpectedApiExceptionTest {
 
   /** Should instantiate. */
   @Test
   void shouldInstantiate() {
-    ApiException apiException = new ApiException(ApiError.of("code", "message"));
+    UnexpectedApiException unexpectedApiException =
+        new UnexpectedApiException(ApiError.of("code", "message"));
 
-    assertThat(apiException.getApiError()).isNotNull();
+    assertThat(unexpectedApiException.getApiError()).isNotNull();
   }
 }
