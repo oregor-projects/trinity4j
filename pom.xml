@@ -12,6 +12,7 @@
     <module>trinity4j-bom</module>
     <module>trinity4j-commons</module>
     <module>trinity4j-api-detail</module>
+    <module>trinity4j-shared</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -116,6 +117,12 @@
     <commons-io-version>2.6</commons-io-version>
     <commons-validator.version>1.5.1</commons-validator.version>
 
+    <!--CAMEL-->
+    <camel.version>3.0.0-RC3</camel.version>
+
+    <!--JAVA EE-->
+    <jaxb-api.version>2.2.11</jaxb-api.version>
+
     <!--GUAVA-->
     <guava.version>26.0-jre</guava.version>
 
@@ -139,6 +146,20 @@
         <groupId>com.fasterxml.uuid</groupId>
         <artifactId>java-uuid-generator</artifactId>
         <version>${fasterxml-uuid.version}</version>
+      </dependency>
+
+      <!--CAMEL-->
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-spring</artifactId>
+        <version>${camel.version}</version>
+      </dependency>
+
+      <!--JAVA EE-->
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${jaxb-api.version}</version>
       </dependency>
 
       <!--API-->
@@ -236,6 +257,18 @@
       <dependency>
         <groupId>com.oregor.trinity4j</groupId>
         <artifactId>trinity4j-commons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!--SHARED-->
+      <dependency>
+        <groupId>com.oregor.trinity4j</groupId>
+        <artifactId>trinity4j-shared</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oregor.trinity4j.trinity4j-shared</groupId>
+        <artifactId>trinity4j-shared-camel</artifactId>
         <version>${project.version}</version>
       </dependency>
 
