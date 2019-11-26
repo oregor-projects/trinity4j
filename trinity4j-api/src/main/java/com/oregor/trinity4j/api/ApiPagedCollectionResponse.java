@@ -41,8 +41,17 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
   // ===============================================================================================
 
   /** Instantiates a new Api page response. */
-  public ApiPagedCollectionResponse() {
+  protected ApiPagedCollectionResponse() {
     super();
+  }
+
+  /**
+   * Instantiates a new Api paged collection response.
+   *
+   * @param error the error
+   */
+  protected ApiPagedCollectionResponse(ApiError error) {
+    super(error);
   }
 
   /**
@@ -54,7 +63,7 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
    * @param pageNumber the page number
    * @param pageSize the page size
    */
-  public ApiPagedCollectionResponse(
+  protected ApiPagedCollectionResponse(
       List<T> items, Integer totalPages, Long totalElements, Integer pageNumber, Integer pageSize) {
     super(items);
     setTotalPages(totalPages);

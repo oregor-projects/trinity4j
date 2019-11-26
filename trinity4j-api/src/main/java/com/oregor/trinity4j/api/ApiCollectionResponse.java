@@ -38,8 +38,17 @@ public abstract class ApiCollectionResponse<T extends CollectionItemIdentifiable
   // ===============================================================================================
 
   /** Instantiates a new Api page response. */
-  public ApiCollectionResponse() {
+  protected ApiCollectionResponse() {
     super();
+  }
+
+  /**
+   * Instantiates a new Api collection response.
+   *
+   * @param error the error
+   */
+  protected ApiCollectionResponse(ApiError error) {
+    super(error);
   }
 
   /**
@@ -47,7 +56,7 @@ public abstract class ApiCollectionResponse<T extends CollectionItemIdentifiable
    *
    * @param items the items
    */
-  public ApiCollectionResponse(List<T> items) {
+  protected ApiCollectionResponse(List<T> items) {
     setItems(items);
   }
 
