@@ -20,6 +20,8 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
+
 /**
  * Container for fetching data in pages.
  *
@@ -29,12 +31,18 @@ package com.oregor.trinity4j.domain;
 public class Paginated<T> {
 
   private Iterable<T> items;
+  private String leftOff;
   private Integer totalPages;
   private Long totalElements;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
+
+  public Paginated(Iterable<T> items, String leftOff) {
+    setItems(items);
+    setLeftOff(leftOff);
+  }
 
   /**
    * Instantiates a new Paginated.
@@ -62,6 +70,10 @@ public class Paginated<T> {
     return items;
   }
 
+  public String getLeftOff() {
+    return leftOff;
+  }
+
   /**
    * Gets total pages.
    *
@@ -84,30 +96,23 @@ public class Paginated<T> {
   // GUARDS
   // ===============================================================================================
 
-  /**
-   * Sets items.
-   *
-   * @param items the items
-   */
   private void setItems(Iterable<T> items) {
+    Assertion.isNotNull(items, "items is required");
     this.items = items;
   }
 
-  /**
-   * Sets total pages.
-   *
-   * @param totalPages the total pages
-   */
   private void setTotalPages(Integer totalPages) {
+    Assertion.isNotNull(totalPages, "totalPages is required");
     this.totalPages = totalPages;
   }
 
-  /**
-   * Sets total elements.
-   *
-   * @param totalElements the total elements
-   */
   private void setTotalElements(Long totalElements) {
+    Assertion.isNotNull(totalElements, "totalElements is required");
     this.totalElements = totalElements;
+  }
+
+  private void setLeftOff(String leftOff) {
+    Assertion.isNotNull(leftOff, "leftOff is required");
+    this.leftOff = leftOff;
   }
 }

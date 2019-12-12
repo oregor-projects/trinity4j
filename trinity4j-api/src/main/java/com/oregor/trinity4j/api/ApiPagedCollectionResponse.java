@@ -31,6 +31,9 @@ import java.util.List;
 public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentifiable>
     extends ApiCollectionResponse<T> {
 
+  /** "Left Off" value for seek method pagination. */
+  private String seekMethodLeftOffValue;
+
   private Integer totalPages;
   private Long totalElements;
   private Integer pageNumber;
@@ -58,14 +61,21 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
    * Instantiates a new Api paged collection response.
    *
    * @param items the items
+   * @param seekMethodLeftOffValue the seek method left off value
    * @param totalPages the total pages
    * @param totalElements the total elements
    * @param pageNumber the page number
    * @param pageSize the page size
    */
   protected ApiPagedCollectionResponse(
-      List<T> items, Integer totalPages, Long totalElements, Integer pageNumber, Integer pageSize) {
+      List<T> items,
+      String seekMethodLeftOffValue,
+      Integer totalPages,
+      Long totalElements,
+      Integer pageNumber,
+      Integer pageSize) {
     super(items);
+    setSeekMethodLeftOffValue(seekMethodLeftOffValue);
     setTotalPages(totalPages);
     setTotalElements(totalElements);
     setPageNumber(pageNumber);
@@ -75,6 +85,15 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
   // ===============================================================================================
   // GETTERS
   // ===============================================================================================
+
+  /**
+   * Gets left off.
+   *
+   * @return the left off
+   */
+  public String getSeekMethodLeftOffValue() {
+    return seekMethodLeftOffValue;
+  }
 
   /**
    * Gets total pages.
@@ -115,6 +134,15 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
   // ===============================================================================================
   // SETTERS
   // ===============================================================================================
+
+  /**
+   * Sets left off.
+   *
+   * @param seekMethodLeftOffValue the left off
+   */
+  public void setSeekMethodLeftOffValue(String seekMethodLeftOffValue) {
+    this.seekMethodLeftOffValue = seekMethodLeftOffValue;
+  }
 
   /**
    * Sets total pages.

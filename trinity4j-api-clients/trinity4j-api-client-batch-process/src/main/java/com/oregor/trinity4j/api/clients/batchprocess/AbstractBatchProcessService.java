@@ -109,6 +109,7 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
                       objectMapper.writeValueAsString(
                           BatchProcessMessage.forProcessing(
                               batchProcessMessage.getMessageType(),
+                              response.getSeekMethodLeftOffValue(),
                               collectionItem.getId(),
                               batchProcessMessage.getDryRun())));
                 } catch (JsonProcessingException e) {
@@ -117,17 +118,31 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
               });
 
       if (response.getItems().size() == batchProcessMessage.getPageSize()) {
-        batchProcessMessagePublisher.send(
-            objectMapper.writeValueAsString(
-                BatchProcessMessage.forFetchingPage(
-                    batchProcessMessage.getMessageType(),
-                    incrementPageNumber(batchProcessMessage.getPageNumber()),
-                    batchProcessMessage.getPageSize(),
-                    batchProcessMessage.getDryRun())));
+        if (batchProcessMessage.getSeekMethodLeftOffValue() != null) {
+          LOG.info("LeftOff {}", batchProcessMessage.getSeekMethodLeftOffValue());
+
+          batchProcessMessagePublisher.send(
+              objectMapper.writeValueAsString(
+                  BatchProcessMessage.forSeekingPage(
+                      batchProcessMessage.getMessageType(),
+                      response.getSeekMethodLeftOffValue(),
+                      incrementPageNumber(batchProcessMessage.getPageNumber()),
+                      batchProcessMessage.getPageSize(),
+                      batchProcessMessage.getDryRun())));
+
+        } else {
+          batchProcessMessagePublisher.send(
+              objectMapper.writeValueAsString(
+                  BatchProcessMessage.forFetchingPage(
+                      batchProcessMessage.getMessageType(),
+                      incrementPageNumber(batchProcessMessage.getPageNumber()),
+                      batchProcessMessage.getPageSize(),
+                      batchProcessMessage.getDryRun())));
+        }
       } else {
         LOG.info(
             "Processed {} pages with pageSize={} and dryRun={} in {}",
-            response.getTotalPages(),
+            batchProcessMessage.getPageNumber() + 1,
             batchProcessMessage.getPageSize(),
             batchProcessMessage.getDryRun(),
             getBatchProcessServiceName());

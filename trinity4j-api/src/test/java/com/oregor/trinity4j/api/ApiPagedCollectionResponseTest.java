@@ -50,7 +50,7 @@ public class ApiPagedCollectionResponseTest {
         Long totalElements,
         Integer pageNumber,
         Integer pageSize) {
-      super(items, totalPages, totalElements, pageNumber, pageSize);
+      super(items, null, totalPages, totalElements, pageNumber, pageSize);
     }
   }
 

@@ -34,6 +34,7 @@ public class BatchProcessMessage {
   // ===============================================================================================
 
   private String messageType;
+  private String seekMethodLeftOffValue;
   private Integer pageNumber;
   private Integer pageSize;
   private String uniqueId;
@@ -42,6 +43,32 @@ public class BatchProcessMessage {
   // ===============================================================================================
   // STATIC
   // ===============================================================================================
+
+  /**
+   * For seeking page batch process message.
+   *
+   * @param messageType the message type
+   * @param seekMethodLeftOffValue the seek method left off value
+   * @param pageNumber the page number
+   * @param pageSize the page size
+   * @param dryRun the dry run
+   * @return the batch process message
+   */
+  public static BatchProcessMessage forSeekingPage(
+      String messageType,
+      String seekMethodLeftOffValue,
+      Integer pageNumber,
+      Integer pageSize,
+      Boolean dryRun) {
+    Assertion.isNotNull(messageType, "messageType is required");
+    Assertion.isNotNull(seekMethodLeftOffValue, "seekMethodLeftOffValue is required");
+    Assertion.isNotNull(pageNumber, "pageNumber is required");
+    Assertion.isNotNull(pageSize, "pageSize is required");
+    Assertion.isNotNull(dryRun, "dryRun is required");
+
+    return new BatchProcessMessage(
+        messageType, seekMethodLeftOffValue, pageNumber, pageSize, null, dryRun);
+  }
 
   /**
    * For fetching page batch process message.
@@ -59,24 +86,26 @@ public class BatchProcessMessage {
     Assertion.isNotNull(pageSize, "pageSize is required");
     Assertion.isNotNull(dryRun, "dryRun is required");
 
-    return new BatchProcessMessage(messageType, pageNumber, pageSize, dryRun);
+    return new BatchProcessMessage(messageType, null, pageNumber, pageSize, null, dryRun);
   }
 
   /**
    * For processing batch process message.
    *
    * @param messageType the message type
+   * @param seekMethodLeftOffValue the seek method left off value
    * @param uniqueId the unique id
    * @param dryRun the dry run
    * @return the batch process message
    */
   public static BatchProcessMessage forProcessing(
-      String messageType, String uniqueId, Boolean dryRun) {
+      String messageType, String seekMethodLeftOffValue, String uniqueId, Boolean dryRun) {
     Assertion.isNotNull(messageType, "messageType is required");
     Assertion.isNotNull(uniqueId, "uniqueId is required");
     Assertion.isNotNull(dryRun, "dryRun is required");
 
-    return new BatchProcessMessage(messageType, uniqueId, dryRun);
+    return new BatchProcessMessage(
+        messageType, seekMethodLeftOffValue, null, null, uniqueId, dryRun);
   }
 
   // ===============================================================================================
@@ -88,31 +117,17 @@ public class BatchProcessMessage {
     super();
   }
 
-  /**
-   * Instantiates a new Batch process message.
-   *
-   * @param messageType the message type
-   * @param pageNumber the page number
-   * @param pageSize the page size
-   * @param dryRun the dry run
-   */
   private BatchProcessMessage(
-      String messageType, Integer pageNumber, Integer pageSize, Boolean dryRun) {
+      String messageType,
+      String seekMethodLeftOffValue,
+      Integer pageNumber,
+      Integer pageSize,
+      String uniqueId,
+      Boolean dryRun) {
     this.messageType = messageType;
+    this.seekMethodLeftOffValue = seekMethodLeftOffValue;
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
-    this.dryRun = dryRun;
-  }
-
-  /**
-   * Instantiates a new Batch process message.
-   *
-   * @param messageType the message type
-   * @param uniqueId the unique id
-   * @param dryRun the dry run
-   */
-  private BatchProcessMessage(String messageType, String uniqueId, Boolean dryRun) {
-    this.messageType = messageType;
     this.uniqueId = uniqueId;
     this.dryRun = dryRun;
   }
@@ -122,12 +137,24 @@ public class BatchProcessMessage {
   // ===============================================================================================
 
   /**
+   * Is for seeking page boolean.
+   *
+   * @return the boolean
+   */
+  public Boolean isForSeekingPage() {
+    return pageSize != null && seekMethodLeftOffValue != null && uniqueId == null;
+  }
+
+  /**
    * Is for fetching page boolean.
    *
    * @return the boolean
    */
   public Boolean isForFetchingPage() {
-    return pageSize != null && pageNumber != null && uniqueId == null;
+    return pageSize != null
+        && pageNumber != null
+        && uniqueId == null
+        && seekMethodLeftOffValue == null;
   }
 
   /**
@@ -150,6 +177,15 @@ public class BatchProcessMessage {
    */
   public String getMessageType() {
     return messageType;
+  }
+
+  /**
+   * Gets left off.
+   *
+   * @return the left off
+   */
+  public String getSeekMethodLeftOffValue() {
+    return seekMethodLeftOffValue;
   }
 
   /**
@@ -199,6 +235,15 @@ public class BatchProcessMessage {
    */
   public void setMessageType(String messageType) {
     this.messageType = messageType;
+  }
+
+  /**
+   * Sets left off.
+   *
+   * @param seekMethodLeftOffValue the left off
+   */
+  public void setSeekMethodLeftOffValue(String seekMethodLeftOffValue) {
+    this.seekMethodLeftOffValue = seekMethodLeftOffValue;
   }
 
   /**
