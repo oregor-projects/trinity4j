@@ -39,7 +39,7 @@ public class BatchProcessMessageTest {
   @Test
   public void shouldSucceedForProcessing() {
     BatchProcessMessage batchProcessMessage =
-        BatchProcessMessage.forProcessing("some messageType", "some unique id", false);
+        BatchProcessMessage.forProcessing("some messageType", null, "some unique id", false);
 
     assertThat(batchProcessMessage.isForFetchingPage()).isFalse();
     assertThat(batchProcessMessage.isForProcessing()).isTrue();
