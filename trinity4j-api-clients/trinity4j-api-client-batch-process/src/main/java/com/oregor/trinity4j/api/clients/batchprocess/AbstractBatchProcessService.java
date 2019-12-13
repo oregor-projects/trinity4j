@@ -119,8 +119,6 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
 
       if (response.getItems().size() == batchProcessMessage.getPageSize()) {
         if (batchProcessMessage.getSeekMethodLeftOffValue() != null) {
-          LOG.info("LeftOff {}", batchProcessMessage.getSeekMethodLeftOffValue());
-
           batchProcessMessagePublisher.send(
               objectMapper.writeValueAsString(
                   BatchProcessMessage.forSeekingPage(
