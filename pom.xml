@@ -448,7 +448,8 @@
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
             <additionalparam>-Xdoclint:none</additionalparam>
-            <failOnError>false</failOnError>
+            <failOnError>true</failOnError>
+            <source>8</source>
           </configuration>
         </plugin>
         <!-- ===================================================================== -->
