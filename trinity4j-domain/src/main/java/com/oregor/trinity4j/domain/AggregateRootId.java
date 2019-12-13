@@ -40,13 +40,29 @@ public abstract class AggregateRootId extends AbstractId<UUID> {
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Aggregate root id. */
+  /**
+   * Instantiates a new Aggregate root id.
+   */
   protected AggregateRootId() {
     super();
   }
 
+  /**
+   * Instantiates a new Aggregate root id.
+   *
+   * @param typeId the type id
+   */
   protected AggregateRootId(UUID typeId) {
     super(typeId);
+  }
+
+  /**
+   * Instantiates a new Aggregate root id.
+   *
+   * @param typeId the type id
+   */
+  protected AggregateRootId(String typeId) {
+    super(UUID.fromString(typeId));
   }
 
   // ===============================================================================================

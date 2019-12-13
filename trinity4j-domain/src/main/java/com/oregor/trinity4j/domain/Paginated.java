@@ -31,7 +31,7 @@ import com.oregor.trinity4j.commons.assertion.Assertion;
 public class Paginated<T> {
 
   private Iterable<T> items;
-  private String leftOff;
+  private String seekMethodLeftOffValue;
   private Integer totalPages;
   private Long totalElements;
 
@@ -39,9 +39,9 @@ public class Paginated<T> {
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  public Paginated(Iterable<T> items, String leftOff) {
+  public Paginated(Iterable<T> items, String seekMethodLeftOffValue) {
     setItems(items);
-    setLeftOff(leftOff);
+    setSeekMethodLeftOffValue(seekMethodLeftOffValue);
   }
 
   /**
@@ -70,8 +70,8 @@ public class Paginated<T> {
     return items;
   }
 
-  public String getLeftOff() {
-    return leftOff;
+  public String getSeekMethodLeftOffValue() {
+    return seekMethodLeftOffValue;
   }
 
   /**
@@ -111,8 +111,8 @@ public class Paginated<T> {
     this.totalElements = totalElements;
   }
 
-  private void setLeftOff(String leftOff) {
-    Assertion.isNotNull(leftOff, "leftOff is required");
-    this.leftOff = leftOff;
+  private void setSeekMethodLeftOffValue(String seekMethodLeftOffValue) {
+    Assertion.isNotNull(seekMethodLeftOffValue, "leftOff is required");
+    this.seekMethodLeftOffValue = seekMethodLeftOffValue;
   }
 }

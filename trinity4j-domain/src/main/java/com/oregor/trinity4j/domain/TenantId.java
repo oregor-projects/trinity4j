@@ -54,6 +54,15 @@ public class TenantId extends AbstractId<UUID> {
     super(typeId);
   }
 
+  /**
+   * Instantiates a new Tenant id.
+   *
+   * @param typeId the type id
+   */
+  public TenantId(String typeId) {
+    super(UUID.fromString(typeId));
+  }
+
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
