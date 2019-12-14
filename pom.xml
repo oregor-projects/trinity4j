@@ -22,7 +22,7 @@
   </parent>
   <groupId>com.oregor.trinity4j</groupId>
   <artifactId>trinity4j</artifactId>
-  <version>0.0.11</version>
+  <version>0.0.12-SNAPSHOT</version>
   <name>trinity4j</name>
   <description>trinity4j</description>
   <url>https://www.oregor.com</url>
@@ -60,7 +60,7 @@
     <url>
       http://github.com/oregor-projects/trinity4j/tree/master
     </url>
-    <tag>v0.0.11</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
