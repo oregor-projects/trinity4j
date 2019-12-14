@@ -40,9 +40,7 @@ public abstract class AggregateRootId extends AbstractId<UUID> {
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /**
-   * Instantiates a new Aggregate root id.
-   */
+  /** Instantiates a new Aggregate root id. */
   protected AggregateRootId() {
     super();
   }

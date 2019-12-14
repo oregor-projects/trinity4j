@@ -27,8 +27,7 @@ package com.oregor.trinity4j.api;
  */
 public abstract class ApiPagedCollectionRequest extends ApiCollectionRequest {
 
-  /** "Left Off" value for seek method pagination. */
-  private String leftOff;
+  private String seekMethodLeftOffValue;
 
   private Integer pageNumber;
   private Integer pageSize;
@@ -51,8 +50,8 @@ public abstract class ApiPagedCollectionRequest extends ApiCollectionRequest {
    *
    * @return the left off
    */
-  public String getLeftOff() {
-    return leftOff;
+  public String getSeekMethodLeftOffValue() {
+    return seekMethodLeftOffValue;
   }
 
   /**
@@ -80,10 +79,10 @@ public abstract class ApiPagedCollectionRequest extends ApiCollectionRequest {
   /**
    * Sets left off.
    *
-   * @param leftOff the left off
+   * @param seekMethodLeftOffValue the left off
    */
-  public void setLeftOff(String leftOff) {
-    this.leftOff = leftOff;
+  public void setSeekMethodLeftOffValue(String seekMethodLeftOffValue) {
+    this.seekMethodLeftOffValue = seekMethodLeftOffValue;
   }
 
   /**

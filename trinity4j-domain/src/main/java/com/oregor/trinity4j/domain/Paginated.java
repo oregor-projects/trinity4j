@@ -112,7 +112,7 @@ public class Paginated<T> {
   }
 
   private void setSeekMethodLeftOffValue(String seekMethodLeftOffValue) {
-    Assertion.isNotNull(seekMethodLeftOffValue, "leftOff is required");
+    Assertion.isNotNull(seekMethodLeftOffValue, "seekMethodLeftOffValue is required");
     this.seekMethodLeftOffValue = seekMethodLeftOffValue;
   }
 }
