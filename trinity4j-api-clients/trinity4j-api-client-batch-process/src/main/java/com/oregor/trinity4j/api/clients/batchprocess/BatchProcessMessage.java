@@ -30,6 +30,18 @@ import com.oregor.trinity4j.commons.assertion.Assertion;
 public class BatchProcessMessage {
 
   // ===============================================================================================
+  // STATIC CONSTANTS
+  // ===============================================================================================
+
+  private static final String MESSAGE_TYPE_IS_REQUIRED = "messageType is required";
+  private static final String SEEK_METHOD_LEFT_OFF_VALUE_IS_REQUIRED =
+      "seekMethodLeftOffValue is required";
+  private static final String PAGE_NUMBER_IS_REQUIRED = "pageNumber is required";
+  private static final String PAGE_SIZE_IS_REQUIRED = "pageSize is required";
+  private static final String DRY_RUN_IS_REQUIRED = "dryRun is required";
+  private static final String UNIQUE_ID_IS_REQUIRED = "uniqueId is required";
+
+  // ===============================================================================================
   // STATE
   // ===============================================================================================
 
@@ -60,11 +72,11 @@ public class BatchProcessMessage {
       Integer pageNumber,
       Integer pageSize,
       Boolean dryRun) {
-    Assertion.isNotNull(messageType, "messageType is required");
-    Assertion.isNotNull(seekMethodLeftOffValue, "seekMethodLeftOffValue is required");
-    Assertion.isNotNull(pageNumber, "pageNumber is required");
-    Assertion.isNotNull(pageSize, "pageSize is required");
-    Assertion.isNotNull(dryRun, "dryRun is required");
+    Assertion.isNotNull(messageType, MESSAGE_TYPE_IS_REQUIRED);
+    Assertion.isNotNull(seekMethodLeftOffValue, SEEK_METHOD_LEFT_OFF_VALUE_IS_REQUIRED);
+    Assertion.isNotNull(pageNumber, PAGE_NUMBER_IS_REQUIRED);
+    Assertion.isNotNull(pageSize, PAGE_SIZE_IS_REQUIRED);
+    Assertion.isNotNull(dryRun, DRY_RUN_IS_REQUIRED);
 
     return new BatchProcessMessage(
         messageType, seekMethodLeftOffValue, pageNumber, pageSize, null, dryRun);
@@ -81,10 +93,10 @@ public class BatchProcessMessage {
    */
   public static BatchProcessMessage forFetchingPage(
       String messageType, Integer pageNumber, Integer pageSize, Boolean dryRun) {
-    Assertion.isNotNull(messageType, "messageType is required");
-    Assertion.isNotNull(pageNumber, "pageNumber is required");
-    Assertion.isNotNull(pageSize, "pageSize is required");
-    Assertion.isNotNull(dryRun, "dryRun is required");
+    Assertion.isNotNull(messageType, MESSAGE_TYPE_IS_REQUIRED);
+    Assertion.isNotNull(pageNumber, PAGE_NUMBER_IS_REQUIRED);
+    Assertion.isNotNull(pageSize, PAGE_SIZE_IS_REQUIRED);
+    Assertion.isNotNull(dryRun, DRY_RUN_IS_REQUIRED);
 
     return new BatchProcessMessage(messageType, null, pageNumber, pageSize, null, dryRun);
   }
@@ -100,9 +112,9 @@ public class BatchProcessMessage {
    */
   public static BatchProcessMessage forProcessing(
       String messageType, String seekMethodLeftOffValue, String uniqueId, Boolean dryRun) {
-    Assertion.isNotNull(messageType, "messageType is required");
-    Assertion.isNotNull(uniqueId, "uniqueId is required");
-    Assertion.isNotNull(dryRun, "dryRun is required");
+    Assertion.isNotNull(messageType, MESSAGE_TYPE_IS_REQUIRED);
+    Assertion.isNotNull(uniqueId, UNIQUE_ID_IS_REQUIRED);
+    Assertion.isNotNull(dryRun, DRY_RUN_IS_REQUIRED);
 
     return new BatchProcessMessage(
         messageType, seekMethodLeftOffValue, null, null, uniqueId, dryRun);

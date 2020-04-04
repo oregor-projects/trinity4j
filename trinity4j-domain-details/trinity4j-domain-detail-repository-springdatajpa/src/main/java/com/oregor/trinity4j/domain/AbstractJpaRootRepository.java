@@ -40,6 +40,17 @@ public abstract class AbstractJpaRootRepository<
         T extends AggregateRoot<I>, I extends AggregateRootId, D extends DomainMessageData>
     extends AbstractJpaIdentityRepository<I> implements Repository<T, I> {
 
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+  private static final String AGGREGATE_ROOT_ID_IS_REQUIRED = "Aggregate Root Id is required";
+  private static final String PAGE_NUMBER_IS_REQUIRED = "pageNumber is required";
+  private static final String PAGE_SIZE_IS_REQUIRED = "pageSize is required";
+
+  // ===============================================================================================
+  // DEPENDENCIES
+  // ===============================================================================================
+
   /** The Spring Data Repository. */
   protected SpringDataRootRepository<T, I> springDataRootRepository;
 
@@ -78,7 +89,7 @@ public abstract class AbstractJpaRootRepository<
 
   @Override
   public T store(T object) {
-    Assertion.isNotNull(object.getId(), "Aggregate Root Id is required");
+    Assertion.isNotNull(object.getId(), AGGREGATE_ROOT_ID_IS_REQUIRED);
 
     T storedObject = this.springDataRootRepository.save(object);
     springDomainMessageDataRepository.saveAll(
@@ -88,14 +99,14 @@ public abstract class AbstractJpaRootRepository<
 
   @Override
   public Optional<T> restore(I objectId) {
-    Assertion.isNotNull(objectId, "Aggregate Root Id is required");
+    Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
 
     return springDataRootRepository.findById(objectId);
   }
 
   @Override
   public void remove(I objectId) {
-    Assertion.isNotNull(objectId, "Aggregate Root Id is required");
+    Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
 
     throw new UnsupportedOperationException();
   }
@@ -107,8 +118,8 @@ public abstract class AbstractJpaRootRepository<
 
   @Override
   public Paginated<T> findPaginated(Integer pageNumber, Integer pageSize) {
-    Assertion.isNotNull(pageNumber, "pageNumber is required");
-    Assertion.isNotNull(pageSize, "pageSize is required");
+    Assertion.isNotNull(pageNumber, PAGE_NUMBER_IS_REQUIRED);
+    Assertion.isNotNull(pageSize, PAGE_SIZE_IS_REQUIRED);
 
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
