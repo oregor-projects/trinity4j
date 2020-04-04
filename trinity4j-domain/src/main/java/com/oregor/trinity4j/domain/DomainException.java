@@ -37,8 +37,8 @@ public class DomainException extends RuntimeException {
   // STATE
   // ===============================================================================================
 
-  private String errorCode;
-  private Object[] arguments;
+  private final String errorCode;
+  private final Object[] arguments;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -50,8 +50,9 @@ public class DomainException extends RuntimeException {
    * @param errorCode the key
    */
   public DomainException(String errorCode) {
-    super(errorCode, null, false, errorCode == null ? true : false);
+    super(errorCode, null, false, errorCode == null);
     this.errorCode = errorCode;
+    this.arguments = null;
   }
 
   /**
@@ -61,7 +62,7 @@ public class DomainException extends RuntimeException {
    * @param arguments the arguments
    */
   public DomainException(String errorCode, Object[] arguments) {
-    super(errorCode, null, false, errorCode == null ? true : false);
+    super(errorCode, null, false, errorCode == null);
     this.errorCode = errorCode;
     this.arguments = arguments;
   }

@@ -37,7 +37,7 @@ public class ApiException extends RuntimeException {
   // STATE
   // ===============================================================================================
 
-  private ApiError apiError;
+  private final ApiError apiError;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
@@ -50,7 +50,7 @@ public class ApiException extends RuntimeException {
    */
   @SuppressWarnings("CPD-START")
   public ApiException(ApiError apiError) {
-    super(apiError.getErrorCode(), null, false, apiError.getErrorCode() == null ? true : false);
+    super(apiError.getErrorCode(), null, false, apiError.getErrorCode() == null);
     this.apiError = apiError;
   }
 

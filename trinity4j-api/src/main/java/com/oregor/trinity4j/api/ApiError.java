@@ -20,12 +20,20 @@
 
 package com.oregor.trinity4j.api;
 
+import java.io.Serializable;
+
 /**
  * The type Api error.
  *
  * @author Christos Tsakostas
  */
-public class ApiError {
+public class ApiError implements Serializable {
+
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+
+  private static final long serialVersionUID = 1L;
 
   // ===============================================================================================
   // STATE
