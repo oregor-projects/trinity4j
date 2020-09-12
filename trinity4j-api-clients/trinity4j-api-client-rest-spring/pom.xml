@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.oregor.trinity4j</groupId>
     <artifactId>trinity4j-api-clients</artifactId>
-    <version>0.0.13-SNAPSHOT</version>
+    <version>0.0.12-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
