@@ -40,6 +40,15 @@ public abstract class AbstractJpaTenantRepository<
         T extends TenantAggregateRoot<I>, I extends AggregateRootId, D extends DomainMessageData>
     extends AbstractJpaIdentityRepository<I> implements TenantRepository<T, I> {
 
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+  private static final String AGGREGATE_ROOT_ID_IS_REQUIRED = "Aggregate Root Id is required";
+
+  // ===============================================================================================
+  // DEPENDENCIES
+  // ===============================================================================================
+
   /** The Spring Data Tenant Repository. */
   protected SpringDataTenantRepository<T, I> springDataTenantRepository;
 
@@ -91,7 +100,9 @@ public abstract class AbstractJpaTenantRepository<
 
   @Override
   public void remove(I objectId) {
-    throw new UnsupportedOperationException();
+    Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
+
+    springDataTenantRepository.deleteById(objectId);
   }
 
   @Override

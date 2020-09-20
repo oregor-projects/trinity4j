@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,14 @@ public abstract class AbstractJpaProjectionRepository<
         O extends Projection<I>, I extends ProjectionId>
     extends AbstractJpaIdentityRepository<I> implements ProjectionRepository<O, I> {
 
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+  private static final String PROJECTION_ID_IS_REQUIRED = "Projection Id is required";
+
+  // ===============================================================================================
+  // DEPENDENCIES
+  // ===============================================================================================
   /** The Spring data projection repository. */
   protected SpringDataProjectionRepository<O, I> springDataProjectionRepository;
 
@@ -64,7 +73,9 @@ public abstract class AbstractJpaProjectionRepository<
 
   @Override
   public void remove(I objectId) {
-    throw new UnsupportedOperationException();
+    Assertion.isNotNull(objectId, PROJECTION_ID_IS_REQUIRED);
+
+    springDataProjectionRepository.deleteById(objectId);
   }
 
   @Override

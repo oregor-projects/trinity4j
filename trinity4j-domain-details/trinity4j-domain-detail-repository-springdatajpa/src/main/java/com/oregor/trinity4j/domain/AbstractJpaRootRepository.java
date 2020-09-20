@@ -108,7 +108,7 @@ public abstract class AbstractJpaRootRepository<
   public void remove(I objectId) {
     Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
 
-    throw new UnsupportedOperationException();
+    springDataRootRepository.deleteById(objectId);
   }
 
   @Override

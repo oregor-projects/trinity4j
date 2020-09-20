@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.domain;
 
+import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,6 +35,11 @@ import org.springframework.data.domain.Pageable;
  * @author Christos Tsakostas
  */
 public abstract class AbstractJpaUuidRepository<T> implements GenericRepository<T, UUID> {
+
+  // ===============================================================================================
+  // STATIC
+  // ===============================================================================================
+  private static final String ENTITY_ID_IS_REQUIRED = "Entity Id is required";
 
   // ===============================================================================================
   // DEPENDENCIES
@@ -93,6 +99,8 @@ public abstract class AbstractJpaUuidRepository<T> implements GenericRepository<
 
   @Override
   public void remove(UUID entityId) {
+    Assertion.isNotNull(entityId, ENTITY_ID_IS_REQUIRED);
+
     springDataGenericRepository.deleteById(entityId);
   }
 }

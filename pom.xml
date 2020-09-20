@@ -118,7 +118,7 @@
     <commons-validator.version>1.5.1</commons-validator.version>
 
     <!--CAMEL-->
-    <camel.version>3.0.0-RC3</camel.version>
+    <camel.version>3.5.0</camel.version>
 
     <!--JAVA EE-->
     <jaxb-api.version>2.2.11</jaxb-api.version>
