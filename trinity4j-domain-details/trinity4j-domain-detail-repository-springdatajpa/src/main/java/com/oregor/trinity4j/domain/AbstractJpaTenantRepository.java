@@ -44,6 +44,8 @@ public abstract class AbstractJpaTenantRepository<
   // STATIC
   // ===============================================================================================
   private static final String AGGREGATE_ROOT_ID_IS_REQUIRED = "Aggregate Root Id is required";
+  private static final String PAGE_NUMBER_IS_REQUIRED = "pageNumber is required";
+  private static final String PAGE_SIZE_IS_REQUIRED = "pageSize is required";
 
   // ===============================================================================================
   // DEPENDENCIES
@@ -111,6 +113,11 @@ public abstract class AbstractJpaTenantRepository<
   }
 
   @Override
+  public Iterable<T> findAll() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public Paginated<T> findPaginated(TenantId tenantId, Integer pageNumber, Integer pageSize) {
     Assertion.isNotNull(tenantId, "tenantId is required");
     Assertion.isNotNull(pageNumber, "pageNumber is required");
@@ -119,6 +126,21 @@ public abstract class AbstractJpaTenantRepository<
     Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
     Page<T> dataPage = springDataTenantRepository.findByTenantId(tenantId, pageable);
+
+    return new Paginated<>(
+        dataPage.getContent().stream().collect(Collectors.toList()),
+        dataPage.getTotalPages(),
+        dataPage.getTotalElements());
+  }
+
+  @Override
+  public Paginated<T> findPaginated(Integer pageNumber, Integer pageSize) {
+    Assertion.isNotNull(pageNumber, PAGE_NUMBER_IS_REQUIRED);
+    Assertion.isNotNull(pageSize, PAGE_SIZE_IS_REQUIRED);
+
+    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+    Page<T> dataPage = springDataTenantRepository.findAll(pageable);
 
     return new Paginated<>(
         dataPage.getContent().stream().collect(Collectors.toList()),

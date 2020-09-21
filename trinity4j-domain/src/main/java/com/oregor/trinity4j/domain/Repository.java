@@ -28,21 +28,4 @@ package com.oregor.trinity4j.domain;
  * @author Christos Tsakostas
  */
 public interface Repository<R extends AggregateRoot<I>, I extends AggregateRootId>
-    extends IdentityProvider<I>, Storable<R, I> {
-
-  /**
-   * Returns all the aggregate root entities stored in the repository.
-   *
-   * @return the iterable
-   */
-  Iterable<R> findAll();
-
-  /**
-   * Returns pages of all the aggregate root entities stored in the repository.
-   *
-   * @param pageNumber the page number
-   * @param pageSize the page size
-   * @return the paginated
-   */
-  Paginated<R> findPaginated(Integer pageNumber, Integer pageSize);
-}
+    extends IdentityProvider<I>, Storable<R, I>, Queryable<R> {}

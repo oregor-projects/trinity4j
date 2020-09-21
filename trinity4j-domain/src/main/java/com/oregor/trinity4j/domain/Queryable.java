@@ -21,30 +21,26 @@
 package com.oregor.trinity4j.domain;
 
 /**
- * The interface Tenant repository.
+ * The interface Queryable.
  *
  * @param <R> the type parameter
- * @param <I> the type parameter
+ * @author Christos Tsakostas
  */
-public interface TenantRepository<R extends TenantAggregateRoot<I>, I extends AggregateRootId>
-    extends IdentityProvider<I>, Storable<R, I>, Queryable<R> {
+public interface Queryable<R> {
 
   /**
-   * Returns all the aggregate root entities stored in the repository, provided a Tenant UUID.
+   * Returns all the aggregate root entities stored in the repository.
    *
-   * @param tenantId the tenant id
    * @return the iterable
    */
-  Iterable<R> findAll(TenantId tenantId);
+  Iterable<R> findAll();
 
   /**
-   * Returns pages of all the aggregate root entities stored in the repository, provided a Tenant
-   * UUID.
+   * Returns pages of all the aggregate root entities stored in the repository.
    *
-   * @param tenantId the tenant id
    * @param pageNumber the page number
    * @param pageSize the page size
    * @return the paginated
    */
-  Paginated<R> findPaginated(TenantId tenantId, Integer pageNumber, Integer pageSize);
+  Paginated<R> findPaginated(Integer pageNumber, Integer pageSize);
 }
