@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 /**
@@ -29,10 +30,19 @@ import java.time.LocalDateTime;
  */
 public abstract class ApiRequest {
 
+  @Schema(hidden = true)
   private String userId;
+
+  @Schema(hidden = true)
   private String userLanguage;
+
+  @Schema(hidden = true)
   private String tenantId;
+
+  @Schema(hidden = true)
   private String ipAddress;
+
+  @Schema(hidden = true)
   private LocalDateTime occurredOn;
 
   // ===============================================================================================

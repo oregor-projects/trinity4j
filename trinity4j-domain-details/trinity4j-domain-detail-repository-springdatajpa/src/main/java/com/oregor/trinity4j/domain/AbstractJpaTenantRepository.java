@@ -43,7 +43,11 @@ public abstract class AbstractJpaTenantRepository<
   // ===============================================================================================
   // STATIC
   // ===============================================================================================
+
+  private static final String TENANT_ID_IS_REQUIRED = "Tenant Id is required";
+  private static final String AGGREGATE_ROOT_IS_REQUIRED = "Aggregate Root is required";
   private static final String AGGREGATE_ROOT_ID_IS_REQUIRED = "Aggregate Root Id is required";
+  private static final String DIFFERENT_TENANT_IDS = "Forbidden (Invalid Tenant)";
   private static final String PAGE_NUMBER_IS_REQUIRED = "pageNumber is required";
   private static final String PAGE_SIZE_IS_REQUIRED = "pageSize is required";
 
@@ -89,6 +93,23 @@ public abstract class AbstractJpaTenantRepository<
 
   @Override
   public T store(T object) {
+    Assertion.isNotNull(object, AGGREGATE_ROOT_IS_REQUIRED);
+
+    T storedObject = this.springDataTenantRepository.save(object);
+    domainMessageDataRepository.saveAll(
+        domainMessageDataConverter.convert(object.getDomainMessages()));
+    return storedObject;
+  }
+
+  @Override
+  public T store(TenantId tenantId, T object) {
+    Assertion.isNotNull(tenantId, TENANT_ID_IS_REQUIRED);
+    Assertion.isNotNull(object, AGGREGATE_ROOT_IS_REQUIRED);
+
+    if (!tenantId.equals(object.getTenantId())) {
+      throw new DomainException(DIFFERENT_TENANT_IDS);
+    }
+
     T storedObject = this.springDataTenantRepository.save(object);
     domainMessageDataRepository.saveAll(
         domainMessageDataConverter.convert(object.getDomainMessages()));
@@ -97,7 +118,23 @@ public abstract class AbstractJpaTenantRepository<
 
   @Override
   public Optional<T> restore(I objectId) {
+    Assertion.isNotNull(objectId, AGGREGATE_ROOT_IS_REQUIRED);
+
     return springDataTenantRepository.findById(objectId);
+  }
+
+  @Override
+  public Optional<T> restore(TenantId tenantId, I objectId) {
+    Assertion.isNotNull(tenantId, TENANT_ID_IS_REQUIRED);
+    Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
+
+    Optional<T> optionalObject = springDataTenantRepository.findById(objectId);
+
+    if (optionalObject.isPresent() && !tenantId.equals(optionalObject.get().getTenantId())) {
+      throw new DomainException(DIFFERENT_TENANT_IDS);
+    }
+
+    return optionalObject;
   }
 
   @Override
@@ -105,6 +142,20 @@ public abstract class AbstractJpaTenantRepository<
     Assertion.isNotNull(objectId, AGGREGATE_ROOT_ID_IS_REQUIRED);
 
     springDataTenantRepository.deleteById(objectId);
+  }
+
+  @Override
+  public void remove(TenantId tenantId, T object) {
+    Assertion.isNotNull(tenantId, TENANT_ID_IS_REQUIRED);
+    Assertion.isNotNull(object, AGGREGATE_ROOT_IS_REQUIRED);
+
+    Optional<T> optionalObject = springDataTenantRepository.findById(object.getId());
+
+    if (optionalObject.isPresent() && !tenantId.equals(optionalObject.get().getTenantId())) {
+      throw new DomainException(DIFFERENT_TENANT_IDS);
+    }
+
+    springDataTenantRepository.deleteById(object.getId());
   }
 
   @Override

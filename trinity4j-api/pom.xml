@@ -11,6 +11,12 @@
   <artifactId>trinity4j-api</artifactId>
 
   <dependencies>
+    <!--SPRINGDOC OPENAPI UI-->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>

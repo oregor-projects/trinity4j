@@ -126,6 +126,9 @@
     <!--GUAVA-->
     <guava.version>26.0-jre</guava.version>
 
+    <!--SPRINGDOC OPENAPI UI-->
+    <springdoc-openapi-ui.version>1.4.6</springdoc-openapi-ui.version>
+
     <!--UUID-->
     <fasterxml-uuid.version>3.1.5</fasterxml-uuid.version>
   </properties>
@@ -141,13 +144,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!--UUID-->
-      <dependency>
-        <groupId>com.fasterxml.uuid</groupId>
-        <artifactId>java-uuid-generator</artifactId>
-        <version>${fasterxml-uuid.version}</version>
-      </dependency>
-
       <!--CAMEL-->
       <dependency>
         <groupId>org.apache.camel</groupId>
@@ -160,6 +156,20 @@
         <groupId>javax.xml.bind</groupId>
         <artifactId>jaxb-api</artifactId>
         <version>${jaxb-api.version}</version>
+      </dependency>
+
+      <!--SPRINGDOC OPENAPI UI-->
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-ui</artifactId>
+        <version>${springdoc-openapi-ui.version}</version>
+      </dependency>
+
+      <!--UUID-->
+      <dependency>
+        <groupId>com.fasterxml.uuid</groupId>
+        <artifactId>java-uuid-generator</artifactId>
+        <version>${fasterxml-uuid.version}</version>
       </dependency>
 
       <!--API-->

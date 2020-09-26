@@ -20,7 +20,6 @@
 
 package com.oregor.trinity4j.domain;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.MappedSuperclass;
@@ -84,7 +83,7 @@ public abstract class AbstractId<U extends Serializable> implements Serializable
    * @param typeId the type id
    */
   private void setTypeId(U typeId) {
-    Assertion.isNotNull(typeId, "typeId is required");
+    DomainAssertion.isNotNull(typeId, "ID is required");
     this.typeId = typeId;
   }
 

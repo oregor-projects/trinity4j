@@ -20,7 +20,8 @@
 
 package com.oregor.trinity4j.api;
 
-import com.oregor.trinity4j.commons.assertion.Assertion;
+import com.oregor.trinity4j.domain.DomainAssertion;
+import com.oregor.trinity4j.domain.DomainException;
 import java.math.BigInteger;
 import java.util.UUID;
 
@@ -38,17 +39,23 @@ public abstract class AbstractApiService {
    * @return the uuid
    */
   protected UUID ensureUuid(String incomingUuid) {
-    Assertion.isNotNull(incomingUuid, "incoming UUID is required");
+    DomainAssertion.isNotNull(incomingUuid, "UUID is required");
 
-    String[] components = incomingUuid.split("-");
+    try {
+      String[] components = incomingUuid.split("-");
 
-    if (components.length == 5) {
-      return UUID.fromString(incomingUuid);
-    } else {
-      BigInteger bi1 = new BigInteger(incomingUuid.substring(0, 16), 16);
-      BigInteger bi2 = new BigInteger(incomingUuid.substring(16, 32), 16);
-      UUID uuid = new UUID(bi1.longValue(), bi2.longValue());
-      return uuid;
+      if (components.length == 5) {
+        return UUID.fromString(incomingUuid);
+      } else {
+        BigInteger bi1 = new BigInteger(incomingUuid.substring(0, 16), 16);
+        BigInteger bi2 = new BigInteger(incomingUuid.substring(16, 32), 16);
+        UUID uuid = new UUID(bi1.longValue(), bi2.longValue());
+        return uuid;
+      }
+    } catch (Exception e) {
+      throw new DomainException(
+          String.format(
+              "Provided input='%s' is not a valid UUID. Error=%s.", incomingUuid, e.getMessage()));
     }
   }
 }

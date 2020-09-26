@@ -20,6 +20,8 @@
 
 package com.oregor.trinity4j.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * The type Api paged collection request.
  *
@@ -27,6 +29,7 @@ package com.oregor.trinity4j.api;
  */
 public abstract class ApiPagedCollectionRequest extends ApiCollectionRequest {
 
+  @Schema(hidden = true)
   private String seekMethodLeftOffValue;
 
   private Integer pageNumber;

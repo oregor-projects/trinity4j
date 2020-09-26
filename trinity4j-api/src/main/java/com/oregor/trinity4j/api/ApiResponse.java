@@ -41,7 +41,7 @@ public class ApiResponse {
   // ===============================================================================================
 
   /** Instantiates a new Api response. */
-  protected ApiResponse() {
+  public ApiResponse() {
     setOccurredOn(LocalDateTime.now());
   }
 
@@ -50,7 +50,7 @@ public class ApiResponse {
    *
    * @param error the failure message
    */
-  protected ApiResponse(ApiError error) {
+  public ApiResponse(ApiError error) {
     setError(error);
     setOccurredOn(LocalDateTime.now());
   }

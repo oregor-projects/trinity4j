@@ -20,6 +20,7 @@
 
 package com.oregor.trinity4j.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public abstract class ApiPagedCollectionResponse<T extends CollectionItemIdentif
     extends ApiCollectionResponse<T> {
 
   /** "Left Off" value for seek method pagination. */
+  @Schema(hidden = true)
   private String seekMethodLeftOffValue;
 
   private Integer totalPages;

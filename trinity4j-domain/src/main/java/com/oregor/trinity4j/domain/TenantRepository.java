@@ -20,6 +20,8 @@
 
 package com.oregor.trinity4j.domain;
 
+import java.util.Optional;
+
 /**
  * The interface Tenant repository.
  *
@@ -28,6 +30,29 @@ package com.oregor.trinity4j.domain;
  */
 public interface TenantRepository<R extends TenantAggregateRoot<I>, I extends AggregateRootId>
     extends IdentityProvider<I>, Storable<R, I>, Queryable<R> {
+
+  /**
+   * Stores the provided object to the repository.
+   *
+   * @param object the object
+   * @return the r
+   */
+  R store(TenantId tenantId, R object);
+
+  /**
+   * Restores an optional entity from the repository, by its id.
+   *
+   * @param objectId the object id
+   * @return the optional
+   */
+  Optional<R> restore(TenantId tenantId, I objectId);
+
+  /**
+   * Removes an object from the repository.
+   *
+   * @param object the object
+   */
+  void remove(TenantId tenantId, R object);
 
   /**
    * Returns all the aggregate root entities stored in the repository, provided a Tenant UUID.

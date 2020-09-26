@@ -41,8 +41,10 @@ public abstract class AbstractServiceAspect {
 
   private static final Logger LOG = LoggerFactory.getLogger(AbstractServiceAspect.class);
   private static final String UNEXPECTED = "UNEXPECTED";
-  private static final String UNEXPECTED_MESSAGE =
-      "Oops... an unexpected error occurred" + " and we're working on it. Please try again later.";
+  // TODO
+  //  private static final String UNEXPECTED_MESSAGE =
+  //      "Oops... an unexpected error occurred" + " and we're working on it. Please try again
+  // later.";
 
   // ===============================================================================================
   // STATE / DEPENDENCIES
@@ -115,13 +117,16 @@ public abstract class AbstractServiceAspect {
                   ? apiRequest.getUserLanguage()
                   : defaultLanguageIso2Code));
     } catch (NoSuchMessageException e) {
-      LOG.error(e.getMessage(), e);
+      // TODO
+      return errorCode;
 
-      if (errorCode.equals(UNEXPECTED)) {
-        throw new UnexpectedApiException(ApiError.of(UNEXPECTED, UNEXPECTED_MESSAGE));
-      } else {
-        throw new UnexpectedApiException(getApiError(apiRequest, UNEXPECTED));
-      }
+      //      LOG.error(e.getMessage(), e);
+      //
+      //      if (errorCode.equals(UNEXPECTED)) {
+      //        throw new UnexpectedApiException(ApiError.of(UNEXPECTED, UNEXPECTED_MESSAGE));
+      //      } else {
+      //        throw new UnexpectedApiException(getApiError(apiRequest, UNEXPECTED));
+      //      }
     }
   }
 }
