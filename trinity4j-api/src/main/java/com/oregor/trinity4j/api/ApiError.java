@@ -77,6 +77,11 @@ public class ApiError implements Serializable {
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
+  /** No-args constructor for reflections-based frameworks. */
+  private ApiError() {
+    super();
+  }
+
   private ApiError(String errorCode, String errorMessage, String hintCode, String hintMessage) {
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;
