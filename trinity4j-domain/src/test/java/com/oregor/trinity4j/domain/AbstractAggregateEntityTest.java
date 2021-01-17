@@ -22,43 +22,21 @@ package com.oregor.trinity4j.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.UUID;
 import org.junit.Test;
 
-/**
- * The type Aggregate root id test.
- *
- * @author Christos Tsakostas
- */
-public class AggregateRootIdTest extends AbstractEqualityTest<AggregateRootId> {
-
-  private static UUID uuid1 = UuidGenerator.timeBasedUuid();
-  private static UUID uuid2 = UuidGenerator.timeBasedUuid();
+/** @author Christos Tsakostas */
+public class AbstractAggregateEntityTest {
 
   @Test
-  public void shouldCreateAggregateRootId() {
-    AggregateRootId aggregateRootId = createObject1();
+  public void shouldCreateSomeAggregateEntity() {
+    SomeAggregateEntityId someAggregateEntityId =
+        new SomeAggregateEntityId(UuidGenerator.timeBasedUuid());
 
-    assertThat(aggregateRootId).isNotNull();
-    assertThat(aggregateRootId.getTypeId()).isNotNull();
-    assertThat(aggregateRootId.getTypeId()).isEqualTo(uuid1);
-  }
+    SomeAggregateEntity someAggregateEntity = new SomeAggregateEntity(someAggregateEntityId);
+    someAggregateEntity.setVersion(1);
 
-  @Test
-  public void shouldCreateAggregateRootIdWithEmptyConstructor() {
-    AggregateRootId aggregateRootId = new SomeAggregateRootId();
-
-    assertThat(aggregateRootId).isNotNull();
-    assertThat(aggregateRootId.getTypeId()).isNull();
-  }
-
-  @Override
-  public AggregateRootId createObject1() {
-    return new SomeAggregateRootId(uuid1);
-  }
-
-  @Override
-  public AggregateRootId createObject2() {
-    return new SomeAggregateRootId(uuid2);
+    assertThat(someAggregateEntity).isNotNull();
+    assertThat(someAggregateEntity.getId()).isEqualTo(someAggregateEntityId);
+    assertThat(someAggregateEntity.getVersion()).isEqualTo(1);
   }
 }

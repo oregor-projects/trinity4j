@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateEntityId<T extends Serializable> extends AbstractId<T> {
+public abstract class AbstractAggregateEntityId<T extends Serializable> extends AbstractId<T> {
 
   private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public abstract class AggregateEntityId<T extends Serializable> extends Abstract
   // ===============================================================================================
 
   /** Instantiates a new Aggregate entity id. */
-  protected AggregateEntityId() {
+  protected AbstractAggregateEntityId() {
     super();
   }
 
@@ -50,7 +50,7 @@ public abstract class AggregateEntityId<T extends Serializable> extends Abstract
    *
    * @param entityId the entityId
    */
-  protected AggregateEntityId(T entityId) {
+  protected AbstractAggregateEntityId(T entityId) {
     super(entityId);
   }
 

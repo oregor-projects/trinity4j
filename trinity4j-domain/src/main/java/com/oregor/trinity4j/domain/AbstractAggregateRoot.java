@@ -39,7 +39,7 @@ import org.springframework.core.annotation.AnnotationUtils;
  */
 @Access(AccessType.FIELD)
 @MappedSuperclass
-public abstract class AggregateRoot<I extends AggregateRootId> {
+public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
 
   // ===============================================================================================
   // STATE
@@ -60,7 +60,7 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
    *
    * <p>No args constructor for Repository Frameworks.
    */
-  protected AggregateRoot() {
+  protected AbstractAggregateRoot() {
     super();
   }
 
@@ -69,7 +69,7 @@ public abstract class AggregateRoot<I extends AggregateRootId> {
    *
    * @param id the id
    */
-  protected AggregateRoot(I id) {
+  protected AbstractAggregateRoot(I id) {
     setId(id);
   }
 

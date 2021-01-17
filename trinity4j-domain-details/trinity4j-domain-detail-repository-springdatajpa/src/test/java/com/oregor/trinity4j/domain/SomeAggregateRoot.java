@@ -28,7 +28,7 @@ import javax.persistence.Entity;
  * @author Christos Tsakostas
  */
 @Entity
-public class SomeAggregateRoot extends AggregateRoot<SomeAggregateRootId> {
+public class SomeAggregateRoot extends AbstractAggregateRoot<SomeAggregateRootId> {
 
   private static final long serialVersionUID = 1L;
 

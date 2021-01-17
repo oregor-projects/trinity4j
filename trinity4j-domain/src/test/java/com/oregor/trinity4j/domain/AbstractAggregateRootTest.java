@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author Christos Tsakostas
  */
-public class AggregateRootTest {
+public class AbstractAggregateRootTest {
 
   /**
    * Should initialize private no-args constructor.

@@ -20,23 +20,21 @@
 
 package com.oregor.trinity4j.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
+import java.util.UUID;
 
 /** @author Christos Tsakostas */
-public class AggregateEntityTest {
+public class AbstractAggregateEntityIdTest extends AbstractEqualityTest<AbstractAggregateEntityId<UUID>> {
 
-  @Test
-  public void shouldCreateSomeAggregateEntity() {
-    SomeAggregateEntityId someAggregateEntityId =
-        new SomeAggregateEntityId(UuidGenerator.timeBasedUuid());
+  private static UUID uuid1 = UuidGenerator.timeBasedUuid();
+  private static UUID uuid2 = UuidGenerator.timeBasedUuid();
 
-    SomeAggregateEntity someAggregateEntity = new SomeAggregateEntity(someAggregateEntityId);
-    someAggregateEntity.setVersion(1);
+  @Override
+  public AbstractAggregateEntityId<UUID> createObject1() {
+    return new SomeAggregateEntityId(uuid1);
+  }
 
-    assertThat(someAggregateEntity).isNotNull();
-    assertThat(someAggregateEntity.getId()).isEqualTo(someAggregateEntityId);
-    assertThat(someAggregateEntity.getVersion()).isEqualTo(1);
+  @Override
+  public AbstractAggregateEntityId<UUID> createObject2() {
+    return new SomeAggregateEntityId(uuid2);
   }
 }
