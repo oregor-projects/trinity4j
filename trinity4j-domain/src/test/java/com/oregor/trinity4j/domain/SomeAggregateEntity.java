@@ -21,7 +21,7 @@
 package com.oregor.trinity4j.domain;
 
 /** @author Christos Tsakostas */
-public class SomeAggregateEntity extends AggregateEntity<SomeAggregateEntityId> {
+public class SomeAggregateEntity extends AbstractAggregateEntity<SomeAggregateEntityId> {
 
   public SomeAggregateEntity() {}
 

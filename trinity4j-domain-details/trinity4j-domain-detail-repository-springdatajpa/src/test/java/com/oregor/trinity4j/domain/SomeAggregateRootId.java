@@ -29,7 +29,7 @@ import javax.persistence.Embeddable;
  * @author Christos Tsakostas
  */
 @Embeddable
-public class SomeAggregateRootId extends AggregateRootId {
+public class SomeAggregateRootId extends AbstractAggregateRootId {
 
   private static final long serialVersionUID = 1L;
 

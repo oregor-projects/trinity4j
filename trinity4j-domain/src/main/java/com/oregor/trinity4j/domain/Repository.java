@@ -27,5 +27,5 @@ package com.oregor.trinity4j.domain;
  * @param <I> the type parameter of the aggregate root Id
  * @author Christos Tsakostas
  */
-public interface Repository<R extends AggregateRoot<I>, I extends AggregateRootId>
+public interface Repository<R extends AbstractAggregateRoot<I>, I extends AbstractAggregateRootId>
     extends IdentityProvider<I>, Storable<R, I>, Queryable<R> {}

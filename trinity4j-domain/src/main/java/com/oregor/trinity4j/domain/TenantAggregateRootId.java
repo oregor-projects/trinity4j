@@ -32,7 +32,7 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class TenantAggregateRootId extends AggregateRootId {
+public abstract class TenantAggregateRootId extends AbstractAggregateRootId {
 
   private static final long serialVersionUID = 1L;
 

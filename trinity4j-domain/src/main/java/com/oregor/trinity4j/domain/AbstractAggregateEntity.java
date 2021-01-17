@@ -20,83 +20,97 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.math.BigInteger;
-import java.util.UUID;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
+import com.oregor.trinity4j.commons.assertion.Assertion;
+import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 /**
- * The type Aggregate root id.
+ * Base class for Aggregate Entities.
  *
+ * @param <I> the type parameter
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AggregateRootId extends AbstractId<UUID> {
+public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityId<?>> implements Identifiable<I> {
 
-  private static final long serialVersionUID = 1L;
+  // ===============================================================================================
+  // STATE / DEPENDENCIES
+  // ===============================================================================================
+
+  @EmbeddedId private I id;
+
+  @Version private Integer version;
 
   // ===============================================================================================
   // CONSTRUCTOR(S)
   // ===============================================================================================
 
-  /** Instantiates a new Aggregate root id. */
-  protected AggregateRootId() {
+  /**
+   * Instantiates a new Aggregate entity.
+   *
+   * <p>No args constructor for ORM frameworks.
+   */
+  protected AbstractAggregateEntity() {
     super();
   }
 
   /**
-   * Instantiates a new Aggregate root id.
+   * Instantiates a new Aggregate entity.
    *
-   * @param typeId the type id
+   * @param id the id
    */
-  protected AggregateRootId(UUID typeId) {
-    super(typeId);
+  protected AbstractAggregateEntity(I id) {
+    setId(id);
   }
 
+  // ===============================================================================================
+  // GETTERS
+  // ===============================================================================================
+
   /**
-   * Instantiates a new Aggregate root id.
+   * Gets version.
    *
-   * @param typeId the type id
+   * @return the version
    */
-  protected AggregateRootId(String typeId) {
-    super(ensureUuid(typeId));
+  public Integer getVersion() {
+    return version;
+  }
+
+  // ===============================================================================================
+  // SETTERS
+  // ===============================================================================================
+
+  /**
+   * Sets version.
+   *
+   * @param version the version
+   */
+  public void setVersion(Integer version) {
+    Assertion.isNotNull(version, "version cannot be null");
+    this.version = version;
+  }
+
+  // ===============================================================================================
+  // GUARDS
+  // ===============================================================================================
+
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
+  private void setId(I id) {
+    Assertion.isNotNull(id, "id cannot be null");
+    this.id = id;
   }
 
   // ===============================================================================================
   // OVERRIDES
   // ===============================================================================================
 
-  @Access(AccessType.PROPERTY)
-  @Column(name = "root_id")
   @Override
-  public UUID getTypeId() {
-    return super.getTypeId();
-  }
-
-  // ===============================================================================================
-  // PRIVATE
-  // ===============================================================================================
-
-  private static UUID ensureUuid(String incomingUuid) {
-    DomainAssertion.isNotNull(incomingUuid, "UUID is required");
-
-    try {
-      String[] components = incomingUuid.split("-");
-
-      if (components.length == 5) {
-        return UUID.fromString(incomingUuid);
-      } else {
-        BigInteger bi1 = new BigInteger(incomingUuid.substring(0, 16), 16);
-        BigInteger bi2 = new BigInteger(incomingUuid.substring(16, 32), 16);
-        UUID uuid = new UUID(bi1.longValue(), bi2.longValue());
-        return uuid;
-      }
-    } catch (Exception e) {
-      throw new DomainException(
-          String.format(
-              "Provided input='%s' is not a valid UUID. Error=%s.", incomingUuid, e.getMessage()));
-    }
+  public I getId() {
+    return id;
   }
 }

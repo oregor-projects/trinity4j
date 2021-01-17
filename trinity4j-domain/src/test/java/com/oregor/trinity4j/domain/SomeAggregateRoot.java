@@ -25,7 +25,7 @@ package com.oregor.trinity4j.domain;
  *
  * @author Christos Tsakostas
  */
-public class SomeAggregateRoot extends AggregateRoot<SomeAggregateRootId> {
+public class SomeAggregateRoot extends AbstractAggregateRoot<SomeAggregateRootId> {
 
   private static final long serialVersionUID = 1L;
 
