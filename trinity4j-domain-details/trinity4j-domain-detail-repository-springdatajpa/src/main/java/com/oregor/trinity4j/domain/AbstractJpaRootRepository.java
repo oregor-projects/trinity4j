@@ -37,7 +37,9 @@ import org.springframework.data.domain.Pageable;
  * @author Christos Tsakostas
  */
 public abstract class AbstractJpaRootRepository<
-        T extends AbstractAggregateRoot<I>, I extends AbstractAggregateRootId, D extends DomainMessageData>
+        T extends AbstractAggregateRoot<I>,
+        I extends AbstractAggregateRootId,
+        D extends DomainMessageData>
     extends AbstractJpaIdentityRepository<I> implements Repository<T, I> {
 
   // ===============================================================================================

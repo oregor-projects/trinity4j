@@ -28,7 +28,8 @@ import java.util.Optional;
  * @param <R> the type parameter
  * @param <I> the type parameter
  */
-public interface TenantRepository<R extends TenantAggregateRoot<I>, I extends AbstractAggregateRootId>
+public interface TenantRepository<
+        R extends TenantAggregateRoot<I>, I extends AbstractAggregateRootId>
     extends IdentityProvider<I>, Storable<R, I>, Queryable<R> {
 
   /**

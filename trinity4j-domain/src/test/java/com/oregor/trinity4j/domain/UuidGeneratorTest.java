@@ -49,4 +49,17 @@ public class UuidGeneratorTest {
 
     assertThat(UUID.fromString(strUuid)).isEqualTo(uuid);
   }
+
+  @Test
+  public void fromString() {
+    String uuidString = "1D5612BF59A811EB935BCB5F149B4C79";
+    UUID uuid = UuidGenerator.fromString(uuidString);
+
+    assertThat(uuid).isNotNull();
+
+    String strUuid = uuid.toString();
+    assertThat(strUuid).isNotNull();
+
+    assertThat(UUID.fromString(strUuid)).isEqualTo(uuid);
+  }
 }
