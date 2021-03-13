@@ -20,7 +20,6 @@
 
 package com.oregor.trinity4j.domain;
 
-import java.math.BigInteger;
 import java.util.UUID;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -61,7 +60,7 @@ public abstract class AbstractAggregateRootId extends AbstractId<UUID> {
    * @param typeId the type id
    */
   protected AbstractAggregateRootId(String typeId) {
-    super(ensureUuid(typeId));
+    super(UuidGenerator.fromString(typeId));
   }
 
   // ===============================================================================================
@@ -73,30 +72,5 @@ public abstract class AbstractAggregateRootId extends AbstractId<UUID> {
   @Override
   public UUID getTypeId() {
     return super.getTypeId();
-  }
-
-  // ===============================================================================================
-  // PRIVATE
-  // ===============================================================================================
-
-  private static UUID ensureUuid(String incomingUuid) {
-    DomainAssertion.isNotNull(incomingUuid, "UUID is required");
-
-    try {
-      String[] components = incomingUuid.split("-");
-
-      if (components.length == 5) {
-        return UUID.fromString(incomingUuid);
-      } else {
-        BigInteger bi1 = new BigInteger(incomingUuid.substring(0, 16), 16);
-        BigInteger bi2 = new BigInteger(incomingUuid.substring(16, 32), 16);
-        UUID uuid = new UUID(bi1.longValue(), bi2.longValue());
-        return uuid;
-      }
-    } catch (Exception e) {
-      throw new DomainException(
-          String.format(
-              "Provided input='%s' is not a valid UUID. Error=%s.", incomingUuid, e.getMessage()));
-    }
   }
 }

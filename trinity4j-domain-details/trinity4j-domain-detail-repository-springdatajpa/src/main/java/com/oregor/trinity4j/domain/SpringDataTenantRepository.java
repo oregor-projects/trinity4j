@@ -34,7 +34,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Christos Tsakostas
  */
 @NoRepositoryBean
-public interface SpringDataTenantRepository<T extends AbstractAggregateRoot<I>, I extends AbstractAggregateRootId>
+public interface SpringDataTenantRepository<
+        T extends AbstractAggregateRoot<I>, I extends AbstractAggregateRootId>
     extends PagingAndSortingRepository<T, I> {
 
   Optional<T> findById(I id);

@@ -32,7 +32,8 @@ import javax.persistence.Version;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityId<?>> implements Identifiable<I> {
+public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityId<?>>
+    implements Identifiable<I> {
 
   // ===============================================================================================
   // STATE / DEPENDENCIES

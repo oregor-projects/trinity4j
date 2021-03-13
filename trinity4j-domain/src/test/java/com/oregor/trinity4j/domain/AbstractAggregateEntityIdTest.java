@@ -23,7 +23,8 @@ package com.oregor.trinity4j.domain;
 import java.util.UUID;
 
 /** @author Christos Tsakostas */
-public class AbstractAggregateEntityIdTest extends AbstractEqualityTest<AbstractAggregateEntityId<UUID>> {
+public class AbstractAggregateEntityIdTest
+    extends AbstractEqualityTest<AbstractAggregateEntityId<UUID>> {
 
   private static UUID uuid1 = UuidGenerator.timeBasedUuid();
   private static UUID uuid2 = UuidGenerator.timeBasedUuid();

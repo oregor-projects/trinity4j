@@ -30,8 +30,8 @@ import javax.persistence.MappedSuperclass;
  * @author Christos Tsakostas
  */
 @MappedSuperclass
-public abstract class TenantAggregateRoot<I extends AbstractAggregateRootId> extends
-    AbstractAggregateRoot<I> {
+public abstract class TenantAggregateRoot<I extends AbstractAggregateRootId>
+    extends AbstractAggregateRoot<I> {
 
   // ===============================================================================================
   // STATE

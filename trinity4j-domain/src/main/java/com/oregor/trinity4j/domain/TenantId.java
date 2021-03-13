@@ -60,7 +60,7 @@ public class TenantId extends AbstractId<UUID> {
    * @param typeId the type id
    */
   public TenantId(String typeId) {
-    super(UUID.fromString(typeId));
+    super(UuidGenerator.fromString(typeId));
   }
 
   // ===============================================================================================
