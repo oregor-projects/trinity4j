@@ -21,6 +21,7 @@
 package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
+import java.time.LocalDateTime;
 import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -41,6 +42,10 @@ public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityI
 
   @EmbeddedId private I id;
 
+  private LocalDateTime createdOn;
+
+  private LocalDateTime updatedOn;
+
   @Version private Integer version;
 
   // ===============================================================================================
@@ -52,8 +57,10 @@ public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityI
    *
    * <p>No args constructor for ORM frameworks.
    */
+  @SuppressWarnings("CPD-START")
   protected AbstractAggregateEntity() {
     super();
+    setCreatedOn(LocalDateTime.now());
   }
 
   /**
@@ -63,11 +70,30 @@ public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityI
    */
   protected AbstractAggregateEntity(I id) {
     setId(id);
+    setCreatedOn(LocalDateTime.now());
   }
 
   // ===============================================================================================
   // GETTERS
   // ===============================================================================================
+
+  /**
+   * Gets created on.
+   *
+   * @return the created on
+   */
+  public LocalDateTime getCreatedOn() {
+    return createdOn;
+  }
+
+  /**
+   * Gets updated on.
+   *
+   * @return the updated on
+   */
+  public LocalDateTime getUpdatedOn() {
+    return updatedOn;
+  }
 
   /**
    * Gets version.
@@ -92,18 +118,28 @@ public abstract class AbstractAggregateEntity<I extends AbstractAggregateEntityI
     this.version = version;
   }
 
+  /**
+   * Sets updated on.
+   *
+   * @param updatedOn the updated on
+   */
+  public void setUpdatedOn(LocalDateTime updatedOn) {
+    Assertion.isNotNull(updatedOn, "updatedOn cannot be null");
+    this.updatedOn = updatedOn;
+  }
+
   // ===============================================================================================
   // GUARDS
   // ===============================================================================================
 
-  /**
-   * Sets id.
-   *
-   * @param id the id
-   */
   private void setId(I id) {
     Assertion.isNotNull(id, "id cannot be null");
     this.id = id;
+  }
+
+  private void setCreatedOn(LocalDateTime createdOn) {
+    Assertion.isNotNull(createdOn, "createdOn cannot be null");
+    this.createdOn = createdOn;
   }
 
   // ===============================================================================================

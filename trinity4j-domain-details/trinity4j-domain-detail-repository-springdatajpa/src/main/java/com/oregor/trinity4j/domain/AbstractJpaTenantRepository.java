@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 /**
  * The type Abstract jpa tenant repository.
@@ -176,7 +177,7 @@ public abstract class AbstractJpaTenantRepository<
     Assertion.isNotNull(pageNumber, "pageNumber is required");
     Assertion.isNotNull(pageSize, "pageSize is required");
 
-    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("createdOn").descending());
 
     Page<T> dataPage = springDataTenantRepository.findByTenantId(tenantId, pageable);
 
@@ -191,7 +192,7 @@ public abstract class AbstractJpaTenantRepository<
     Assertion.isNotNull(pageNumber, PAGE_NUMBER_IS_REQUIRED);
     Assertion.isNotNull(pageSize, PAGE_SIZE_IS_REQUIRED);
 
-    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("createdOn").descending());
 
     Page<T> dataPage = springDataTenantRepository.findAll(pageable);
 

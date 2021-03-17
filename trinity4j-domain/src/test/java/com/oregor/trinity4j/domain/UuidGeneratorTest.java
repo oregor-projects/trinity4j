@@ -52,7 +52,7 @@ public class UuidGeneratorTest {
 
   @Test
   public void fromString() {
-    String uuidString = "1D5612BF59A811EB935BCB5F149B4C79";
+    String uuidString = "C2289B4883F111EB9BB961EDFCECC732";
     UUID uuid = UuidGenerator.fromString(uuidString);
 
     assertThat(uuid).isNotNull();
