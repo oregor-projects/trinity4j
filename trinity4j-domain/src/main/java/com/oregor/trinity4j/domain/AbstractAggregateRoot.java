@@ -21,6 +21,7 @@
 package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Access;
@@ -49,6 +50,10 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
 
   private I id;
 
+  private LocalDateTime createdOn;
+
+  private LocalDateTime updatedOn;
+
   @Version private Integer version;
 
   // ===============================================================================================
@@ -60,8 +65,10 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
    *
    * <p>No args constructor for Repository Frameworks.
    */
+  @SuppressWarnings("CPD-START")
   protected AbstractAggregateRoot() {
     super();
+    setCreatedOn(LocalDateTime.now());
   }
 
   /**
@@ -71,6 +78,7 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
    */
   protected AbstractAggregateRoot(I id) {
     setId(id);
+    setCreatedOn(LocalDateTime.now());
   }
 
   // ===============================================================================================
@@ -156,6 +164,24 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
   }
 
   /**
+   * Gets created on.
+   *
+   * @return the created on
+   */
+  public LocalDateTime getCreatedOn() {
+    return createdOn;
+  }
+
+  /**
+   * Gets updated on.
+   *
+   * @return the updated on
+   */
+  public LocalDateTime getUpdatedOn() {
+    return updatedOn;
+  }
+
+  /**
    * Gets version.
    *
    * @return the version
@@ -178,6 +204,16 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
     this.version = version;
   }
 
+  /**
+   * Sets updated on.
+   *
+   * @param updatedOn the updated on
+   */
+  public void setUpdatedOn(LocalDateTime updatedOn) {
+    Assertion.isNotNull(updatedOn, "updatedOn cannot be null");
+    this.updatedOn = updatedOn;
+  }
+
   // ===============================================================================================
   // GUARDS
   // ===============================================================================================
@@ -190,6 +226,11 @@ public abstract class AbstractAggregateRoot<I extends AbstractAggregateRootId> {
   private void setId(I id) {
     Assertion.isNotNull(id, "id cannot be null");
     this.id = id;
+  }
+
+  private void setCreatedOn(LocalDateTime createdOn) {
+    Assertion.isNotNull(createdOn, "createdOn cannot be null");
+    this.createdOn = createdOn;
   }
 
   // ===============================================================================================
