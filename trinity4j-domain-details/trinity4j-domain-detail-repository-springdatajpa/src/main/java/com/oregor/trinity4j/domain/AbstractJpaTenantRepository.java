@@ -21,6 +21,7 @@
 package com.oregor.trinity4j.domain;
 
 import com.oregor.trinity4j.commons.assertion.Assertion;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -97,6 +98,10 @@ public abstract class AbstractJpaTenantRepository<
   @Override
   public T store(T object) {
     Assertion.isNotNull(object, AGGREGATE_ROOT_IS_REQUIRED);
+
+    if (object.getVersion() != null) {
+      object.setUpdatedOn(LocalDateTime.now());
+    }
 
     T storedObject = this.springDataTenantRepository.save(object);
     domainMessageDataRepository.saveAll(
