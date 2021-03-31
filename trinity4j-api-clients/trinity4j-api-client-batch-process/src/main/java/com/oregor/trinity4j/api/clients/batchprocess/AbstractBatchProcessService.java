@@ -138,7 +138,7 @@ public abstract class AbstractBatchProcessService<T extends CollectionItemIdenti
                       batchProcessMessage.getDryRun())));
         }
       } else {
-        LOG.info(
+        LOG.debug(
             "Processed {} pages with pageSize={} and dryRun={} in {}",
             batchProcessMessage.getPageNumber() + 1,
             batchProcessMessage.getPageSize(),
